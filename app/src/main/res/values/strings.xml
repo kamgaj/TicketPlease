@@ -1,3 +1,32 @@
 <resources>
     <string name="app_name">TicketPlease</string>
+    <string name="rejestracja">Rejestracja</string>
+    <string name="email">Email</string>
+    <string name="nazwa_u_ytkownika">Nazwa użytkownika</string>
+    <string name="zaloguj_si">Zaloguj się</string>
+    <string name="has_o">Hasło</string>
+    <string name="zarejestruj_si">Zarejestruj się</string>
+    <string name="poka">Pokaż</string>
+    <string name="zapomnia_e_has_a">Zapomniałeś hasła?</string>
+    <string name="nie_masz_jeszcze_konta_zarejesruj_si">Nie masz jeszcze konta? Zarejesruj się</string>
+    <string name="masz_ju_konto_zaloguj_si">Masz już konto? Zaloguj się</string>
+    <string name="witaj">Witaj</string>
+    <string name="aby_rozpocz_korzystanie_z_aplikacji_zaloguj_si_lub_utw_rz_nowe_konto">Aby rozpocząć korzystanie z aplikacji zaloguj się lub utwórz nowe konto</string>
+    <string name="strona_g_wna">Strona główna</string>
+    <string name="opis">Opis</string>
+    <string name="title">Title</string>
+    <string name="gatunek">Gatunek</string>
+    <string name="profile_button">profile button</string>
+    <string name="ticket_button">ticket button</string>
+    <string name="search_button">search button</string>
+    <string name="home_button">home button</string>
+    <string name="szukaj">Szukaj</string>
+    <string name="buy_ticket">buy ticket</string>
+    <string name="description">Description</string>
+    <string name="film_poster">film poster</string>
+    <string name="bilet">Bilet</string>
+    <string name="tytu">Tytuł</string>
+    <string name="_12_06_2020">12.06.2020</string>
+    <string name="_4_bilety">4 bilety</string>
+    <string name="qrcode">qrcode</string>
 </resources>

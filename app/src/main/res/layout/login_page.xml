@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <com.google.android.material.chip.Chip
+        android:id="@+id/loginBar"
+        android:layout_width="343dp"
+        android:layout_height="51dp"
+        android:layout_marginStart="34dp"
+        android:layout_marginTop="386dp"
+        android:layout_marginEnd="34dp"
+        app:chipBackgroundColor="#5DB075"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/loginBarText"
+        android:layout_width="84dp"
+        android:layout_height="25dp"
+        android:text="@string/zaloguj_si"
+        android:textAlignment="center"
+        android:textColor="#FFFFFF"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="@+id/loginBar"
+        app:layout_constraintEnd_toEndOf="@+id/loginBar"
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintStart_toStartOf="@+id/loginBar"
+        app:layout_constraintTop_toTopOf="@+id/loginBar"
+        tools:textSize="16sp" />
+
+    <TextView
+        android:id="@+id/LoginText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="132dp"
+        android:layout_marginTop="60dp"
+        android:layout_marginEnd="132dp"
+        android:text="@string/zaloguj_si"
+        android:textColor="#000000"
+        android:textAlignment="center"
+        android:textSize="30sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <EditText
+        android:id="@+id/Password"
+        android:layout_width="343dp"
+        android:layout_height="50dp"
+        android:layout_marginStart="34dp"
+        android:layout_marginTop="247dp"
+        android:layout_marginEnd="34dp"
+        android:ems="10"
+        android:hint="@string/has_o"
+        android:inputType="textPassword"
+        app:layout_constraintCircleRadius="15dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:background="#F6F6F6" />
+
+    <EditText
+        android:id="@+id/Login"
+        android:layout_width="343dp"
+        android:layout_height="50dp"
+        android:layout_marginStart="34dp"
+        android:layout_marginTop="173dp"
+        android:layout_marginEnd="34dp"
+        android:ems="10"
+        android:inputType="text"
+        android:text="@string/nazwa_u_ytkownika"
+        android:textColor="@android:color/secondary_text_dark"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:background="#F6F6F6" />
+
+    <TextView
+        android:id="@+id/ShowPassword"
+        android:layout_width="47dp"
+        android:layout_height="wrap_content"
+        android:text="@string/poka"
+        android:textColor="#5DB075"
+        android:textSize="16sp"
+        android:textAlignment="center"
+        app:layout_constraintBottom_toBottomOf="@+id/Password"
+        app:layout_constraintEnd_toEndOf="@+id/Password"
+        app:layout_constraintTop_toTopOf="@+id/Password" />
+
+    <TextView
+        android:id="@+id/ForgetPassword"
+        android:layout_width="154dp"
+        android:layout_height="25dp"
+        android:layout_marginStart="128dp"
+        android:layout_marginTop="523dp"
+        android:layout_marginEnd="128dp"
+        android:text="@string/zapomnia_e_has_a"
+        android:textAlignment="center"
+        android:textColor="#5DB075"
+        android:textSize="16sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/NoAccount"
+        android:layout_width="304dp"
+        android:layout_height="25dp"
+        android:layout_marginStart="58dp"
+        android:layout_marginTop="555dp"
+        android:layout_marginEnd="58dp"
+        android:text="@string/nie_masz_jeszcze_konta_zarejesruj_si"
+        android:textAlignment="center"
+        android:textColor="#5DB075"
+        android:textSize="16sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
