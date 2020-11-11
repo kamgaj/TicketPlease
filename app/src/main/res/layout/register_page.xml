@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+
+    <TextView
+        android:id="@+id/alreadyRegistered"
+        android:layout_width="213dp"
+        android:layout_height="19dp"
+        android:layout_marginStart="99dp"
+        android:layout_marginTop="56dp"
+        android:text="@string/masz_ju_konto_zaloguj_si"
+        android:textColor="#5DB075"
+        android:textSize="16sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/loginBar2" />
+
+    <com.google.android.material.chip.Chip
+        android:id="@+id/loginBar2"
+        android:layout_width="343dp"
+        android:layout_height="51dp"
+        android:layout_marginStart="34dp"
+        android:layout_marginTop="19dp"
+        app:chipBackgroundColor="#5DB075"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/password" />
+
+    <TextView
+        android:id="@+id/loginBarText2"
+        android:layout_width="111dp"
+        android:layout_height="19dp"
+        android:text="@string/zarejestruj_si"
+        android:textColor="#000000"
+        app:layout_constraintBottom_toBottomOf="@+id/loginBar2"
+        app:layout_constraintEnd_toEndOf="@+id/loginBar2"
+        app:layout_constraintStart_toStartOf="@+id/loginBar2"
+        app:layout_constraintTop_toTopOf="@+id/loginBar2"
+        tools:textSize="16sp" />
+
+    <EditText
+        android:id="@+id/password"
+        android:layout_width="343dp"
+        android:layout_height="50dp"
+        android:layout_marginStart="34dp"
+        android:layout_marginTop="22dp"
+        android:ems="10"
+        android:hint="@string/has_o"
+        android:inputType="textPassword"
+        app:layout_constraintCircleRadius="15dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/email"
+        tools:background="#F6F6F6" />
+
+    <EditText
+        android:id="@+id/login"
+        android:layout_width="343dp"
+        android:layout_height="50dp"
+        android:layout_marginStart="34dp"
+        android:layout_marginTop="90dp"
+        android:ems="10"
+        android:inputType="text"
+        android:text="@string/nazwa_u_ytkownika"
+        android:textColor="@android:color/secondary_text_dark"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/RegisterText"
+        tools:background="#F6F6F6" />
+
+    <EditText
+        android:id="@+id/email"
+        android:layout_width="343dp"
+        android:layout_height="50dp"
+        android:layout_marginStart="34dp"
+        android:layout_marginTop="22dp"
+        android:ems="10"
+        android:inputType="textEmailAddress"
+        android:text="@string/email"
+        android:textColor="@android:color/secondary_text_dark"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/login"
+        tools:background="#F6F6F6" />
+
+    <TextView
+        android:id="@+id/RegisterText"
+        android:layout_width="162dp"
+        android:layout_height="36dp"
+        android:layout_marginStart="122dp"
+        android:layout_marginTop="47dp"
+        android:text="@string/rejestracja"
+        android:textColor="#000000"
+        android:textSize="30sp"
+        android:visibility="visible"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+</androidx.constraintlayout.widget.ConstraintLayout>

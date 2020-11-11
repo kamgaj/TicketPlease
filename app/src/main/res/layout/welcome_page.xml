@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <TextView
+        android:id="@+id/welcomeText"
+        android:layout_width="84dp"
+        android:layout_height="36dp"
+        android:layout_marginStart="163dp"
+        android:layout_marginTop="81dp"
+        android:text="@string/witaj"
+        android:textColor="#000000"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:textSize="30sp" />
+
+    <TextView
+        android:id="@+id/textView2"
+        android:layout_width="314dp"
+        android:layout_height="233dp"
+        android:layout_marginStart="48dp"
+        android:layout_marginTop="217dp"
+        android:text="@string/aby_rozpocz_korzystanie_z_aplikacji_zaloguj_si_lub_utw_rz_nowe_konto"
+        android:textColor="#000000"
+        android:textSize="36sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <com.google.android.material.chip.Chip
+        android:id="@+id/LoginBar"
+        android:layout_width="343dp"
+        android:layout_height="51dp"
+        android:layout_marginStart="34dp"
+        android:layout_marginTop="139dp"
+        app:chipBackgroundColor="#5DB075"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView2" />
+
+    <TextView
+        android:id="@+id/LoginBarText"
+        android:layout_width="84dp"
+        android:layout_height="19dp"
+        android:text="@string/zaloguj_si"
+        android:textColor="#000000"
+        app:layout_constraintBottom_toBottomOf="@+id/LoginBar"
+        app:layout_constraintEnd_toEndOf="@+id/LoginBar"
+        app:layout_constraintStart_toStartOf="@+id/LoginBar"
+        app:layout_constraintTop_toTopOf="@+id/LoginBar"
+        tools:textSize="16sp" />
+
+    <com.google.android.material.chip.Chip
+        android:id="@+id/RegisterBar"
+        android:layout_width="343dp"
+        android:layout_height="51dp"
+        android:layout_marginStart="34dp"
+        android:layout_marginTop="17dp"
+        app:chipBackgroundColor="#5DB075"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/LoginBar" />
+
+    <TextView
+        android:id="@+id/RegisterBarText"
+        android:layout_width="111dp"
+        android:layout_height="19dp"
+        android:text="@string/zarejestruj_si"
+        android:textColor="#000000"
+        app:layout_constraintBottom_toBottomOf="@+id/RegisterBar"
+        app:layout_constraintEnd_toEndOf="@+id/RegisterBar"
+        app:layout_constraintStart_toStartOf="@+id/RegisterBar"
+        app:layout_constraintTop_toTopOf="@+id/RegisterBar"
+        tools:textSize="16sp" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

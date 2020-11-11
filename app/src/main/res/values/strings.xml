@@ -1,3 +1,15 @@
 <resources>
     <string name="app_name">TicketPlease</string>
+    <string name="rejestracja">Rejestracja</string>
+    <string name="email">Email</string>
+    <string name="nazwa_u_ytkownika">Nazwa użytkownika</string>
+    <string name="zaloguj_si">Zaloguj się</string>
+    <string name="has_o">Hasło</string>
+    <string name="zarejestruj_si">Zarejestruj się</string>
+    <string name="poka">Pokaż</string>
+    <string name="zapomnia_e_has_a">Zapomniałeś hasła?</string>
+    <string name="nie_masz_jeszcze_konta_zarejesruj_si">Nie masz jeszcze konta? Zarejesruj się</string>
+    <string name="masz_ju_konto_zaloguj_si">Masz już konto? Zaloguj się</string>
+    <string name="witaj">Witaj</string>
+    <string name="aby_rozpocz_korzystanie_z_aplikacji_zaloguj_si_lub_utw_rz_nowe_konto">Aby rozpocząć korzystanie z aplikacji zaloguj się lub utwórz nowe konto</string>
 </resources>
