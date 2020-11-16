@@ -29,4 +29,14 @@
     <string name="_12_06_2020">12.06.2020</string>
     <string name="_4_bilety">4 bilety</string>
     <string name="qrcode">qrcode</string>
+    <string name="najlepiej_oceniane">Najlepiej oceniane</string>
+    <string name="promocje">Promocje</string>
+    <string name="_10_00_z">10.00 zł</string>
+    <string name="najnowsze_filmy">Najnowsze filmy</string>
+    <string name="podsumowanie">Podsumowanie</string>
+    <string name="kupi_e_5_bilet_w">Kupiłeś 5 biletów</string>
+    <string name="data_seansu_06_12_2020">Data seansu: 06.12.2020</string>
+    <string name="otrzymasz_powiadomienie_dzie_przed_seansem">Otrzymasz powiadomienie dzień przed seansem</string>
+    <string name="wyszukiwarka">Wyszukiwarka</string>
+    <string name="result_1">Result 1</string>
 </resources>

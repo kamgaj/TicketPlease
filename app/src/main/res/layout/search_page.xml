@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <com.google.android.material.chip.Chip
+        android:id="@+id/chip5"
+        android:layout_width="343dp"
+        android:layout_height="50dp"
+        android:layout_marginTop="20dp"
+        android:hint="@string/szukaj"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/toolbarUP" />
+
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbarDown"
+        android:layout_width="411dp"
+        android:layout_height="90dp"
+        android:layout_marginStart="1dp"
+        android:background="#FFFFFF"
+        android:minHeight="?attr/actionBarSize"
+        android:theme="?attr/actionBarTheme"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbarUP"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_width="411dp"
+        android:layout_height="74dp"
+        android:background="#5DB075"
+        android:minHeight="?attr/actionBarSize"
+        android:theme="?attr/actionBarTheme"
+        tools:layout_editor_absoluteX="0dp"
+        tools:layout_editor_absoluteY="229dp" />
+
+    <ImageButton
+        android:id="@+id/homeButton"
+        android:layout_width="38.33dp"
+        android:layout_height="40dp"
+        android:layout_marginStart="60dp"
+        android:background="#FFFFFF"
+        app:layout_constraintBottom_toBottomOf="@+id/toolbarDown"
+        app:layout_constraintStart_toStartOf="@+id/toolbarDown"
+        app:layout_constraintTop_toTopOf="@+id/toolbarDown"
+        app:srcCompat="@drawable/home"
+        android:contentDescription="@string/home_button" />
+
+    <ImageButton
+        android:id="@+id/searchButton"
+        android:layout_width="38.33dp"
+        android:layout_height="40dp"
+        android:layout_marginStart="45dp"
+        android:background="#FFFFFF"
+        app:layout_constraintBottom_toBottomOf="@+id/toolbarDown"
+        app:layout_constraintStart_toEndOf="@+id/homeButton"
+        app:layout_constraintTop_toTopOf="@+id/toolbarDown"
+        app:srcCompat="@drawable/search"
+        android:contentDescription="@string/search_button" />
+
+    <ImageButton
+        android:id="@+id/ticketButton"
+        android:layout_width="38.33dp"
+        android:layout_height="40dp"
+        android:layout_marginStart="45dp"
+        android:background="#FFFFFF"
+        app:layout_constraintBottom_toBottomOf="@+id/toolbarDown"
+        app:layout_constraintStart_toEndOf="@+id/searchButton"
+        app:layout_constraintTop_toTopOf="@+id/toolbarDown"
+        app:srcCompat="@drawable/ticket"
+        android:contentDescription="@string/ticket_button" />
+
+    <ImageButton
+        android:id="@+id/profileButton"
+        android:layout_width="38.33dp"
+        android:layout_height="40dp"
+        android:layout_marginStart="45dp"
+        android:layout_marginEnd="78dp"
+        android:background="#FFFFFF"
+        app:layout_constraintBottom_toBottomOf="@+id/toolbarDown"
+        app:layout_constraintEnd_toEndOf="@+id/toolbarDown"
+        app:layout_constraintStart_toEndOf="@+id/ticketButton"
+        app:layout_constraintTop_toTopOf="@+id/toolbarDown"
+        app:layout_constraintVertical_bias="0.466"
+        app:srcCompat="@drawable/profile"
+        android:contentDescription="@string/profile_button" />
+
+    <TextView
+        android:id="@+id/Title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/wyszukiwarka"
+        android:textColor="#FFFFFF"
+        android:textSize="30sp"
+        app:layout_constraintBottom_toBottomOf="@+id/toolbarUP"
+        app:layout_constraintEnd_toEndOf="@+id/toolbarUP"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/toolbarUP" />
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/scrollView3"
+        android:layout_width="407dp"
+        android:layout_height="543dp"
+        app:layout_constraintBottom_toTopOf="@+id/toolbarDown"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent">
+
+        <TextView
+            android:id="@+id/SearchResult"
+            android:layout_width="317dp"
+            android:layout_height="42dp"
+            android:layout_marginTop="4dp"
+            android:text="@string/result_1"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:textColor="#000000"
+            tools:textSize="16sp" />
+
+        <LinearLayout
+            android:id="@+id/linearLayout"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="190dp"
+            android:orientation="vertical"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" >
+
+        </LinearLayout>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>
