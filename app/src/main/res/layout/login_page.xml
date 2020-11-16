@@ -62,7 +62,8 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        tools:background="#F6F6F6" />
+        tools:background="#F6F6F6"
+        android:autofillHints="" />
 
     <EditText
         android:id="@+id/Login"
@@ -78,7 +79,8 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        tools:background="#F6F6F6" />
+        tools:background="#F6F6F6"
+        android:autofillHints="" />
 
     <TextView
         android:id="@+id/ShowPassword"
