@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "684672537892",
+    "firebase_url": "https://ticketplease-5d96d.firebaseio.com",
+    "project_id": "ticketplease-5d96d",
+    "storage_bucket": "ticketplease-5d96d.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:684672537892:android:b351d2f157eb3afd074fb1",
+        "android_client_info": {
+          "package_name": "com.example.ticketplease"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "684672537892-2k9v2lt77h84iduvk03fuq6elsgseap8.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAV5N8hsW1ufnHrENZmXGyBmlFkq0UIqGQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "684672537892-2k9v2lt77h84iduvk03fuq6elsgseap8.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

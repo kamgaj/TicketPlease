@@ -4,7 +4,8 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    tools:context=".RegisterActivity">
 
 
     <TextView
@@ -14,6 +15,7 @@
         android:layout_marginStart="99dp"
         android:layout_marginTop="56dp"
         android:layout_marginEnd="99dp"
+        android:onClick="goToLogin"
         android:text="@string/masz_ju_konto_zaloguj_si"
         android:textColor="#5DB075"
         android:textSize="16sp"
@@ -71,8 +73,8 @@
         android:layout_marginTop="90dp"
         android:layout_marginEnd="34dp"
         android:ems="10"
-        android:inputType="text"
-        android:text="@string/nazwa_u_ytkownika"
+        android:inputType="textNoSuggestions"
+        android:hint="@string/nazwa_u_ytkownika"
         android:textColor="@android:color/secondary_text_dark"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -88,7 +90,7 @@
         android:layout_marginEnd="34dp"
         android:ems="10"
         android:inputType="textEmailAddress"
-        android:text="@string/email"
+        android:hint="@string/email"
         android:textColor="@android:color/secondary_text_dark"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
