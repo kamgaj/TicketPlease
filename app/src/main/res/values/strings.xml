@@ -8,7 +8,7 @@
     <string name="zarejestruj_si">Zarejestruj się</string>
     <string name="poka">Pokaż</string>
     <string name="zapomnia_e_has_a">Zapomniałeś hasła?</string>
-    <string name="nie_masz_jeszcze_konta_zarejesruj_si">Nie masz jeszcze konta? Zarejesruj się</string>
+    <string name="nie_masz_jeszcze_konta_zarejesruj_si">Nie masz jeszcze konta? Zarejestruj się</string>
     <string name="masz_ju_konto_zaloguj_si">Masz już konto? Zaloguj się</string>
     <string name="witaj">Witaj</string>
     <string name="aby_rozpocz_korzystanie_z_aplikacji_zaloguj_si_lub_utw_rz_nowe_konto">Aby rozpocząć korzystanie z aplikacji zaloguj się lub utwórz nowe konto</string>
@@ -29,4 +29,11 @@
     <string name="_12_06_2020">12.06.2020</string>
     <string name="_4_bilety">4 bilety</string>
     <string name="qrcode">qrcode</string>
+    <string name="EmptyPassword">Podaj hasło</string>
+    <string name="EmptyEmail">Podaj adres E-mail</string>
+    <string name="EmptyLogin">Podaj nazwę użytkownika</string>
+    <string name="RegistrationFailToast">Nie udało się stworzyć konta, spróbuj ponownie</string>
+    <string name="VerificationEmailSent">E-mail weryfikacyjny został wysłany</string>
+    <string name="onFailureEmail">onFailure: Email not sent </string>
+    <string name="loginError">Nazwa użytkownika lub hasło jest niepoprawne</string>
 </resources>
