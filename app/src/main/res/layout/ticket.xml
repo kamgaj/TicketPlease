@@ -84,7 +84,7 @@
         android:contentDescription="@string/profile_button" />
 
     <TextView
-        android:id="@+id/Title"
+        android:id="@+id/NickName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/bilet"

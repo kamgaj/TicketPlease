@@ -25,7 +25,6 @@
     <string name="description">Description</string>
     <string name="film_poster">film poster</string>
     <string name="bilet">Bilet</string>
-    <string name="tytu">Tytuł</string>
     <string name="_12_06_2020">12.06.2020</string>
     <string name="_4_bilety">4 bilety</string>
     <string name="qrcode">qrcode</string>
@@ -40,4 +39,22 @@
     <string name="wyszukiwarka">Wyszukiwarka</string>
     <string name="result_1">Result 1</string>
     <string name="ok">OK</string>
+    <string name="rezerwacja">Rezerwacja</string>
+    <string name="cinema">Cinema</string>
+    <string name="technology">Technology</string>
+    <string name="date">Date</string>
+    <string name="dalej">Dalej</string>
+    <string name="reset_has_a">Reset hasła</string>
+    <string name="na_podany_adres_email_zostanie_wys_any_link_pozwalaj_cy_na_zmian_has_a">Na podany adres email zostanie wysłany link pozwalający na zmianę hasła</string>
+    <string name="wy_lij">Wyślij</string>
+    <string name="todo"></string>
+    <string name="profil">Profil</string>
+    <string name="wyloguj">Wyloguj</string>
+    <string name="ustawienia">Ustawienia</string>
+    <string name="obejrzane">Obejrzane</string>
+    <string name="zarezerowane">Zarezerowane</string>
+    <string name="tytu">Tytuł</string>
+    <string name="nick">Nick</string>
+    <string name="offers">Offers</string>
+    <string name="search">Search</string>
 </resources>
