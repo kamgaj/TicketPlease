@@ -87,7 +87,7 @@
         android:id="@+id/NickName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/bilet"
+        android:text="@string/podsumowanie"
         android:textColor="#FFFFFF"
         android:textSize="30sp"
         app:layout_constraintBottom_toBottomOf="@+id/toolbarUP"
@@ -95,35 +95,24 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/toolbarUP" />
 
-    <ImageView
-        android:id="@+id/qrCode"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="15dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/toolbarUP"
-        app:srcCompat="@drawable/qr"
-        android:contentDescription="@string/qrcode" />
-
     <TextView
         android:id="@+id/tutulFilmu"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="40dp"
-        android:layout_marginTop="36dp"
-        android:text="@string/tytu"
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="52dp"
+        android:text="@string/kupi_e_5_bilet_w"
         android:textColor="#000000"
         android:textSize="24sp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/qrCode" />
+        app:layout_constraintTop_toBottomOf="@+id/toolbarUP" />
 
     <TextView
         android:id="@+id/date"
         android:layout_width="343dp"
         android:layout_height="19dp"
         android:layout_marginTop="20dp"
-        android:text="@string/_12_06_2020"
+        android:text="@string/data_seansu_06_12_2020"
         android:textColor="#000000"
         android:textSize="16sp"
         app:layout_constraintEnd_toEndOf="parent"
@@ -132,13 +121,35 @@
 
     <TextView
         android:id="@+id/numberOfTickets"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="341dp"
+        android:layout_height="35dp"
+        android:layout_marginStart="32dp"
         android:layout_marginTop="16dp"
-        android:text="@string/_4_bilety"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.092"
+        android:text="@string/otrzymasz_powiadomienie_dzie_przed_seansem"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/date" />
+
+    <com.google.android.material.chip.Chip
+        android:id="@+id/chip6"
+        android:layout_width="160dp"
+        android:layout_height="97dp"
+        android:layout_marginTop="312dp"
+        app:chipBackgroundColor="#5DB075"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/numberOfTickets" />
+
+    <TextView
+        android:id="@+id/okButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/ok"
+        android:textColor="#ffffff"
+        android:textSize="30sp"
+        app:layout_constraintBottom_toBottomOf="@+id/chip6"
+        app:layout_constraintEnd_toEndOf="@+id/chip6"
+        app:layout_constraintStart_toStartOf="@+id/chip6"
+        app:layout_constraintTop_toTopOf="@+id/chip6"
+        tools:textStyle="bold" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -6,6 +6,59 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
+    <com.google.android.material.chip.Chip
+        android:id="@+id/chip5"
+        android:layout_width="343dp"
+        android:layout_height="50dp"
+        android:layout_marginTop="20dp"
+        android:hint="@string/szukaj"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/toolbarUP" />
+
+
+    <RadioGroup
+        android:id="@+id/toggleProfile"
+        android:layout_width="342dp"
+        android:layout_height="35dp"
+        android:layout_marginStart="34dp"
+        android:layout_marginTop="6dp"
+        android:layout_marginEnd="35dp"
+        android:background="@drawable/color_out_line"
+        android:checkedButton="@+id/offer"
+        android:orientation="horizontal"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/chip5">
+
+        <RadioButton
+            android:id="@+id/search"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_marginStart="1dp"
+            android:layout_marginTop="1dp"
+            android:layout_marginBottom="1dp"
+            android:layout_weight="1"
+            android:background="@drawable/toggle_widget_background"
+            android:button="@null"
+            android:gravity="center"
+            android:text="@string/search"
+            android:textColor="@color/white" />
+
+        <RadioButton
+            android:id="@+id/offer"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_marginTop="1dp"
+            android:layout_marginEnd="1dp"
+            android:layout_marginBottom="1dp"
+            android:layout_weight="1"
+            android:background="@drawable/toggle_widget_background"
+            android:button="@null"
+            android:gravity="center"
+            android:text="@string/offers"
+            android:textColor="#BDBDBD" />
+    </RadioGroup>
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbarDown"
         android:layout_width="411dp"
@@ -87,7 +140,7 @@
         android:id="@+id/NickName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/bilet"
+        android:text="@string/wyszukiwarka"
         android:textColor="#FFFFFF"
         android:textSize="30sp"
         app:layout_constraintBottom_toBottomOf="@+id/toolbarUP"
@@ -95,50 +148,29 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/toolbarUP" />
 
-    <ImageView
-        android:id="@+id/qrCode"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="15dp"
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/scrollView3"
+        android:layout_width="407dp"
+        android:layout_height="543dp"
+        android:layout_marginTop="5dp"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/toolbarUP"
-        app:srcCompat="@drawable/qr"
-        android:contentDescription="@string/qrcode" />
+        app:layout_constraintTop_toBottomOf="@+id/toggleProfile">
 
-    <TextView
-        android:id="@+id/tutulFilmu"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="40dp"
-        android:layout_marginTop="36dp"
-        android:text="@string/tytu"
-        android:textColor="#000000"
-        android:textSize="24sp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/qrCode" />
+        <TextView
+            android:id="@+id/DescriptionText"
+            android:layout_width="317dp"
+            android:layout_height="42dp"
+            android:layout_marginTop="4dp"
+            android:text="@string/result_1"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:textColor="#000000"
+            tools:textSize="16sp" />
 
-    <TextView
-        android:id="@+id/date"
-        android:layout_width="343dp"
-        android:layout_height="19dp"
-        android:layout_marginTop="20dp"
-        android:text="@string/_12_06_2020"
-        android:textColor="#000000"
-        android:textSize="16sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tutulFilmu" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
-    <TextView
-        android:id="@+id/numberOfTickets"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:text="@string/_4_bilety"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.092"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/date" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

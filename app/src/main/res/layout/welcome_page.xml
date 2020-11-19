@@ -12,7 +12,7 @@
         android:layout_marginStart="163dp"
         android:layout_marginTop="81dp"
         android:layout_marginEnd="163dp"
-        android:text="Witaj!"
+        android:text="@string/witaj"
         android:textAlignment="center"
         android:textColor="#000000"
         android:textStyle="bold"
@@ -41,11 +41,13 @@
         android:layout_width="343dp"
         android:layout_height="51dp"
         android:layout_marginStart="34dp"
+        android:layout_marginTop="152dp"
         android:layout_marginEnd="34dp"
         app:chipBackgroundColor="#5DB075"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        tools:layout_editor_absoluteY="549dp" />
+        app:layout_constraintTop_toBottomOf="@+id/textView2" />
 
     <TextView
         android:id="@+id/LoginBarText"
