@@ -74,7 +74,7 @@
         android:layout_marginEnd="34dp"
         android:ems="10"
         android:inputType="text"
-        android:hint="@string/nazwa_u_ytkownika"
+        android:hint="@string/email"
         android:textColor="@android:color/secondary_text_dark"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
