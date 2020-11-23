@@ -23,10 +23,16 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.Objects;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import io.opencensus.metrics.LongGauge;
 
 public class RegisterActivity extends AppCompatActivity {
+    //email validation method
+    boolean isEmailValid(CharSequence email) {
+        return android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches();
+    }
 
     private static final String TAG = "Registration";
     private FirebaseAuth mFirebaseAuth;
@@ -42,7 +48,6 @@ public class RegisterActivity extends AppCompatActivity {
 
         mFirebaseAuth = FirebaseAuth.getInstance(); //opening connection with firebase authentication module
         FirebaseFirestore fStore = FirebaseFirestore.getInstance(); // opening connection with firebase
-
 
         registerButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -66,35 +71,56 @@ public class RegisterActivity extends AppCompatActivity {
             passwordEdit.setError(getString(R.string.EmptyPassword));
             passwordEdit.requestFocus();
         }
-        //If everything is ok we are creating new user account
         else {
-            mFirebaseAuth.createUserWithEmailAndPassword(email, password).addOnCompleteListener(RegisterActivity.this, task -> {
-                //if tasks fails we get entry in a Log
-                if(!task.isSuccessful())
-                {
-                    FirebaseAuthException e = (FirebaseAuthException )task.getException();
-                    Log.e(TAG, "Failed Registration", e);
-                    Toast.makeText(RegisterActivity.this, getString(R.string.RegistrationFailToast), Toast.LENGTH_LONG).show();
-                }
-                //if task is successful we store current user and go to MainActivity or if not we are making a log entry
-                else
-                {
-                    FirebaseUser fUser = mFirebaseAuth.getCurrentUser();
-                    Objects.requireNonNull(fUser).sendEmailVerification().addOnSuccessListener(new OnSuccessListener<Void>() {
-                        @Override
-                        public void onSuccess(Void aVoid) {
-                            Toast.makeText(RegisterActivity.this, getString(R.string.VerificationEmailSent), Toast.LENGTH_LONG).show();
-                            FirebaseUser firebaseUser = mFirebaseAuth.getCurrentUser();
-                            startActivity(new Intent(RegisterActivity.this, MainActivity.class));
-                        }
-                    }).addOnFailureListener(new OnFailureListener() {
-                        @Override
-                        public void onFailure(@NonNull Exception e) {
-                            Log.d(TAG, getString(R.string.onFailureEmail) + e.getMessage());
-                        }
-                    });
-                }
-            });
+            if(username.contains(" ")){
+                Toast.makeText(getApplicationContext(), "Nazwa użytkownika nie może zawierać spacji", Toast.LENGTH_LONG).show();
+            }
+            else if(password.contains(" ")){
+                Toast.makeText(getApplicationContext(), "Hasło nie może zawierać spacji", Toast.LENGTH_LONG).show();
+            }
+            else if(email.contains(" ")){
+                Toast.makeText(getApplicationContext(), "Email nie może zawierać spacji", Toast.LENGTH_LONG).show();
+            }
+            else if(username.length()<5){
+                Toast.makeText(getApplicationContext(), "Nazwa użytkownika musi zawierać minimum 5 znaków", Toast.LENGTH_LONG).show();
+            }
+            else if(password.length()<8){
+                Toast.makeText(getApplicationContext(), "Hasło musi zawierać minimum 8 znaków", Toast.LENGTH_LONG).show();
+            }
+            else if(!username.matches("[a-zA-Z0-9]*")){
+                Toast.makeText(getApplicationContext(), "Nazwa użytkownika zawiera znaki specjalne", Toast.LENGTH_LONG).show();
+            }
+            else if (!isEmailValid(email)){
+                Toast.makeText(getApplicationContext(), "Błędny adres email", Toast.LENGTH_LONG).show();
+            }
+            //If everything is ok we are creating new user account
+            else {
+                mFirebaseAuth.createUserWithEmailAndPassword(email, password).addOnCompleteListener(RegisterActivity.this, task -> {
+                    //if tasks fails we get entry in a Log
+                    if (!task.isSuccessful()) {
+                        FirebaseAuthException e = (FirebaseAuthException) task.getException();
+                        Log.e(TAG, "Failed Registration", e);
+                        Toast.makeText(RegisterActivity.this, getString(R.string.RegistrationFailToast), Toast.LENGTH_LONG).show();
+                    }
+                    //if task is successful we store current user and go to LoginActivity or if not we are making a log entry
+                    else {
+                        FirebaseUser fUser = mFirebaseAuth.getCurrentUser();
+                        Objects.requireNonNull(fUser).sendEmailVerification().addOnSuccessListener(new OnSuccessListener<Void>() {
+                            @Override
+                            public void onSuccess(Void aVoid) {
+                                Toast.makeText(RegisterActivity.this, getString(R.string.VerificationEmailSent), Toast.LENGTH_LONG).show();
+                                FirebaseUser firebaseUser = mFirebaseAuth.getCurrentUser();
+                                startActivity(new Intent(RegisterActivity.this, LoginActivity.class));
+                            }
+                        }).addOnFailureListener(new OnFailureListener() {
+                            @Override
+                            public void onFailure(@NonNull Exception e) {
+                                Log.d(TAG, getString(R.string.onFailureEmail) + e.getMessage());
+                            }
+                        });
+                    }
+                });
+            }
         }
             }
         });
