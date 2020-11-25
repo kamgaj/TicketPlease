@@ -55,6 +55,7 @@
             android:layout_weight="1"
             android:background="@drawable/toggle_widget_background"
             android:button="@null"
+            android:checked="false"
             android:gravity="center"
             android:text="@string/offers"
             android:textColor="#BDBDBD" />

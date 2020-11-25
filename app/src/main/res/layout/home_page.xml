@@ -116,232 +116,238 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/scrollView2"
-        android:layout_width="423dp"
-        android:layout_height="575dp"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
         app:layout_constraintBottom_toTopOf="@+id/toolbarDown"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/chip4">
 
-        <TextView
-            android:id="@+id/bestReviews"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
-            android:layout_marginTop="8dp"
-            android:text="@string/najlepiej_oceniane"
-            android:textColor="#000000"
-            android:textSize="24sp"
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent">
 
-        <HorizontalScrollView
-            android:id="@+id/horizontalScrollView2"
-            android:layout_width="497dp"
-            android:layout_height="182dp"
-            android:layout_marginTop="8dp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/newestMovies">
+            <HorizontalScrollView
+                android:id="@+id/horizontalScrollView2"
+                android:layout_width="497dp"
+                android:layout_height="182dp"
+                android:layout_marginTop="8dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/bestReviews">
 
-            <androidx.constraintlayout.widget.ConstraintLayout
-                android:id="@+id/linearLayout3"
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/linearLayout3"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent">
+
+                    <Spinner
+                        android:id="@+id/spinner"
+                        android:layout_width="114dp"
+                        android:layout_height="177dp"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintVertical_bias="0.0" />
+
+                    <ImageView
+                        android:id="@+id/imageView2"
+                        android:layout_width="110dp"
+                        android:layout_height="110dp"
+                        android:contentDescription="@string/film_poster"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintHorizontal_bias="1.0"
+                        app:layout_constraintStart_toStartOf="@+id/spinner"
+                        app:layout_constraintTop_toTopOf="@+id/spinner"
+                        app:srcCompat="@drawable/film_poster" />
+
+                    <TextView
+                        android:id="@+id/BestMovieTitle"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="16dp"
+                        android:layout_marginTop="12dp"
+                        android:text="@string/tytu"
+                        android:textColor="#000000"
+                        android:textSize="14sp"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/imageView2" />
+
+                    <TextView
+                        android:id="@+id/BestRevievsPrice"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="16dp"
+                        android:layout_marginTop="4dp"
+                        android:text="@string/_10_00_z"
+                        android:textColor="#000000"
+                        android:textSize="14sp"
+                        android:textStyle="bold"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/BestMovieTitle" />
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+            </HorizontalScrollView>
+
+            <TextView
+                android:id="@+id/newestMovies"
                 android:layout_width="wrap_content"
-                android:layout_height="match_parent">
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:text="@string/najnowsze_filmy"
+                android:textColor="#000000"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:textSize="24sp" />
 
-                <Spinner
-                    android:id="@+id/spinner"
-                    android:layout_width="114dp"
-                    android:layout_height="177dp"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintVertical_bias="0.0" />
+            <HorizontalScrollView
+                android:id="@+id/horizontalScrollView"
+                android:layout_width="0dp"
+                android:layout_height="182dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/newestMovies">
 
-                <ImageView
-                    android:id="@+id/imageView2"
-                    android:layout_width="110dp"
-                    android:layout_height="110dp"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintHorizontal_bias="1.0"
-                    app:layout_constraintStart_toStartOf="@+id/spinner"
-                    app:layout_constraintTop_toTopOf="@+id/spinner"
-                    app:srcCompat="@drawable/film_poster"
-                    android:contentDescription="@string/film_poster" />
-
-                <TextView
-                    android:id="@+id/BestMovieTitle"
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/linearLayout4"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="16dp"
-                    android:layout_marginTop="12dp"
-                    android:text="@string/tytu"
-                    android:textColor="#000000"
-                    android:textSize="14sp"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/imageView2" />
+                    android:layout_height="match_parent">
 
-                <TextView
-                    android:id="@+id/BestRevievsPrice"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="16dp"
-                    android:layout_marginTop="4dp"
-                    android:text="@string/_10_00_z"
-                    android:textColor="#000000"
-                    android:textSize="14sp"
-                    android:textStyle="bold"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/BestMovieTitle" />
-            </androidx.constraintlayout.widget.ConstraintLayout>
-        </HorizontalScrollView>
+                    <Spinner
+                        android:id="@+id/NewestSpinner"
+                        android:layout_width="114dp"
+                        android:layout_height="177dp"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintVertical_bias="0.0" />
 
-        <HorizontalScrollView
-            android:id="@+id/horizontalScrollView"
-            android:layout_width="497dp"
-            android:layout_height="182dp"
-            android:layout_marginTop="8dp"
-            android:layout_marginBottom="8dp"
-            app:layout_constraintBottom_toTopOf="@+id/newestMovies"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/bestReviews">
+                    <ImageView
+                        android:id="@+id/imageViewNewest"
+                        android:layout_width="110dp"
+                        android:layout_height="110dp"
+                        android:contentDescription="@string/film_poster"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintHorizontal_bias="1.0"
+                        app:layout_constraintStart_toStartOf="@+id/NewestSpinner"
+                        app:layout_constraintTop_toTopOf="@+id/NewestSpinner"
+                        app:srcCompat="@drawable/film_poster" />
 
-            <androidx.constraintlayout.widget.ConstraintLayout
-                android:id="@+id/linearLayout4"
+                    <TextView
+                        android:id="@+id/NewestMovieTitle"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="12dp"
+                        android:layout_marginTop="8dp"
+                        android:text="@string/tytu"
+                        android:textColor="#000000"
+                        android:textSize="14sp"
+                        app:layout_constraintStart_toStartOf="@+id/NewestSpinner"
+                        app:layout_constraintTop_toBottomOf="@+id/imageViewNewest" />
+
+                    <TextView
+                        android:id="@+id/NewestPrice"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="12dp"
+                        android:layout_marginTop="4dp"
+                        android:text="@string/_10_00_z"
+                        android:textColor="#000000"
+                        android:textSize="14sp"
+                        android:textStyle="bold"
+                        app:layout_constraintStart_toStartOf="@+id/NewestSpinner"
+                        app:layout_constraintTop_toBottomOf="@+id/NewestMovieTitle" />
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+            </HorizontalScrollView>
+
+            <TextView
+                android:id="@+id/bestReviews"
                 android:layout_width="wrap_content"
-                android:layout_height="match_parent">
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:text="@string/najlepiej_oceniane"
+                android:textColor="#000000"
+                android:textSize="24sp"
+                app:layout_constraintBottom_toTopOf="@+id/horizontalScrollView2"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/horizontalScrollView" />
 
-                <Spinner
-                    android:id="@+id/NewestSpinner"
-                    android:layout_width="114dp"
-                    android:layout_height="177dp"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintVertical_bias="0.0" />
-
-                <ImageView
-                    android:id="@+id/imageViewNewest"
-                    android:layout_width="110dp"
-                    android:layout_height="110dp"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintHorizontal_bias="1.0"
-                    app:layout_constraintStart_toStartOf="@+id/NewestSpinner"
-                    app:layout_constraintTop_toTopOf="@+id/NewestSpinner"
-                    app:srcCompat="@drawable/film_poster"
-                    android:contentDescription="@string/film_poster" />
-
-                <TextView
-                    android:id="@+id/NewestMovieTitle"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="16dp"
-                    android:layout_marginTop="12dp"
-                    android:text="@string/tytu"
-                    android:textColor="#000000"
-                    android:textSize="14sp"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/imageViewNewest" />
-
-                <TextView
-                    android:id="@+id/NewestPrice"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="16dp"
-                    android:layout_marginTop="4dp"
-                    android:text="@string/_10_00_z"
-                    android:textColor="#000000"
-                    android:textSize="14sp"
-                    android:textStyle="bold"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/NewestMovieTitle" />
-            </androidx.constraintlayout.widget.ConstraintLayout>
-        </HorizontalScrollView>
-
-        <TextView
-            android:id="@+id/newestMovies"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
-            android:layout_marginBottom="8dp"
-            android:text="@string/najnowsze_filmy"
-            android:textColor="#000000"
-            app:layout_constraintBottom_toTopOf="@+id/horizontalScrollView2"
-            app:layout_constraintStart_toStartOf="parent"
-            tools:textSize="24sp" />
-
-        <TextView
-            android:id="@+id/Discounts"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
-            android:layout_marginTop="8dp"
-            android:layout_marginBottom="8dp"
-            android:text="@string/promocje"
-            android:textColor="#000000"
-            android:textSize="24sp"
-            app:layout_constraintBottom_toTopOf="@+id/horizontalScrollView3"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/horizontalScrollView2" />
-
-        <HorizontalScrollView
-            android:id="@+id/horizontalScrollView3"
-            android:layout_width="497dp"
-            android:layout_height="182dp"
-            android:layout_marginTop="8dp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/Discounts">
-
-            <androidx.constraintlayout.widget.ConstraintLayout
-                android:id="@+id/linearLayout5"
+            <TextView
+                android:id="@+id/Discounts"
                 android:layout_width="wrap_content"
-                android:layout_height="match_parent">
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:text="@string/promocje"
+                android:textColor="#000000"
+                android:textSize="24sp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/horizontalScrollView2"
+                app:layout_constraintVertical_bias="0.084" />
 
-                <Spinner
-                    android:id="@+id/DiscountSpinner"
-                    android:layout_width="114dp"
-                    android:layout_height="177dp"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintVertical_bias="1.0" />
+            <HorizontalScrollView
+                android:id="@+id/horizontalScrollView3"
+                android:layout_width="497dp"
+                android:layout_height="182dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/Discounts">
 
-                <ImageView
-                    android:id="@+id/imageView3"
-                    android:layout_width="110dp"
-                    android:layout_height="110dp"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintHorizontal_bias="1.0"
-                    app:layout_constraintStart_toStartOf="@+id/DiscountSpinner"
-                    app:layout_constraintTop_toTopOf="@+id/DiscountSpinner"
-                    app:srcCompat="@drawable/film_poster"
-                    android:contentDescription="@string/film_poster" />
-
-                <TextView
-                    android:id="@+id/DiscountTitle"
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/linearLayout5"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="16dp"
-                    android:layout_marginTop="12dp"
-                    android:text="@string/tytu"
-                    android:textColor="#000000"
-                    android:textSize="14sp"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/imageView3" />
+                    android:layout_height="match_parent">
 
-                <TextView
-                    android:id="@+id/DiscountPrice"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="16dp"
-                    android:layout_marginTop="4dp"
-                    android:text="@string/_10_00_z"
-                    android:textColor="#000000"
-                    android:textSize="14sp"
-                    android:textStyle="bold"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/DiscountTitle" />
-            </androidx.constraintlayout.widget.ConstraintLayout>
-        </HorizontalScrollView>
+                    <Spinner
+                        android:id="@+id/DiscountSpinner"
+                        android:layout_width="114dp"
+                        android:layout_height="177dp"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintVertical_bias="1.0" />
+
+                    <ImageView
+                        android:id="@+id/imageView3"
+                        android:layout_width="110dp"
+                        android:layout_height="110dp"
+                        android:contentDescription="@string/film_poster"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintHorizontal_bias="1.0"
+                        app:layout_constraintStart_toStartOf="@+id/DiscountSpinner"
+                        app:layout_constraintTop_toTopOf="@+id/DiscountSpinner"
+                        app:srcCompat="@drawable/film_poster" />
+
+                    <TextView
+                        android:id="@+id/DiscountTitle"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="16dp"
+                        android:layout_marginTop="12dp"
+                        android:text="@string/tytu"
+                        android:textColor="#000000"
+                        android:textSize="14sp"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/imageView3" />
+
+                    <TextView
+                        android:id="@+id/DiscountPrice"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="16dp"
+                        android:layout_marginTop="4dp"
+                        android:text="@string/_10_00_z"
+                        android:textColor="#000000"
+                        android:textSize="14sp"
+                        android:textStyle="bold"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/DiscountTitle" />
+                </androidx.constraintlayout.widget.ConstraintLayout>
+            </HorizontalScrollView>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

@@ -60,7 +60,8 @@ public class LoginActivity extends AppCompatActivity {
                                 if(user.isEmailVerified()) {
                                     //if everything is ok we go to the MainActivity
                                     if (task.isSuccessful()) {
-                                        startActivity(new Intent(LoginActivity.this, MainActivity.class));
+                                        startActivity(new Intent(LoginActivity.this, HomeActivity.class));
+                                       // startActivity(new Intent(LoginActivity.this, MainActivity.class));
                                     }
                                     //if not then we got an Error Toast
                                     else {

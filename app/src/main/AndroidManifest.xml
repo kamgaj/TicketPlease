@@ -14,8 +14,16 @@
         </activity>
 
         <activity android:name=".RegisterActivity" />
+        <activity android:name=".HomeActivity" />
+        <activity android:name=".BookingActivity" />
+        <activity android:name=".DescriptionActivity" />
+        <activity android:name=".ProfileActivity" />
+        <activity android:name=".SearchActivity" />
+        <activity android:name=".TicketActivity" />
+        <activity android:name=".SummaryActivity" />
+        <activity android:name=".LoginActivity" />
 
-        <activity android:name=".LoginActivity">
+        <activity android:name=".WelcomeActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
