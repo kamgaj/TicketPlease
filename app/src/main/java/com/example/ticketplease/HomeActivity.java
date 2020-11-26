@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.Spinner;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -36,6 +37,14 @@ public class HomeActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 startActivity(new Intent(HomeActivity.this, ProfileActivity.class));
+            }
+        });
+        ImageView Image1;
+        Image1 = (ImageView) findViewById(R.id.imageViewNewest);
+        Image1.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(HomeActivity.this, DescriptionActivity.class));
             }
         });
     }
