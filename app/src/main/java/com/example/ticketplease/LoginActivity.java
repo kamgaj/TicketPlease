@@ -1,11 +1,15 @@
 package com.example.ticketplease;
 
+import android.app.Dialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -14,6 +18,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.android.material.chip.Chip;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -22,7 +27,10 @@ public class LoginActivity extends AppCompatActivity {
     EditText loginEdit, passwordEdit;
     FirebaseAuth mFirebaseAuth;
     Button loginButton;
-
+    TextView forgetPass;
+    Dialog Forget;
+    ImageView close;
+    Chip confirm;
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -79,10 +87,39 @@ public class LoginActivity extends AppCompatActivity {
                 }
             }
         });
+        Forget=new Dialog(LoginActivity.this);
+        Forget.setContentView(R.layout.forgot_password_popup);
+        Forget.getWindow().setBackgroundDrawable(getDrawable(R.drawable.background));
+        Forget.getWindow().setLayout(ViewGroup.LayoutParams.MATCH_PARENT,ViewGroup.LayoutParams.WRAP_CONTENT);
+        forgetPass=findViewById(R.id.ForgetPassword);
+        forgetPass.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+               Forget.show();
+            }
+        });
+        close=(ImageView)Forget.findViewById(R.id.CloseButtonForget);
+        close.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Forget.dismiss();
+            }
+        });
+        confirm=Forget.findViewById(R.id.ResetPasswordConfirmButton);
+        confirm.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Forget.dismiss();
+                Toast.makeText(getApplicationContext(), "Na adres email otrzymasz link umożliwiający zmianę hasła", Toast.LENGTH_LONG).show();
+            }
+        });
     }
 
 
     public void goToRegistration(View view) {
         startActivity(new Intent(LoginActivity.this, RegisterActivity.class));
     }
+
+
+
 }
