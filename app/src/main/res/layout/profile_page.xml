@@ -64,7 +64,7 @@
         android:id="@+id/toolbarUP"
         android:layout_width="424dp"
         android:layout_height="313dp"
-        android:background="#5DB075"
+        android:background="@color/mainColor"
         android:minHeight="?attr/actionBarSize"
         android:theme="?attr/actionBarTheme"
         app:layout_constraintEnd_toEndOf="parent"
