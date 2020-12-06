@@ -147,29 +147,25 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/toolbarUP" />
 
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/scrollView3"
-        android:layout_width="407dp"
-        android:layout_height="543dp"
-        android:layout_marginTop="5dp"
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="345dp"
+        android:layout_height="481dp"
+        android:layout_marginTop="32dp"
+        android:layout_marginBottom="8dp"
+        android:fillViewport="true"
+        app:layout_constraintBottom_toTopOf="@+id/toolbarDown"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/toggleProfile">
 
-        <TextView
-            android:id="@+id/DescriptionText"
-            android:layout_width="317dp"
-            android:layout_height="42dp"
-            android:layout_marginTop="4dp"
-            android:text="@string/result_1"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            tools:textColor="#000000"
-            tools:textSize="16sp" />
+        <LinearLayout
+            android:id="@+id/scrollResult"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"></LinearLayout>
+    </androidx.core.widget.NestedScrollView>
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
+
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
