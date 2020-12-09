@@ -43,7 +43,7 @@
         android:layout_marginStart="34dp"
         android:layout_marginTop="152dp"
         android:layout_marginEnd="34dp"
-        app:chipBackgroundColor="#5DB075"
+        app:chipBackgroundColor="@color/mainColor"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
@@ -70,7 +70,7 @@
         android:layout_marginStart="34dp"
         android:layout_marginTop="17dp"
         android:layout_marginEnd="34dp"
-        app:chipBackgroundColor="#5DB075"
+        app:chipBackgroundColor="@color/mainColor"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/LoginBar" />

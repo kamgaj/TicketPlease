@@ -64,7 +64,7 @@
         android:id="@+id/toolbarUP"
         android:layout_width="424dp"
         android:layout_height="313dp"
-        android:background="#5DB075"
+        android:background="@color/mainColor"
         android:minHeight="?attr/actionBarSize"
         android:theme="?attr/actionBarTheme"
         app:layout_constraintEnd_toEndOf="parent"
@@ -131,75 +131,52 @@
         android:text="@string/nick"
         android:textColor="#000000"
         android:textSize="30sp"
-        app:layout_constraintBottom_toTopOf="@+id/toggleProfile"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/toolbarUP" />
 
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/scrollView3"
-        android:layout_width="417dp"
-        android:layout_height="296dp"
-        android:layout_marginTop="19dp"
+    <ListView
+        android:id="@+id/ListFilms"
+        android:layout_width="391dp"
+        android:layout_height="250dp"
+        android:layout_marginTop="16dp"
         app:layout_constraintBottom_toTopOf="@+id/toolbarDown"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/toggleProfile">
+        app:layout_constraintTop_toBottomOf="@+id/toggleProfile" />
 
-        <TextView
-            android:id="@+id/DescriptionText"
-            android:layout_width="286dp"
-            android:layout_height="45dp"
-            android:layout_marginStart="8dp"
-            android:text="@string/result_1"
-            app:layout_constraintBottom_toBottomOf="@+id/spinner3"
-            app:layout_constraintStart_toEndOf="@+id/imageView4"
-            tools:textColor="#000000"
-            tools:textSize="16sp" />
 
-        <Spinner
-            android:id="@+id/spinner3"
-            android:layout_width="343dp"
-            android:layout_height="77dp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <ImageView
-            android:id="@+id/imageView4"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:layout_constraintBottom_toBottomOf="@+id/DescriptionText"
-            app:layout_constraintStart_toStartOf="@+id/spinner3"
-            app:layout_constraintTop_toTopOf="@+id/spinner3"
-            app:srcCompat="@drawable/small_poster" />
-
-        <TextView
-            android:id="@+id/FilmTitleWatched"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
-            android:layout_marginTop="5dp"
-            android:text="@string/tytu"
-            android:textColor="#000000"
-            android:textSize="16sp"
-            android:textStyle="bold"
-            app:layout_constraintStart_toEndOf="@+id/imageView4"
-            app:layout_constraintTop_toTopOf="@+id/spinner3" />
-
-    </androidx.constraintlayout.widget.ConstraintLayout>
-
-    <ImageView
-        android:id="@+id/ProfilePicture"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+    <androidx.cardview.widget.CardView
+        android:layout_width="155dp"
+        android:layout_height="155dp"
+        app:cardCornerRadius="250dp"
         app:layout_constraintBottom_toBottomOf="@+id/toolbarUP"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/profileTopBar"
-        app:srcCompat="@drawable/profile_pic" />
+        app:cardBackgroundColor="@color/white">
+
+        <androidx.cardview.widget.CardView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:cardCornerRadius="250dp"
+            android:layout_gravity="center">
+
+            <ImageView
+                android:id="@+id/ProfilePicture"
+                android:layout_width="150dp"
+                android:layout_height="150dp"
+                app:layout_constraintBottom_toBottomOf="@+id/toolbarUP"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/profileTopBar"
+                android:src="@drawable/profile_pic"
+                android:scaleType="centerCrop"/>
+
+        </androidx.cardview.widget.CardView>
+
+    </androidx.cardview.widget.CardView>
 
     <Spinner
         android:id="@+id/profileTopBar"
