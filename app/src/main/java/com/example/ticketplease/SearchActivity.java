@@ -17,7 +17,7 @@ import com.google.android.material.resources.TextAppearance;
 
 import java.util.ArrayList;
 
-import io.opencensus.resource.Resource;
+
 
 public class SearchActivity extends AppCompatActivity {
 
