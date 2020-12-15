@@ -21,4 +21,7 @@ public class DescriptionActivity extends AppCompatActivity {
             }
         });
     }
+    public void goToSearch(View view) {
+        startActivity(new Intent(DescriptionActivity.this, SearchActivity.class));
+    }
 }

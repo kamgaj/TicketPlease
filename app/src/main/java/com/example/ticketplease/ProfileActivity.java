@@ -65,4 +65,10 @@ public class ProfileActivity extends AppCompatActivity {
         filmsArray.add(new ProfileFilmListItem("Czarny ekran 5","Film bez wizji. Niektórzy myślą, że to cały czas pierwsza część",R.drawable.small_poster));
         filmsArray.add(new ProfileFilmListItem("Czarny ekran 6","Film bez wizji. Niektórzy myślą, że to cały czas pierwsza część",R.drawable.small_poster));
     }
+    public void goToDescription(View view) {
+        startActivity(new Intent(ProfileActivity.this, DescriptionActivity.class));
+    }
+    public void logout(View view){
+        startActivity(new Intent(ProfileActivity.this,LoginActivity.class));
+    }
 }
