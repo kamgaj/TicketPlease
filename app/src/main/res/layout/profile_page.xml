@@ -31,7 +31,7 @@
             android:button="@null"
             android:gravity="center"
             android:text="@string/obejrzane"
-            android:textColor="@color/white" />
+            android:textColor="@drawable/radiobutton_text_colors" />
 
         <RadioButton
             android:id="@+id/offer"
@@ -45,7 +45,7 @@
             android:button="@null"
             android:gravity="center"
             android:text="@string/zarezerowane"
-            android:textColor="#BDBDBD" />
+            android:textColor="@drawable/radiobutton_text_colors" />
     </RadioGroup>
 
     <androidx.appcompat.widget.Toolbar
@@ -218,6 +218,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="8dp"
+        android:onClick="logout"
         android:text="@string/wyloguj"
         android:textColor="#ffffff"
         android:textSize="16sp"

@@ -43,7 +43,7 @@
             android:button="@null"
             android:gravity="center"
             android:text="@string/search"
-            android:textColor="@color/white" />
+            android:textColor="@drawable/radiobutton_text_colors" />
 
         <RadioButton
             android:id="@+id/offer"
@@ -58,7 +58,7 @@
             android:checked="false"
             android:gravity="center"
             android:text="@string/offers"
-            android:textColor="#BDBDBD" />
+            android:textColor="@drawable/radiobutton_text_colors" />
     </RadioGroup>
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbarDown"
@@ -147,25 +147,18 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/toolbarUP" />
 
-    <androidx.core.widget.NestedScrollView
-        android:layout_width="345dp"
-        android:layout_height="481dp"
-        android:layout_marginTop="32dp"
-        android:layout_marginBottom="8dp"
-        android:fillViewport="true"
+    <ListView
+        android:id="@+id/searchListView"
+        android:layout_width="330dp"
+        android:layout_height="434dp"
+        android:layout_marginStart="34dp"
+        android:layout_marginTop="11dp"
+        android:layout_marginEnd="35dp"
+        android:layout_marginBottom="12dp"
         app:layout_constraintBottom_toTopOf="@+id/toolbarDown"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/toggleProfile">
-
-        <LinearLayout
-            android:id="@+id/scrollResult"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"></LinearLayout>
-    </androidx.core.widget.NestedScrollView>
-
-
+        app:layout_constraintTop_toBottomOf="@+id/toggleProfile" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

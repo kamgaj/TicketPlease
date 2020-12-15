@@ -1,11 +1,15 @@
 package com.example.ticketplease;
 
 import android.content.Intent;
+import android.icu.text.DateFormatSymbols;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ListView;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -16,6 +20,7 @@ import androidx.core.widget.NestedScrollView;
 import com.google.android.material.resources.TextAppearance;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 
 
 
@@ -50,21 +55,18 @@ public class SearchActivity extends AppCompatActivity {
                 startActivity(new Intent(SearchActivity.this, ProfileActivity.class));
             }
         });
-        final Button[] buttons = new Button[15];
-        LinearLayout container = (LinearLayout) findViewById(R.id.scrollResult);
-
-       LinearLayout .LayoutParams test = new LinearLayout .LayoutParams(
-                LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
-
-        for (int i = 0; i < 15; i++) {
-            buttons[i] = new Button(this);
-            //i don't think you should do that
-            //myTextViews[i].setId(R.id.testid+i);
-            buttons[i].setText("Film "+(i+1));
-            buttons[i].setTextAlignment(View.TEXT_ALIGNMENT_TEXT_START);
-            buttons[i].setTextSize(16);
-            buttons[i].setLayoutParams(test);
-            container.addView(buttons[i]);
-        }
+        ListView searchView;
+        //String[] Titles;
+        searchView=findViewById(R.id.searchListView);
+        String Titles[] = {"Title","Title2","Title3","Title4","Title5","Title6","Title7","Title8","Title9","Title10","Title11","Title12"}; //new DateFormatSymbols().getMonths();
+        ArrayAdapter<String> titlesArray = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1,Titles);
+        searchView.setAdapter(titlesArray);
+        searchView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Intent i=new Intent(SearchActivity.this,DescriptionActivity.class);
+                startActivity(i);
+            }
+        });
     }
 }

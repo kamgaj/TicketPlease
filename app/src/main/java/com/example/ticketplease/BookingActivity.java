@@ -23,4 +23,7 @@ public class BookingActivity  extends AppCompatActivity {
             }
         });
     }
+    public void descriptionFromBooking(View view){
+        startActivity(new Intent(BookingActivity.this,DescriptionActivity.class));
+    }
 }
