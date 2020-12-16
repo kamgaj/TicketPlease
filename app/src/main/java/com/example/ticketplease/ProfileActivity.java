@@ -5,9 +5,11 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
+import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.Toast;
@@ -16,9 +18,16 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.Query;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
@@ -33,6 +42,8 @@ public class ProfileActivity extends AppCompatActivity {
     private StorageReference storageReference;
     private String uID;
     private ImageView profilePicture;
+    private FirebaseFirestore db= FirebaseFirestore.getInstance();
+    private CollectionReference collectionRef;
 
     ArrayList<ProfileFilmListItem> filmsArray = new ArrayList<>();
     @Override
@@ -83,12 +94,8 @@ public class ProfileActivity extends AppCompatActivity {
         Titles = new DateFormatSymbols().getMonths();
         ArrayAdapter<String> titlesArray = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1,Titles);
         films.setAdapter(titlesArray);*/
-        getFilms();
-        ListView films;
-        ListAdapter listAdapter;
-        films=findViewById(R.id.ListFilms);
-        listAdapter = new ProfileListView(this,filmsArray);
-        films.setAdapter(listAdapter);
+        //getFilms();
+        getNewestFilms();
 
         //Tu zaczyna sie moja porazka xD
         profilePicture = findViewById(R.id.ProfilePicture);
@@ -132,17 +139,44 @@ public class ProfileActivity extends AppCompatActivity {
             }
         });
     }
+    private void getNewestFilms() {
+        storageReference = FirebaseStorage.getInstance().getReference();
+        collectionRef = db.collection("Movies");
 
+        db.collection("Movies")
+                .orderBy("Release_date", Query.Direction.DESCENDING)
+                .limit(10)
+                .get()
+                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                        if(task.isSuccessful()) {
+                            for(QueryDocumentSnapshot document : Objects.requireNonNull(task.getResult())) {
+                                String path = document.getString("Poster_link");
+                                filmsArray.add(new ProfileFilmListItem(document.getString("Title"), document.getString("Description"), path));
+                                Log.d("Zdjecie",path);
+                            }
+                            PrintWatched();
+                        } else {
+                            Log.d("ProfilePage", "Error getting documents: ", task.getException());
+                        }
+                    }
+                });
+    }
+    void PrintWatched(){
+        ListView films;
+        ListAdapter listAdapter;
+        films=findViewById(R.id.ListFilms);
+        listAdapter = new ProfileListView(this,filmsArray);
+        films.setAdapter(listAdapter);
+    }
     private void getFilms() {
-        filmsArray.add(new ProfileFilmListItem("Czarny ekran","Film bez wizji",R.drawable.small_poster));
+        /*filmsArray.add(new ProfileFilmListItem("Czarny ekran","Film bez wizji",R.drawable.small_poster));
         filmsArray.add(new ProfileFilmListItem("Czarny ekran 2","Film bez wizji. Kolejna część oscarowej produkcji",R.drawable.small_poster));
         filmsArray.add(new ProfileFilmListItem("Czarny ekran 3","Film bez wizji. Niektórzy myślą, że to cały czas pierwsza część",R.drawable.small_poster));
         filmsArray.add(new ProfileFilmListItem("Czarny ekran 4","Film bez wizji. Niektórzy myślą, że to cały czas pierwsza część",R.drawable.small_poster));
         filmsArray.add(new ProfileFilmListItem("Czarny ekran 5","Film bez wizji. Niektórzy myślą, że to cały czas pierwsza część",R.drawable.small_poster));
-        filmsArray.add(new ProfileFilmListItem("Czarny ekran 6","Film bez wizji. Niektórzy myślą, że to cały czas pierwsza część",R.drawable.small_poster));
-    }
-    public void goToDescription(View view) {
-        startActivity(new Intent(ProfileActivity.this, DescriptionActivity.class));
+        filmsArray.add(new ProfileFilmListItem("Czarny ekran 6","Film bez wizji. Niektórzy myślą, że to cały czas pierwsza część",R.drawable.small_poster));*/
     }
     public void logout(View view){
         startActivity(new Intent(ProfileActivity.this,LoginActivity.class));

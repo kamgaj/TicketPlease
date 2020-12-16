@@ -1,11 +1,20 @@
 package com.example.ticketplease;
 
 import android.content.Context;
+import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.Toast;
 
+import com.squareup.picasso.Picasso;
+
+import java.io.InputStream;
+import java.net.HttpURLConnection;
+import java.net.URL;
 import java.util.ArrayList;
 
 public class ProfileListView extends BaseAdapter {
@@ -53,10 +62,16 @@ public class ProfileListView extends BaseAdapter {
         final ProfileFilmListItem products = getItem(position);
 
         listViewHolder.title.setText(products.Title);
-        listViewHolder.poster.setImageResource(products.Poster);
+        Picasso.get().load(products.Poster).into(listViewHolder.poster);
         listViewHolder.description.setText(products.Description);
-
-
+        row.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(context, DescriptionActivity.class);
+                intent.putExtra("Movie_title", products.Title);
+                context.startActivity(intent);
+            }
+        });
         return row;
     }
 }
