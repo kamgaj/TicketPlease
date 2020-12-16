@@ -2,6 +2,8 @@ package com.example.ticketplease;
 
 
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
@@ -99,7 +101,8 @@ public class HomeActivity extends AppCompatActivity {
                     public void onComplete(@NonNull Task<QuerySnapshot> task) {
                         if(task.isSuccessful()) {
                             for(QueryDocumentSnapshot document : Objects.requireNonNull(task.getResult())) {
-                                filmsArray.add(new HomeFilmListItem(document.getString("Title"), 5.50, R.drawable.film_poster));
+                                String path = document.getString("Poster_link");
+                                filmsArray.add(new HomeFilmListItem(document.getString("Title"), 5.50, path));
                             }
                             LinearLayout linearLayout;
                             linearLayout = findViewById(R.id.FilmsLinearLayout);
@@ -124,7 +127,8 @@ public class HomeActivity extends AppCompatActivity {
                     public void onComplete(@NonNull Task<QuerySnapshot> task) {
                         if(task.isSuccessful()) {
                             for(QueryDocumentSnapshot document : Objects.requireNonNull(task.getResult())) {
-                                filmsArray2.add(new HomeFilmListItem(document.getString("Title"), 5.50, R.drawable.film_poster));
+                                String path = document.getString("Poster_link");
+                                filmsArray2.add(new HomeFilmListItem(document.getString("Title"), 5.50, path));
                             }
                             LinearLayout linearLayout2;
                             linearLayout2 = findViewById(R.id.bestReviewsFilmsLinearLayout);
@@ -148,7 +152,8 @@ public class HomeActivity extends AppCompatActivity {
                     public void onComplete(@NonNull Task<QuerySnapshot> task) {
                         if(task.isSuccessful()) {
                             for(QueryDocumentSnapshot document : Objects.requireNonNull(task.getResult())) {
-                                filmsArray3.add(new HomeFilmListItem(document.getString("Title"), 5.50, R.drawable.film_poster));
+                                String path = document.getString("Poster_link");
+                                filmsArray3.add(new HomeFilmListItem(document.getString("Title"), 5.50, path));
                             }
                             LinearLayout linearLayout3;
                             linearLayout3 = findViewById(R.id.DiscountsLinearLayout);
@@ -169,11 +174,29 @@ public class HomeActivity extends AppCompatActivity {
             TextView price = view.findViewById(R.id.Price);
             ImageView poster = view.findViewById(R.id.Poster);
             title.setText(listFilms.get(i).Title);
-            poster.setImageResource(listFilms.get(i).Poster);
             price.setText(String.valueOf(listFilms.get(i).Price));
+
+            FirebaseStorage storage = FirebaseStorage.getInstance();
+
+            StorageReference ref = storage.getReferenceFromUrl(listFilms.get(i).pathToPoster);
+            ref.getBytes(1024 * 1024).addOnSuccessListener(new OnSuccessListener<byte[]>() {
+                @Override
+                public void onSuccess(byte[] bytes) {
+                    Bitmap bitmap = BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
+                    poster.setImageBitmap(bitmap);
+                }
+            });
 
             int finalI = i;
             poster.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent intent = new Intent(HomeActivity.this, DescriptionActivity.class);
+                    intent.putExtra("Movie_title", listFilms.get(finalI).Title);
+                    startActivity(intent);
+                }
+            });
+            title.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     Intent intent = new Intent(HomeActivity.this, DescriptionActivity.class);
