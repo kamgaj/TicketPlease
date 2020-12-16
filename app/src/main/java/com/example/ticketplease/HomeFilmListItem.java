@@ -3,10 +3,10 @@ package com.example.ticketplease;
 public class HomeFilmListItem {
     String Title;
     Double Price;
-    int Poster;
-    HomeFilmListItem(String T, Double Pr, int P){
+    String pathToPoster;
+    HomeFilmListItem(String T, Double Pr, String P){
         Title=T;
         Price=Pr;
-        Poster=P;
+        pathToPoster=P;
     }
 }
