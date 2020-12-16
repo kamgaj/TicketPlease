@@ -171,10 +171,14 @@ public class HomeActivity extends AppCompatActivity {
             title.setText(listFilms.get(i).Title);
             poster.setImageResource(listFilms.get(i).Poster);
             price.setText(String.valueOf(listFilms.get(i).Price));
-            view.setOnClickListener(new View.OnClickListener() {
+
+            int finalI = i;
+            poster.setOnClickListener(new View.OnClickListener() {
                 @Override
-                public void onClick(View view) {
-                    startActivity(new Intent(HomeActivity.this, DescriptionActivity.class));
+                public void onClick(View v) {
+                    Intent intent = new Intent(HomeActivity.this, DescriptionActivity.class);
+                    intent.putExtra("Movie_title", listFilms.get(finalI).Title);
+                    startActivity(intent);
                 }
             });
             linearLayout.addView(view);
