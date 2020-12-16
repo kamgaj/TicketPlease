@@ -181,6 +181,14 @@ public class HomeActivity extends AppCompatActivity {
                     startActivity(intent);
                 }
             });
+            title.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent intent = new Intent(HomeActivity.this, DescriptionActivity.class);
+                    intent.putExtra("Movie_title", listFilms.get(finalI).Title);
+                    startActivity(intent);
+                }
+            });
             linearLayout.addView(view);
         }
     }
