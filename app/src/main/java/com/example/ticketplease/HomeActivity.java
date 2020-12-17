@@ -42,7 +42,7 @@ import java.util.Objects;
 public class HomeActivity extends AppCompatActivity {
     ArrayList<HomeFilmListItem> filmsArray = new ArrayList<>();
     ArrayList<HomeFilmListItem> filmsArray2 = new ArrayList<>();
-    ArrayList<HomeFilmListItem> filmsArray3 = new ArrayList<>();
+    ArrayList<HomeFilmListItem> discountsArray = new ArrayList<>();
     private FirebaseFirestore db= FirebaseFirestore.getInstance();
     private CollectionReference collectionRef;
     private StorageReference storageReference;
@@ -83,7 +83,7 @@ public class HomeActivity extends AppCompatActivity {
         //Displaying Movies
         getNewestFilms();
         getTopRatedFilms();
-        getDiscountedFilms();
+        getDiscounts();
 
 
     }
@@ -102,7 +102,7 @@ public class HomeActivity extends AppCompatActivity {
                         if(task.isSuccessful()) {
                             for(QueryDocumentSnapshot document : Objects.requireNonNull(task.getResult())) {
                                 String path = document.getString("Poster_link");
-                                filmsArray.add(new HomeFilmListItem(document.getString("Title"), 5.50, path));
+                                filmsArray.add(new HomeFilmListItem(document.getString("Title"),  path));
                             }
                             LinearLayout linearLayout;
                             linearLayout = findViewById(R.id.FilmsLinearLayout);
@@ -128,7 +128,7 @@ public class HomeActivity extends AppCompatActivity {
                         if(task.isSuccessful()) {
                             for(QueryDocumentSnapshot document : Objects.requireNonNull(task.getResult())) {
                                 String path = document.getString("Poster_link");
-                                filmsArray2.add(new HomeFilmListItem(document.getString("Title"), 5.50, path));
+                                filmsArray2.add(new HomeFilmListItem(document.getString("Title"),  path));
                             }
                             LinearLayout linearLayout2;
                             linearLayout2 = findViewById(R.id.bestReviewsFilmsLinearLayout);
@@ -140,7 +140,7 @@ public class HomeActivity extends AppCompatActivity {
                 });
     }
 
-    private void getDiscountedFilms() {
+    private void getDiscounts() {
         storageReference = FirebaseStorage.getInstance().getReference();
         collectionRef = db.collection("Movies");
 
@@ -153,11 +153,11 @@ public class HomeActivity extends AppCompatActivity {
                         if(task.isSuccessful()) {
                             for(QueryDocumentSnapshot document : Objects.requireNonNull(task.getResult())) {
                                 String path = document.getString("Poster_link");
-                                filmsArray3.add(new HomeFilmListItem(document.getString("Title"), 5.50, path));
+                                discountsArray.add(new HomeFilmListItem(document.getString("Title"),  path));
                             }
                             LinearLayout linearLayout3;
                             linearLayout3 = findViewById(R.id.DiscountsLinearLayout);
-                            addToView(filmsArray3,linearLayout3);
+                            addToViewDiscount(discountsArray,linearLayout3);
                         } else {
                             Log.d(TAG, "Error getting documents: ", task.getException());
                         }
@@ -171,10 +171,8 @@ public class HomeActivity extends AppCompatActivity {
         for (int i = 0; i < listFilms.size(); i++) {
             View view = layoutInflater.inflate(R.layout.home_page_item, linearLayout, false);
             TextView title = view.findViewById(R.id.MovieTitle);
-            TextView price = view.findViewById(R.id.Price);
             ImageView poster = view.findViewById(R.id.Poster);
             title.setText(listFilms.get(i).Title);
-            price.setText(String.valueOf(listFilms.get(i).Price));
 
             FirebaseStorage storage = FirebaseStorage.getInstance();
 
@@ -201,6 +199,45 @@ public class HomeActivity extends AppCompatActivity {
                 public void onClick(View v) {
                     Intent intent = new Intent(HomeActivity.this, DescriptionActivity.class);
                     intent.putExtra("Movie_title", listFilms.get(finalI).Title);
+                    startActivity(intent);
+                }
+            });
+            linearLayout.addView(view);
+        }
+    }
+    public void addToViewDiscount(ArrayList<HomeFilmListItem> listDiscounts, LinearLayout linearLayout) {
+        LayoutInflater layoutInflater = LayoutInflater.from(this);
+        for (int i = 0; i < listDiscounts.size(); i++) {
+            View view = layoutInflater.inflate(R.layout.home_page_item, linearLayout, false);
+            TextView title = view.findViewById(R.id.MovieTitle);
+            ImageView poster = view.findViewById(R.id.Poster);
+            title.setText(listDiscounts.get(i).Title);
+
+            FirebaseStorage storage = FirebaseStorage.getInstance();
+
+            StorageReference ref = storage.getReferenceFromUrl(listDiscounts.get(i).pathToPoster);
+            ref.getBytes(1024 * 1024).addOnSuccessListener(new OnSuccessListener<byte[]>() {
+                @Override
+                public void onSuccess(byte[] bytes) {
+                    Bitmap bitmap = BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
+                    poster.setImageBitmap(bitmap);
+                }
+            });
+
+            int finalI = i;
+            poster.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent intent = new Intent(HomeActivity.this, DiscountActivity.class);
+                    intent.putExtra("Discount_title", listDiscounts.get(finalI).Title);
+                    startActivity(intent);
+                }
+            });
+            title.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent intent = new Intent(HomeActivity.this, DiscountActivity.class);
+                    intent.putExtra("Movie_title", listDiscounts.get(finalI).Title);
                     startActivity(intent);
                 }
             });

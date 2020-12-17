@@ -17,6 +17,7 @@
 <!--        <activity android:name=".HomeActivity" />-->
         <activity android:name=".BookingActivity" />
         <activity android:name=".DescriptionActivity" />
+        <activity android:name=".DiscountActivity" />
         <activity android:name=".ProfileActivity" />
         <activity android:name=".SearchActivity" />
         <activity android:name=".TicketActivity" />
