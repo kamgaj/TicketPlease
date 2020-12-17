@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -12,6 +13,16 @@ public class SummaryActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.summary_page);
+        String numberOfTickets = getIntent().getStringExtra("Tickets");
+        TextView text = findViewById(R.id.NumberOfTickets);
+
+        if(numberOfTickets.equals("2")||numberOfTickets.equals("3")||numberOfTickets.equals("4")) {
+            text.setText("Kupiłeś "+ numberOfTickets + " bilety");
+        } else if(numberOfTickets.equals("1")){
+            text.setText("Kupiłeś 1 bilet");
+        }else  {
+            text.setText("Kupiłeś "+ numberOfTickets +" biletów");
+        }
 
         Button ok;
         ok = findViewById(R.id.chip6);
