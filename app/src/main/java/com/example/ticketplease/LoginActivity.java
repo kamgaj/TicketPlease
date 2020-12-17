@@ -4,6 +4,7 @@ import android.app.Dialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
@@ -122,8 +123,16 @@ public class LoginActivity extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-        super.onBackPressed();
-//        moveTaskToBack(false);
-        //Zwrocic jakis response code i jesli kody się zgadzją to nie mozna sie cofnac
+
+        int requestCode = getIntent().getIntExtra("logoutCode", 1234);
+        Log.d("RESPONSE: ", String.valueOf(requestCode));
+        if(requestCode == 2137) {
+            Intent startMain = new Intent(Intent.ACTION_MAIN);
+            startMain.addCategory(Intent.CATEGORY_HOME);
+            startMain.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            startActivity(startMain);
+        }else {
+            super.onBackPressed();
+        }
     }
 }
