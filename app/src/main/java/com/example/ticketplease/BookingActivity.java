@@ -84,7 +84,6 @@ public class BookingActivity  extends AppCompatActivity {
         }
         for(int i=0;i<alreadyBooked.size();i++){
             buttons.get(alreadyBooked.get(i)).setEnabled(false);
-            Toast.makeText(getApplicationContext(), String.valueOf(alreadyBooked.get(i)), Toast.LENGTH_LONG).show();
             buttons.get(alreadyBooked.get(i)).setBackgroundColor(getResources().getColor(R.color.mainColor));
         }
     }
