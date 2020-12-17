@@ -65,13 +65,13 @@ public class BookingActivity  extends AppCompatActivity {
                         if(button.getTag()=="1"){
                             button.setBackgroundColor(getResources().getColor(R.color.white));
                             button.setTag("0");
-                            userChoice.remove(String.valueOf(finalI +5* finalJ));
+                            userChoice.remove(String.valueOf(7*finalI + finalJ));
                             tickets--;
 
                         }else {
                             button.setBackgroundColor(getResources().getColor(R.color.black));
                             button.setTag("1");
-                            userChoice.add(String.valueOf(finalI +5* finalJ));
+                            userChoice.add(String.valueOf(7*finalI + finalJ));
                             tickets++;
                         }
                     }
@@ -84,6 +84,7 @@ public class BookingActivity  extends AppCompatActivity {
         }
         for(int i=0;i<alreadyBooked.size();i++){
             buttons.get(alreadyBooked.get(i)).setEnabled(false);
+            Toast.makeText(getApplicationContext(), String.valueOf(alreadyBooked.get(i)), Toast.LENGTH_LONG).show();
             buttons.get(alreadyBooked.get(i)).setBackgroundColor(getResources().getColor(R.color.mainColor));
         }
     }
