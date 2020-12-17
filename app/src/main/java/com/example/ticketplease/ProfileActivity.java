@@ -10,6 +10,7 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.ListAdapter;
 import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -21,7 +22,6 @@ import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
@@ -36,6 +36,19 @@ import java.util.Objects;
 
 public class ProfileActivity extends AppCompatActivity {
 
+    private FirebaseAuth firebaseAuth;
+    FirebaseAuth.AuthStateListener authStateListener = new FirebaseAuth.AuthStateListener() {
+        @Override
+        public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
+            if (firebaseAuth.getCurrentUser() == null){
+                //Do anything here which needs to be done after signout is complete
+                Intent logoutIntent = new Intent(ProfileActivity.this,LoginActivity.class);
+                logoutIntent.putExtra("logoutCode", 2137);
+                startActivity(logoutIntent);
+            }
+
+        }
+    };
     private StorageReference storageReference;
     private String uID;
     private ImageView profilePicture;
@@ -46,6 +59,18 @@ public class ProfileActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.profile_page);
+
+
+        firebaseAuth = FirebaseAuth.getInstance();
+        firebaseAuth.addAuthStateListener(authStateListener);
+        TextView logout = findViewById(R.id.logoutButton);
+        logout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                firebaseAuth.signOut();
+
+            }
+        });
 
         FirebaseAuth mFirebaseAuth = FirebaseAuth.getInstance();
         storageReference = FirebaseStorage.getInstance().getReference();
@@ -160,7 +185,10 @@ public class ProfileActivity extends AppCompatActivity {
         films.setAdapter(listAdapter);
     }
 
-    public void logout(View view){
-        startActivity(new Intent(ProfileActivity.this,LoginActivity.class));
-    }
+//    public void logout(View view){
+//        FirebaseAuth.getInstance().signOut();
+//        Intent logoutIntent = new Intent(ProfileActivity.this,LoginActivity.class);
+//        logoutIntent.putExtra("logoutCode", 2137);
+//        startActivity(logoutIntent);
+//    }
 }

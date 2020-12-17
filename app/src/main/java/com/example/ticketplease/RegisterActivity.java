@@ -110,7 +110,9 @@ public class RegisterActivity extends AppCompatActivity {
                             public void onSuccess(Void aVoid) {
                                 Toast.makeText(RegisterActivity.this, getString(R.string.VerificationEmailSent), Toast.LENGTH_LONG).show();
                                 FirebaseUser firebaseUser = mFirebaseAuth.getCurrentUser();
-                                startActivity(new Intent(RegisterActivity.this, LoginActivity.class));
+                                Intent goToHome = new Intent(RegisterActivity.this, HomeActivity.class);
+                                goToHome.putExtra("disableBackButton", 7312);
+                                startActivity(goToHome);
                             }
                         }).addOnFailureListener(new OnFailureListener() {
                             @Override

@@ -44,8 +44,7 @@ public class HomeActivity extends AppCompatActivity {
     ArrayList<HomeFilmListItem> filmsArray2 = new ArrayList<>();
     ArrayList<HomeFilmListItem> discountsArray = new ArrayList<>();
     private FirebaseFirestore db= FirebaseFirestore.getInstance();
-    private CollectionReference collectionRef;
-    private StorageReference storageReference;
+
     private static final String TAG = "HomeActivity";
 
     @Override
@@ -89,8 +88,6 @@ public class HomeActivity extends AppCompatActivity {
     }
 
     private void getNewestFilms() {
-        storageReference = FirebaseStorage.getInstance().getReference();
-        collectionRef = db.collection("Movies");
 
         db.collection("Movies")
                 .orderBy("Release_date", Query.Direction.DESCENDING)
@@ -115,8 +112,6 @@ public class HomeActivity extends AppCompatActivity {
     }
 
     private void getTopRatedFilms() {
-        storageReference = FirebaseStorage.getInstance().getReference();
-        collectionRef = db.collection("Movies");
 
         db.collection("Movies")
                 .orderBy("Rating", Query.Direction.DESCENDING)
@@ -141,8 +136,6 @@ public class HomeActivity extends AppCompatActivity {
     }
 
     private void getDiscounts() {
-        storageReference = FirebaseStorage.getInstance().getReference();
-        collectionRef = db.collection("Movies");
 
         db.collection("Discounts")
                 .limit(10)
@@ -242,6 +235,21 @@ public class HomeActivity extends AppCompatActivity {
                 }
             });
             linearLayout.addView(view);
+        }
+    }
+
+    @Override
+    public void onBackPressed() {
+
+        int requestCode = getIntent().getIntExtra("disableBackButton", 1234);
+
+        if(requestCode == 7312) {
+            Intent startMain = new Intent(Intent.ACTION_MAIN);
+            startMain.addCategory(Intent.CATEGORY_HOME);
+            startMain.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            startActivity(startMain);
+        }else {
+            super.onBackPressed();
         }
     }
 
