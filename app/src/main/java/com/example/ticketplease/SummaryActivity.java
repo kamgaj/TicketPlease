@@ -16,12 +16,12 @@ public class SummaryActivity extends AppCompatActivity {
         String numberOfTickets = getIntent().getStringExtra("Tickets");
         TextView text = findViewById(R.id.NumberOfTickets);
 
-        if(numberOfTickets.equals("0")) {
-            text.setText("Kupiłeś 0 biletów");
+        if(numberOfTickets.equals("2")||numberOfTickets.equals("3")||numberOfTickets.equals("4")) {
+            text.setText("Kupiłeś "+ numberOfTickets + " bilety");
         } else if(numberOfTickets.equals("1")){
             text.setText("Kupiłeś 1 bilet");
         }else  {
-            text.setText("Kupiłeś "+ numberOfTickets + " bilety");
+            text.setText("Kupiłeś "+ numberOfTickets +" biletów");
         }
 
         Button ok;
