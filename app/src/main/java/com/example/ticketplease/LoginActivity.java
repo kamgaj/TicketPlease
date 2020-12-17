@@ -120,6 +120,10 @@ public class LoginActivity extends AppCompatActivity {
         startActivity(new Intent(LoginActivity.this, RegisterActivity.class));
     }
 
-
-
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+//        moveTaskToBack(false);
+        //Zwrocic jakis response code i jesli kody się zgadzją to nie mozna sie cofnac
+    }
 }

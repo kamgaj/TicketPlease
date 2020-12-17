@@ -144,7 +144,7 @@ public class HomeActivity extends AppCompatActivity {
         storageReference = FirebaseStorage.getInstance().getReference();
         collectionRef = db.collection("Movies");
 
-        db.collection("Movies")
+        db.collection("Discounts")
                 .limit(10)
                 .get()
                 .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
@@ -152,7 +152,7 @@ public class HomeActivity extends AppCompatActivity {
                     public void onComplete(@NonNull Task<QuerySnapshot> task) {
                         if(task.isSuccessful()) {
                             for(QueryDocumentSnapshot document : Objects.requireNonNull(task.getResult())) {
-                                String path = document.getString("Poster_link");
+                                String path = document.getString("Image_link");
                                 discountsArray.add(new HomeFilmListItem(document.getString("Title"),  path));
                             }
                             LinearLayout linearLayout3;
