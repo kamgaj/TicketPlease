@@ -27,7 +27,7 @@ import java.util.Objects;
 
 public class DescriptionActivity extends AppCompatActivity {
 
-
+    int x=0;
     StorageReference ref;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,6 +35,7 @@ public class DescriptionActivity extends AppCompatActivity {
         setContentView(R.layout.description);
         TextView title = findViewById(R.id.titleText);
         String titleFromIntent = getIntent().getStringExtra("Movie_title");
+        x = getIntent().getIntExtra("From_where",0);
         title.setText(titleFromIntent);
         TextView description = findViewById(R.id.descriptionText);
         TextView genres = findViewById(R.id.genreText);
@@ -51,8 +52,8 @@ public class DescriptionActivity extends AppCompatActivity {
             }
         });
     }
-    public void goToSearch(View view) {
-        startActivity(new Intent(DescriptionActivity.this, SearchActivity.class));
+    public void returnToPreviousScreen(View view) {
+        finish();
     }
 
     private void getMovieFromFirebase(String movieTitle, TextView tvDesc, TextView genres, ImageView poster) {

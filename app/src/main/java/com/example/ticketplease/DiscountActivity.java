@@ -40,8 +40,8 @@ public class DiscountActivity extends AppCompatActivity {
 
 
     }
-    public void goToSearch(View view) {
-        startActivity(new Intent(DiscountActivity.this, SearchActivity.class));
+    public void CloseDiscount(View view){
+        finish();
     }
 
     private void getDiscountFromFirebase(String discountTitle, TextView tvDesc, ImageView discountImage) {

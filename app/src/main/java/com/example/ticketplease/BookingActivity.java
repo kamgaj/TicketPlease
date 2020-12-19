@@ -27,7 +27,7 @@ public class BookingActivity  extends AppCompatActivity {
         buttonNext.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Toast.makeText(getApplicationContext(), String.valueOf(tickets)+"  i   "+userChoice.toString(), Toast.LENGTH_LONG).show();
+                //Toast.makeText(getApplicationContext(), String.valueOf(tickets)+"  i   "+userChoice.toString(), Toast.LENGTH_LONG).show();
 
                 Intent intent = new Intent(BookingActivity.this, SummaryActivity.class);
                 intent.putExtra("Tickets", String.valueOf(tickets));
@@ -37,9 +37,6 @@ public class BookingActivity  extends AppCompatActivity {
         AddBookedBefore();
         addButtons();
 
-    }
-    public void descriptionFromBooking(View view){
-        startActivity(new Intent(BookingActivity.this,DescriptionActivity.class));
     }
     void addButtons(){
         LinearLayout linearLayout;
