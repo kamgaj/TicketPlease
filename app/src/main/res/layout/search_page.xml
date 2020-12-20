@@ -42,7 +42,7 @@
             android:background="@drawable/toggle_widget_background"
             android:button="@null"
             android:gravity="center"
-            android:text="@string/search"
+            android:text="@string/tytu"
             android:textColor="@drawable/radiobutton_text_colors" />
 
         <RadioButton
@@ -57,7 +57,7 @@
             android:button="@null"
             android:checked="false"
             android:gravity="center"
-            android:text="@string/offers"
+            android:text="@string/gatunek"
             android:textColor="@drawable/radiobutton_text_colors" />
     </RadioGroup>
     <androidx.appcompat.widget.Toolbar
