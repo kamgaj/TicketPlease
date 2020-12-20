@@ -82,7 +82,7 @@
         android:contentDescription="@string/profile_button" />
 
     <TextView
-        android:id="@+id/NickName"
+        android:id="@+id/Summary"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/podsumowanie"
@@ -94,7 +94,7 @@
         app:layout_constraintTop_toTopOf="@+id/toolbarUP" />
 
     <TextView
-        android:id="@+id/tutulFilmu"
+        android:id="@+id/NumberOfTickets"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="32dp"
@@ -115,7 +115,7 @@
         android:textSize="16sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tutulFilmu" />
+        app:layout_constraintTop_toBottomOf="@+id/NumberOfTickets" />
 
     <TextView
         android:id="@+id/numberOfTickets"

@@ -7,11 +7,10 @@ import android.os.Bundle;
 import android.provider.MediaStore;
 import android.util.Log;
 import android.view.View;
-import android.widget.ArrayAdapter;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.ListAdapter;
 import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -23,7 +22,6 @@ import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
@@ -33,23 +31,46 @@ import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 import com.squareup.picasso.Picasso;
 
-import java.text.DateFormatSymbols;
 import java.util.ArrayList;
 import java.util.Objects;
 
 public class ProfileActivity extends AppCompatActivity {
 
+    private FirebaseAuth firebaseAuth;
+    FirebaseAuth.AuthStateListener authStateListener = new FirebaseAuth.AuthStateListener() {
+        @Override
+        public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
+            if (firebaseAuth.getCurrentUser() == null){
+                //Do anything here which needs to be done after signout is complete
+                Intent logoutIntent = new Intent(ProfileActivity.this,LoginActivity.class);
+                logoutIntent.putExtra("logoutCode", 2137);
+                startActivity(logoutIntent);
+            }
+
+        }
+    };
     private StorageReference storageReference;
     private String uID;
     private ImageView profilePicture;
     private FirebaseFirestore db= FirebaseFirestore.getInstance();
-    private CollectionReference collectionRef;
 
     ArrayList<ProfileFilmListItem> filmsArray = new ArrayList<>();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.profile_page);
+
+
+        firebaseAuth = FirebaseAuth.getInstance();
+        firebaseAuth.addAuthStateListener(authStateListener);
+        TextView logout = findViewById(R.id.logoutButton);
+        logout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                firebaseAuth.signOut();
+
+            }
+        });
 
         FirebaseAuth mFirebaseAuth = FirebaseAuth.getInstance();
         storageReference = FirebaseStorage.getInstance().getReference();
@@ -88,16 +109,10 @@ public class ProfileActivity extends AppCompatActivity {
                 startActivity(new Intent(ProfileActivity.this, HomeActivity.class));
             }
         });
-        /*ListView films;
-        String[] Titles;
-        films=findViewById(R.id.ListFilms);
-        Titles = new DateFormatSymbols().getMonths();
-        ArrayAdapter<String> titlesArray = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1,Titles);
-        films.setAdapter(titlesArray);*/
-        //getFilms();
+
         getNewestFilms();
 
-        //Tu zaczyna sie moja porazka xD
+
         profilePicture = findViewById(R.id.ProfilePicture);
         profilePicture.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -141,7 +156,6 @@ public class ProfileActivity extends AppCompatActivity {
     }
     private void getNewestFilms() {
         storageReference = FirebaseStorage.getInstance().getReference();
-        collectionRef = db.collection("Movies");
 
         db.collection("Movies")
                 .orderBy("Release_date", Query.Direction.DESCENDING)
@@ -170,15 +184,11 @@ public class ProfileActivity extends AppCompatActivity {
         listAdapter = new ProfileListView(this,filmsArray);
         films.setAdapter(listAdapter);
     }
-    private void getFilms() {
-        /*filmsArray.add(new ProfileFilmListItem("Czarny ekran","Film bez wizji",R.drawable.small_poster));
-        filmsArray.add(new ProfileFilmListItem("Czarny ekran 2","Film bez wizji. Kolejna część oscarowej produkcji",R.drawable.small_poster));
-        filmsArray.add(new ProfileFilmListItem("Czarny ekran 3","Film bez wizji. Niektórzy myślą, że to cały czas pierwsza część",R.drawable.small_poster));
-        filmsArray.add(new ProfileFilmListItem("Czarny ekran 4","Film bez wizji. Niektórzy myślą, że to cały czas pierwsza część",R.drawable.small_poster));
-        filmsArray.add(new ProfileFilmListItem("Czarny ekran 5","Film bez wizji. Niektórzy myślą, że to cały czas pierwsza część",R.drawable.small_poster));
-        filmsArray.add(new ProfileFilmListItem("Czarny ekran 6","Film bez wizji. Niektórzy myślą, że to cały czas pierwsza część",R.drawable.small_poster));*/
-    }
-    public void logout(View view){
-        startActivity(new Intent(ProfileActivity.this,LoginActivity.class));
-    }
+
+//    public void logout(View view){
+//        FirebaseAuth.getInstance().signOut();
+//        Intent logoutIntent = new Intent(ProfileActivity.this,LoginActivity.class);
+//        logoutIntent.putExtra("logoutCode", 2137);
+//        startActivity(logoutIntent);
+//    }
 }
