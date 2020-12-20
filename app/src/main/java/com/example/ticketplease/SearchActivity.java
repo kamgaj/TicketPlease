@@ -60,9 +60,9 @@ public class SearchActivity extends AppCompatActivity {
         boolean isSearchPressed=true;
         //String[] Titles;
         searchView=findViewById(R.id.searchListView);
-        String Titles[] = {"Title","Title2","Title3","Title4","Title5","Title6","Title7","Title8","Title9","Title10","Title11","Title12"};
+        String Titles[] = {"Tytuł","Tytuł2","Tytuł3","Tytuł4","Tytuł5","Tytuł6","Tytuł7","Tytuł8","Tytuł9","Tytuł10","Tytuł11","Tytuł12"};
         ArrayAdapter<String> titlesArray = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1,Titles);
-        String Offers[] = {"Offer","Offer2","Offer3","Offer4","Offer5","Offer6","Offer7","Offer8","Offer9","Offer10","Offer11","Offer12"};
+        String Offers[] = {"Tytuł z gatunku","Tytuł2 z gatunku","Tytuł3 z gatunku","Tytuł4 z gatunku","Tytuł5 z gatunku","Tytuł6 z gatunku","Tytuł7 z gatunku","Tytuł8 z gatunku","Tytuł9 z gatunku","Tytuł10 z gatunku","Tytuł11 z gatunku","Tytuł12 z gatunku"};
         ArrayAdapter<String> offersArray = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1,Offers);
         searchView.setAdapter(offersArray);
         /*searchView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
