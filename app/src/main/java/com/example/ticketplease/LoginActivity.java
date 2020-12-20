@@ -4,6 +4,7 @@ import android.app.Dialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
@@ -68,8 +69,9 @@ public class LoginActivity extends AppCompatActivity {
                                 if(user.isEmailVerified()) {
                                     //if everything is ok we go to the MainActivity
                                     if (task.isSuccessful()) {
-                                        startActivity(new Intent(LoginActivity.this, HomeActivity.class));
-                                       // startActivity(new Intent(LoginActivity.this, MainActivity.class));
+                                        Intent goToHome = new Intent(LoginActivity.this, HomeActivity.class);
+                                        goToHome.putExtra("disableBackButton", 7312);
+                                        startActivity(goToHome);
                                     }
                                     //if not then we got an Error Toast
                                     else {
@@ -120,6 +122,18 @@ public class LoginActivity extends AppCompatActivity {
         startActivity(new Intent(LoginActivity.this, RegisterActivity.class));
     }
 
+    @Override
+    public void onBackPressed() {
 
-
+        int requestCode = getIntent().getIntExtra("logoutCode", 1234);
+        Log.d("RESPONSE: ", String.valueOf(requestCode));
+        if(requestCode == 2137) {
+            Intent startMain = new Intent(Intent.ACTION_MAIN);
+            startMain.addCategory(Intent.CATEGORY_HOME);
+            startMain.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            startActivity(startMain);
+        }else {
+            super.onBackPressed();
+        }
+    }
 }

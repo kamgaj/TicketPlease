@@ -7,7 +7,6 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -20,7 +19,6 @@ import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
-import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -29,9 +27,7 @@ import java.util.Objects;
 
 public class DescriptionActivity extends AppCompatActivity {
 
-    FirebaseStorage firebaseStorage;
-    StorageReference storageReference;
-
+    int x=0;
     StorageReference ref;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,12 +35,13 @@ public class DescriptionActivity extends AppCompatActivity {
         setContentView(R.layout.description);
         TextView title = findViewById(R.id.titleText);
         String titleFromIntent = getIntent().getStringExtra("Movie_title");
+        x = getIntent().getIntExtra("From_where",0);
         title.setText(titleFromIntent);
         TextView description = findViewById(R.id.descriptionText);
         TextView genres = findViewById(R.id.genreText);
         ImageView moviePoster = findViewById(R.id.filmPoster);
 
-        getEntryFromFirebase(titleFromIntent, description, genres, moviePoster);
+        getMovieFromFirebase(titleFromIntent, description, genres, moviePoster);
 
         ImageView BuyTicket;
         BuyTicket = (ImageView) findViewById(R.id.BuyTicketButton);
@@ -55,11 +52,11 @@ public class DescriptionActivity extends AppCompatActivity {
             }
         });
     }
-    public void goToSearch(View view) {
-        startActivity(new Intent(DescriptionActivity.this, SearchActivity.class));
+    public void returnToPreviousScreen(View view) {
+        finish();
     }
 
-    private void getEntryFromFirebase(String movieTitle, TextView tvDesc, TextView genres, ImageView poster) {
+    private void getMovieFromFirebase(String movieTitle, TextView tvDesc, TextView genres, ImageView poster) {
         FirebaseFirestore db= FirebaseFirestore.getInstance();
         List<String> genresList = new ArrayList<>();
 
@@ -98,4 +95,5 @@ public class DescriptionActivity extends AppCompatActivity {
                     }
                 });
     }
+
 }
