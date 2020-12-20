@@ -8,8 +8,10 @@ import android.provider.MediaStore;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ListAdapter;
 import android.widget.ListView;
+import android.widget.RadioButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -121,6 +123,23 @@ public class ProfileActivity extends AppCompatActivity {
                 startActivityForResult(openGaleryIntent, 2137);
             }
         });
+
+        RadioButton Watched = (RadioButton) findViewById(R.id.watched);
+        Watched.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                filmsArray.clear();
+                getNewestFilms();
+            }
+        });
+        RadioButton Booked = (RadioButton) findViewById(R.id.booked);
+        Booked.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                filmsArray.clear();
+                getTopRatedFilms();
+            }
+        });
     }
 
     @Override
@@ -173,6 +192,27 @@ public class ProfileActivity extends AppCompatActivity {
                             PrintWatched();
                         } else {
                             Log.d("ProfilePage", "Error getting documents: ", task.getException());
+                        }
+                    }
+                });
+    }
+        private void getTopRatedFilms() {
+
+        db.collection("Movies")
+                .orderBy("Rating", Query.Direction.DESCENDING)
+                .limit(10)
+                .get()
+                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                        if(task.isSuccessful()) {
+                            for(QueryDocumentSnapshot document : Objects.requireNonNull(task.getResult())) {
+                                String path = document.getString("Poster_link");
+                                filmsArray.add(new ProfileFilmListItem(document.getString("Title"), document.getString("Description"), path));
+                            }
+                            PrintWatched();
+                        } else {
+                            Log.d("ProfilePage2", "Error getting documents: ", task.getException());
                         }
                     }
                 });

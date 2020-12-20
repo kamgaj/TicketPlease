@@ -13,14 +13,14 @@
         android:layout_height="47dp"
         android:layout_marginTop="18dp"
         android:background="@drawable/color_out_line"
-        android:checkedButton="@+id/offer"
+        android:checkedButton="@+id/booked"
         android:orientation="horizontal"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/NickName">
 
         <RadioButton
-            android:id="@+id/search"
+            android:id="@+id/watched"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_marginStart="1dp"
@@ -34,7 +34,7 @@
             android:textColor="@drawable/radiobutton_text_colors" />
 
         <RadioButton
-            android:id="@+id/offer"
+            android:id="@+id/booked"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_marginTop="1dp"
