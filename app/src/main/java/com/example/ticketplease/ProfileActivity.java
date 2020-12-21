@@ -112,7 +112,7 @@ public class ProfileActivity extends AppCompatActivity {
             }
         });
 
-        getNewestFilms();
+        getTopRatedFilms();
 
 
         profilePicture = findViewById(R.id.ProfilePicture);
