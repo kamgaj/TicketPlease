@@ -62,7 +62,7 @@ public class BookingActivity  extends AppCompatActivity {
                     @Override
                     public void onDateSet(DatePicker datePicker, int i, int i1, int i2) {
                         calendar.set(i,i1,i2);
-                        readyDate = String.valueOf(i2)+"."+String.valueOf(i1)+"."+String.valueOf(i);
+                        readyDate = String.valueOf(i2)+"."+String.valueOf(i1+1)+"."+String.valueOf(i);
                         date.setHint(readyDate);
                     }
                 }, day,month,year);
