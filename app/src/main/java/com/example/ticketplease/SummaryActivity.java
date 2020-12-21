@@ -35,4 +35,9 @@ public class SummaryActivity extends AppCompatActivity {
             }
         });
     }
+
+    @Override
+    public void onBackPressed() {
+        startActivity(new Intent(SummaryActivity.this,HomeActivity.class));
+    }
 }
