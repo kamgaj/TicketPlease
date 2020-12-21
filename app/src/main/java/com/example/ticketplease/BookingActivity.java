@@ -29,7 +29,7 @@ public class BookingActivity  extends AppCompatActivity {
     List<String> cinema=new ArrayList<>();
     List<String> technology=new ArrayList<>();
     Calendar calendar=Calendar.getInstance();
-    String readyDate=String.valueOf(calendar.get(calendar.DAY_OF_MONTH))+"."+String.valueOf(calendar.get(calendar.MONTH))+"."+String.valueOf(calendar.get(calendar.YEAR));
+    String readyDate=String.valueOf(calendar.get(calendar.DAY_OF_MONTH))+"."+String.valueOf(calendar.get(calendar.MONTH)+1)+"."+String.valueOf(calendar.get(calendar.YEAR));
     int tickets=0;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
