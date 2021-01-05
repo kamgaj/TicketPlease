@@ -11,11 +11,26 @@
         android:layout_width="343dp"
         android:layout_height="50dp"
         android:layout_marginTop="20dp"
-        android:hint="@string/szukaj"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/toolbarUP" />
 
+
+    <EditText
+        android:id="@+id/SearchTextList"
+        android:layout_width="302dp"
+        android:layout_height="45dp"
+        android:layout_marginStart="24dp"
+        android:layout_marginEnd="24dp"
+        android:layout_marginBottom="6dp"
+        android:layout_weight="1"
+        android:ems="10"
+        android:hint="@string/szukaj"
+        android:inputType="textPersonName"
+        app:layout_constraintBottom_toBottomOf="@+id/chip5"
+        app:layout_constraintEnd_toEndOf="@+id/chip5"
+        app:layout_constraintStart_toStartOf="@+id/chip5"
+        app:layout_constraintTop_toTopOf="@+id/chip5" />
 
     <RadioGroup
         android:id="@+id/toggleProfile"
@@ -145,12 +160,13 @@
         app:layout_constraintBottom_toBottomOf="@+id/toolbarUP"
         app:layout_constraintEnd_toEndOf="@+id/toolbarUP"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/toolbarUP" />
+        app:layout_constraintTop_toTopOf="@+id/toolbarUP"
+        app:layout_constraintVertical_bias="1.0" />
 
     <ListView
         android:id="@+id/searchListView"
         android:layout_width="330dp"
-        android:layout_height="434dp"
+        android:layout_height="0dp"
         android:layout_marginStart="34dp"
         android:layout_marginTop="11dp"
         android:layout_marginEnd="35dp"

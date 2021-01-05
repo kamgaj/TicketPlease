@@ -3,16 +3,20 @@ package com.example.ticketplease;
 import android.content.Intent;
 import android.icu.text.DateFormatSymbols;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.AppCompatTextView;
@@ -20,6 +24,7 @@ import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.core.widget.NestedScrollView;
 
 import com.google.android.material.resources.TextAppearance;
+import com.google.android.material.textfield.TextInputEditText;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -86,5 +91,23 @@ public class SearchActivity extends AppCompatActivity {
                 searchView.setAdapter(offersArray);
             }
         });
+
+        EditText search=findViewById(R.id.SearchTextList);
+        search.addTextChangedListener(new TextWatcher() {
+
+            public void afterTextChanged(Editable s) {
+
+                // you can call or do what you want with your EditText here
+                if(search.getText().length()>=3)Toast.makeText(getApplicationContext(), search.getText(), Toast.LENGTH_LONG).show();
+
+                // yourEditText...
+            }
+
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
+
+            public void onTextChanged(CharSequence s, int start, int before, int count) {}
+        });
+
+
     }
 }
