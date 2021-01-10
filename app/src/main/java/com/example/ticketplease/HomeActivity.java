@@ -23,6 +23,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
+import com.google.android.material.chip.Chip;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
@@ -43,6 +44,7 @@ public class HomeActivity extends AppCompatActivity {
     ArrayList<HomeFilmListItem> filmsArray = new ArrayList<>();
     ArrayList<HomeFilmListItem> filmsArray2 = new ArrayList<>();
     ArrayList<HomeFilmListItem> discountsArray = new ArrayList<>();
+    Chip search;
     private FirebaseFirestore db= FirebaseFirestore.getInstance();
 
     private static final String TAG = "HomeActivity";
@@ -74,6 +76,15 @@ public class HomeActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 startActivity(new Intent(HomeActivity.this, ProfileActivity.class));
+            }
+        });
+
+        search = findViewById(R.id.chip4);
+        search.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent goToSearch = new Intent(HomeActivity.this, SearchActivity.class);
+                startActivity(goToSearch);
             }
         });
 
