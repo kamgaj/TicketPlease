@@ -1,37 +1,35 @@
 package com.example.ticketplease;
 
 import android.content.Intent;
-import android.icu.text.DateFormatSymbols;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.RadioButton;
-import android.widget.RadioGroup;
-import android.widget.TextView;
-import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.AppCompatTextView;
-import androidx.constraintlayout.widget.ConstraintLayout;
-import androidx.core.widget.NestedScrollView;
 
-import com.google.android.material.resources.TextAppearance;
-import com.google.android.material.textfield.TextInputEditText;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
-import java.util.Arrays;
-
+import java.util.List;
+import java.util.Objects;
 
 
 public class SearchActivity extends AppCompatActivity {
+    private final FirebaseFirestore db= FirebaseFirestore.getInstance();
+    ArrayAdapter<String> titlesArray;
+    ListView searchView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -61,22 +59,27 @@ public class SearchActivity extends AppCompatActivity {
                 startActivity(new Intent(SearchActivity.this, ProfileActivity.class));
             }
         });
-        ListView searchView;
+
         boolean isSearchPressed=true;
-        //String[] Titles;
-        searchView=findViewById(R.id.searchListView);
-        String Titles[] = {"Tytuł","Tytuł2","Tytuł3","Tytuł4","Tytuł5","Tytuł6","Tytuł7","Tytuł8","Tytuł9","Tytuł10","Tytuł11","Tytuł12"};
-        ArrayAdapter<String> titlesArray = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1,Titles);
-        String Offers[] = {"Tytuł z gatunku","Tytuł2 z gatunku","Tytuł3 z gatunku","Tytuł4 z gatunku","Tytuł5 z gatunku","Tytuł6 z gatunku","Tytuł7 z gatunku","Tytuł8 z gatunku","Tytuł9 z gatunku","Tytuł10 z gatunku","Tytuł11 z gatunku","Tytuł12 z gatunku"};
+
+        searchView = findViewById(R.id.searchListView);
+
+
+        String[] Offers = {"Tytuł z gatunku","Tytuł2 z gatunku","Tytuł3 z gatunku","Tytuł4 z gatunku","Tytuł5 z gatunku","Tytuł6 z gatunku","Tytuł7 z gatunku","Tytuł8 z gatunku","Tytuł9 z gatunku","Tytuł10 z gatunku","Tytuł11 z gatunku","Tytuł12 z gatunku"};
         ArrayAdapter<String> offersArray = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1,Offers);
         searchView.setAdapter(offersArray);
-        /*searchView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+
+        searchView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Intent i=new Intent(SearchActivity.this,DescriptionActivity.class);
-                startActivity(i);
+                String selectedItem = (String) parent.getItemAtPosition(position);
+                Intent intent = new Intent(SearchActivity.this, DescriptionActivity.class);
+                intent.putExtra("Movie_title", selectedItem);
+                startActivity(intent);
             }
-        });*/
+        });
+
+
         RadioButton Search = (RadioButton) findViewById(R.id.search);
         Search.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -97,10 +100,36 @@ public class SearchActivity extends AppCompatActivity {
 
             public void afterTextChanged(Editable s) {
 
-                // you can call or do what you want with your EditText here
-                if(search.getText().length()>=3)Toast.makeText(getApplicationContext(), search.getText(), Toast.LENGTH_LONG).show();
 
-                // yourEditText...
+                if(search.getText().length()>=3) {
+                    String start = search.getText().toString();
+                    start = start.substring(0, 1).toUpperCase() + start.substring(1);
+                    String end = search.getText().toString() + "\uf8ff";
+                    end = end.substring(0, 1).toUpperCase() + end.substring(1);
+                    db.collection("Movies")
+                            .orderBy("Title")
+                            .startAt(start)
+                            .endAt(end)
+                            .get()
+                            .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                                @Override
+                                public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                                    if(task.isSuccessful()) {
+                                        List<String> titles = new ArrayList<>();
+                                        for(QueryDocumentSnapshot document : Objects.requireNonNull(task.getResult())) {
+                                            titles.add(document.getString("Title"));
+                                        }
+                                        titlesArray =  new ArrayAdapter<>(getApplicationContext(), android.R.layout.simple_list_item_1,titles);
+                                        searchView.setAdapter(titlesArray);
+                                    }
+                                }
+                            });
+                } else {
+                    titlesArray = new ArrayAdapter<>(getApplication(), android.R.layout.simple_list_item_1,
+                            new ArrayList<>());
+                    searchView.setAdapter(titlesArray);
+                }
+
             }
 
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
