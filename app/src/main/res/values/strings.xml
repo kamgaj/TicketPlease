@@ -70,4 +70,14 @@
     <string name="name">Name</string>
     <string name="oferta">Oferta Specjalna</string>
 
+    <string-array name="genres">
+        <item>Kryminalny</item>
+        <item>Dramat</item>
+        <item>Komedia</item>
+        <item>Akcja</item>
+        <item>Sci-Fi</item>
+        <item>Sensacyjny</item>
+        <item>Thriller</item>
+    </string-array>
+
 </resources>
