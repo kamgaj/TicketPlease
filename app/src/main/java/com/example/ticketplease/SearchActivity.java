@@ -29,6 +29,7 @@ import java.util.Objects;
 public class SearchActivity extends AppCompatActivity {
     private final FirebaseFirestore db= FirebaseFirestore.getInstance();
     ArrayAdapter<String> titlesArray;
+    ArrayAdapter<String> genresArray;
     ListView searchView;
 
     @Override
@@ -60,14 +61,13 @@ public class SearchActivity extends AppCompatActivity {
             }
         });
 
-        boolean isSearchPressed=true;
 
         searchView = findViewById(R.id.searchListView);
+        EditText search=findViewById(R.id.SearchTextList);
+        search.setEnabled(false);
 
 
-        String[] Offers = {"Tytuł z gatunku","Tytuł2 z gatunku","Tytuł3 z gatunku","Tytuł4 z gatunku","Tytuł5 z gatunku","Tytuł6 z gatunku","Tytuł7 z gatunku","Tytuł8 z gatunku","Tytuł9 z gatunku","Tytuł10 z gatunku","Tytuł11 z gatunku","Tytuł12 z gatunku"};
-        ArrayAdapter<String> offersArray = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1,Offers);
-        searchView.setAdapter(offersArray);
+        getStringFromXML();
 
         searchView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -85,17 +85,19 @@ public class SearchActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 searchView.setAdapter(titlesArray);
+                search.setEnabled(true);
             }
         });
         RadioButton Offer = (RadioButton) findViewById(R.id.offer);
         Offer.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                searchView.setAdapter(offersArray);
+                getStringFromXML();
+                search.setEnabled(false);
             }
         });
 
-        EditText search=findViewById(R.id.SearchTextList);
+
         search.addTextChangedListener(new TextWatcher() {
 
             public void afterTextChanged(Editable s) {
@@ -138,5 +140,11 @@ public class SearchActivity extends AppCompatActivity {
         });
 
 
+    }
+
+    private void getStringFromXML() {
+        String[] genresFromXML = getResources().getStringArray(R.array.genres);
+        genresArray = new ArrayAdapter<>(getApplicationContext(), android.R.layout.simple_list_item_1, genresFromXML);
+        searchView.setAdapter(genresArray);
     }
 }
