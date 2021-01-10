@@ -11,7 +11,6 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.RadioButton;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -174,6 +173,8 @@ public class SearchActivity extends AppCompatActivity {
                                     }
                                     genresArray = new ArrayAdapter<>(getApplicationContext(), android.R.layout.simple_list_item_1, titles);
                                     searchView.setAdapter(genresArray);
+
+                                    goToSearchedMovieDescription();
                                 }
                             }
                         });
