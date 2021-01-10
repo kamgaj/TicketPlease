@@ -11,6 +11,7 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.RadioButton;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -31,11 +32,17 @@ public class SearchActivity extends AppCompatActivity {
     ArrayAdapter<String> titlesArray;
     ArrayAdapter<String> genresArray;
     ListView searchView;
+    RadioButton Title;
+    RadioButton Genre;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.search_page);
+
+        Genre = (RadioButton) findViewById(R.id.offer);
+        Title = (RadioButton) findViewById(R.id.search);
+
         ImageView Ticket;
         Ticket = (ImageView) findViewById(R.id.ticketButton);
         Ticket.setOnClickListener(new View.OnClickListener() {
@@ -69,34 +76,35 @@ public class SearchActivity extends AppCompatActivity {
 
         getStringFromXML();
 
-        searchView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                String selectedItem = (String) parent.getItemAtPosition(position);
-                Intent intent = new Intent(SearchActivity.this, DescriptionActivity.class);
-                intent.putExtra("Movie_title", selectedItem);
-                startActivity(intent);
-            }
-        });
 
 
-        RadioButton Search = (RadioButton) findViewById(R.id.search);
-        Search.setOnClickListener(new View.OnClickListener() {
+
+        Title.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 searchView.setAdapter(titlesArray);
                 search.setEnabled(true);
-            }
+
+                goToSearchedMovieDescription();
+                }
+
         });
-        RadioButton Offer = (RadioButton) findViewById(R.id.offer);
-        Offer.setOnClickListener(new View.OnClickListener() {
+
+        Genre.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 getStringFromXML();
+                search.getText().clear();
                 search.setEnabled(false);
-            }
+
+                queryGenresFromFirebase();
+                }
+
+
         });
 
+        Genre.performClick(); //It is necessary, because at create of this activity this line of code clicks in Genre radio button so it allows
+                                //to use on click listener without a initial click
 
         search.addTextChangedListener(new TextWatcher() {
 
@@ -146,5 +154,43 @@ public class SearchActivity extends AppCompatActivity {
         String[] genresFromXML = getResources().getStringArray(R.array.genres);
         genresArray = new ArrayAdapter<>(getApplicationContext(), android.R.layout.simple_list_item_1, genresFromXML);
         searchView.setAdapter(genresArray);
+    }
+
+    private void queryGenresFromFirebase() {
+        searchView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                String selectedGenre = (String) parent.getItemAtPosition(position);
+                db.collection("Movies")
+                        .whereArrayContains("Genres", selectedGenre)
+                        .get()
+                        .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                            @Override
+                            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                                if(task.isSuccessful()) {
+                                    List<String> titles = new ArrayList<>();
+                                    for(QueryDocumentSnapshot document : Objects.requireNonNull(task.getResult())) {
+                                        titles.add(document.getString("Title"));
+                                    }
+                                    genresArray = new ArrayAdapter<>(getApplicationContext(), android.R.layout.simple_list_item_1, titles);
+                                    searchView.setAdapter(genresArray);
+                                }
+                            }
+                        });
+
+            }
+        });
+    }
+
+    private void goToSearchedMovieDescription() {
+        searchView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                String selectedItem = (String) parent.getItemAtPosition(position);
+                Intent intent = new Intent(SearchActivity.this, DescriptionActivity.class);
+                intent.putExtra("Movie_title", selectedItem);
+                startActivity(intent);
+            }
+        });
     }
 }
