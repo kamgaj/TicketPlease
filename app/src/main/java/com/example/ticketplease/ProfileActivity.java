@@ -113,7 +113,20 @@ public class ProfileActivity extends AppCompatActivity {
         });
 
         getTopRatedFilms();
-
+        TextView settingsProfile;
+        settingsProfile=findViewById(R.id.settingsProfile);
+        settingsProfile.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(ProfileActivity.this, SettingsActivity.class));
+            }
+        });
+        Home.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(ProfileActivity.this, HomeActivity.class));
+            }
+        });
 
         profilePicture = findViewById(R.id.ProfilePicture);
         profilePicture.setOnClickListener(new View.OnClickListener() {
