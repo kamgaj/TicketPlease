@@ -4,6 +4,7 @@ import android.app.Dialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.text.method.PasswordTransformationMethod;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
@@ -23,6 +24,8 @@ import com.google.android.material.chip.Chip;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+
+import org.w3c.dom.Text;
 
 public class LoginActivity extends AppCompatActivity {
     EditText loginEdit, passwordEdit;
@@ -44,6 +47,26 @@ public class LoginActivity extends AppCompatActivity {
         if(mFirebaseAuth.getCurrentUser()!=null){
             startActivity(new Intent(LoginActivity.this, HomeActivity.class));
         }
+        TextView show;
+        show=findViewById(R.id.ShowPassword);
+        show.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if(passwordEdit.getTransformationMethod()==null){
+                    int start =passwordEdit.getSelectionStart();
+                    int end =passwordEdit.getSelectionEnd();
+                    passwordEdit.setTransformationMethod(new PasswordTransformationMethod());
+                    passwordEdit.setSelection(start,end);
+                    show.setText("Pokaż");
+                }else{
+                    int start =passwordEdit.getSelectionStart();
+                    int end =passwordEdit.getSelectionEnd();
+                    passwordEdit.setTransformationMethod(null);
+                    passwordEdit.setSelection(start,end);
+                    show.setText("Ukryj");
+                }
+            }
+        });
         loginButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
