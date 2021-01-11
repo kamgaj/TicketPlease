@@ -2,10 +2,12 @@ package com.example.ticketplease;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.method.PasswordTransformationMethod;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -49,6 +51,26 @@ public class RegisterActivity extends AppCompatActivity {
         mFirebaseAuth = FirebaseAuth.getInstance(); //opening connection with firebase authentication module
         FirebaseFirestore fStore = FirebaseFirestore.getInstance(); // opening connection with firebase
 
+        TextView show;
+        show=findViewById(R.id.showPassword);
+        show.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if(passwordEdit.getTransformationMethod()==null){
+                    int start =passwordEdit.getSelectionStart();
+                    int end =passwordEdit.getSelectionEnd();
+                    passwordEdit.setTransformationMethod(new PasswordTransformationMethod());
+                    passwordEdit.setSelection(start,end);
+                    show.setText("Pokaż");
+                }else{
+                    int start =passwordEdit.getSelectionStart();
+                    int end =passwordEdit.getSelectionEnd();
+                    passwordEdit.setTransformationMethod(null);
+                    passwordEdit.setSelection(start,end);
+                    show.setText("Ukryj");
+                }
+            }
+        });
         registerButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
