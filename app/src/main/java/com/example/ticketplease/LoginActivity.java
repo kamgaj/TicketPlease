@@ -133,11 +133,23 @@ public class LoginActivity extends AppCompatActivity {
             }
         });
         confirm=Forget.findViewById(R.id.ResetPasswordConfirmButton);
+        EditText resetEmail = (EditText) Forget.findViewById(R.id.recoverPasswordEmail);
         confirm.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                String email = resetEmail.getText().toString();
+
+                FirebaseAuth.getInstance().sendPasswordResetEmail(email)
+                        .addOnCompleteListener(new OnCompleteListener<Void>() {
+                            @Override
+                            public void onComplete(@NonNull Task<Void> task) {
+                                if (task.isSuccessful()) {
+                                    Toast.makeText(getApplicationContext(), getString(R.string.passwdReset), Toast.LENGTH_LONG).show();
+                                }
+                            }
+                        });
+
                 Forget.dismiss();
-                Toast.makeText(getApplicationContext(), "Na adres email otrzymasz link umożliwiający zmianę hasła", Toast.LENGTH_LONG).show();
             }
         });
     }
