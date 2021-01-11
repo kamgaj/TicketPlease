@@ -46,6 +46,7 @@
         app:layout_constraintTop_toTopOf="@+id/toolbarUP" />
 
     <androidx.core.widget.NestedScrollView
+        android:id="@+id/nestedScrollView"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
@@ -102,7 +103,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
                 android:layout_marginEnd="8dp"
-                android:text="@string/lorem_ipsum_dolor_sit_amet_tellus_quisque_pretium_eget_enim_fusce_convallis_pellentesque_justo_euismod_pede_nunc_justo_ipsum_ante_in_leo_sapien_lacinia_sit_amet_magna_sed_tristique_velit_vitae_lacinia_lacus_phasellus_lorem_a_leo_felis_facilisis_congue_nunc_sapien_in_lobortis_mauris_et_malesuada_congue_nam_pharetra_eget_lacinia_scelerisque_dui_vel_ipsum_vitae_urna_nam_lorem_eros_bibendum_scelerisque_odio_non_dolor_pellentesque_molestie_enim_mauris_luctus_a_adipiscing_elit_sed_faucibus_dolor_sit_amet_tellus_maecenas_nec_urna_sem_vestibulum_iaculis_in_tempus_suspendisse_ultricies_vitae_nunc_nulla_aliquet_porttitor_vel_dui_ut_sit_amet_vulputate_eu_sagittis_sed_ultrices_nec_mattis_sed_aliquet_feugiat_tortor_mauris_interdum_at_pretium_bibendum_a_massa_vivamus_faucibus_lorem_nunc_velit_sit_amet_quam_nunc_molestie_a_elementum_eu_aliquet_eget_scelerisque_porttitor_interdum_nulla_ipsum_primis_in_felis_tincidunt_hendrerit_sollicitudin_id_eleifend_pede_bibendum_purus_scelerisque_neque_mauris_adipiscing_vitae_egestas_ac_vulputate_fringilla_phasellus_tellus_pede_ultrices_sit_amet_euismod_id_orci_in_hac_habitasse_platea_dictumst_maecenas_semper_eros_quisque_placerat_a_mauris_mauris_molestie_placerat_nisl_quam_lobortis_elit_nam_vestibulum_cras_non_purus_praesent_vitae_ornare_a_hendrerit_sagittis_lorem_ipsum_primis_in_massa_mauris_ut_magna_vitae_imperdiet_sed_viverra_mattis_integer_aliquet_elit_aenean_massa_dui_ut_viverra_luctus_nisl_in_nunc_fusce_nisl_dui_nunc_in_faucibus_orci_dui_non_nunc_hendrerit_wisi_phasellus_vitae_ultrices_urna_placerat_eget_sagittis_eleifend_nulla_facilisi_phasellus_at_lectus_eget_augue_eu_nunc_phasellus_in_faucibus_vestibulum_nullam_semper_risus_nullam_justo_phasellus_libero_nec_nunc_posuere_vehicula_dolor_massa_sit_amet_tortor_phasellus_vulputate_eget_nisl_curabitur_eget_dolor_id_eros_ut_eget_leo_ut_leo_donec_nisl_ac_quam_ante_ipsum_adipiscing_arcu_congue_eu_fringilla_aliquet_praesent_pretium_vivamus_posuere_ligula_ut_malesuada_fames_ac_erat_volutpat_curabitur_commodo_cras_vitae_ultrices_posuere_in_gravida_vitae_bibendum_tellus_quis_ultricies_in_convallis_non_dictum_justo_iaculis_malesuada_fames_ac_erat_fermentum_libero_lacinia_eros_sem_sit_amet_quam_sagittis_tortor_vehicula_non_tempor_magna_non_sem_quisque_at_orci"
+                android:text="@string/lorem_ipsum"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="@+id/genreText"
                 app:layout_constraintTop_toBottomOf="@+id/genreText" />
@@ -119,5 +120,41 @@
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.core.widget.NestedScrollView>
+
+    <TextView
+        android:id="@+id/duration"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:text="@string/duration"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.045"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/nestedScrollView" />
+
+    <TextView
+        android:id="@+id/release_date"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:text="@string/release_date"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.046"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/duration" />
+
+    <TextView
+        android:id="@+id/rating"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:text="@string/rating"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.044"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/release_date" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

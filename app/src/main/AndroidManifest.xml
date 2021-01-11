@@ -9,9 +9,9 @@
         android:roundIcon="@mipmap/ic_logo_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.TicketPlease">
-        <activity android:name=".MainActivity">
+<!--        <activity android:name=".MainActivity">-->
 
-        </activity>
+<!--        </activity>-->
 
         <activity android:name=".RegisterActivity" />
 <!--        <activity android:name=".homeactivity" />-->
