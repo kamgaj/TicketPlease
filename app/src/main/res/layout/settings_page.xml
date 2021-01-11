@@ -68,7 +68,7 @@
                 app:layout_constraintTop_toTopOf="parent" />
 
             <com.google.android.material.chip.Chip
-                android:id="@+id/RestetButton"
+                android:id="@+id/ResetButton"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
@@ -86,11 +86,11 @@
                 android:layout_height="wrap_content"
                 android:text="Zresetuj hasło"
                 android:textColor="#000000"
-                app:layout_constraintBottom_toBottomOf="@+id/RestetButton"
-                app:layout_constraintEnd_toEndOf="@+id/RestetButton"
+                app:layout_constraintBottom_toBottomOf="@+id/ResetButton"
+                app:layout_constraintEnd_toEndOf="@+id/ResetButton"
                 app:layout_constraintHorizontal_bias="0.512"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="@+id/RestetButton"
+                app:layout_constraintTop_toTopOf="@+id/ResetButton"
                 app:layout_constraintVertical_bias="0.482" />
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.core.widget.NestedScrollView>
