@@ -41,7 +41,9 @@ public class LoginActivity extends AppCompatActivity {
         loginEdit = findViewById(R.id.Login);
         passwordEdit = findViewById(R.id.Password);
         loginButton = findViewById(R.id.loginBar);
-
+        if(mFirebaseAuth.getCurrentUser()!=null){
+            startActivity(new Intent(LoginActivity.this, HomeActivity.class));
+        }
         loginButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
