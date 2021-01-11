@@ -8,7 +8,6 @@ import android.text.Html;
 import android.text.SpannableStringBuilder;
 import android.text.Spanned;
 import android.text.method.LinkMovementMethod;
-import android.text.style.ClickableSpan;
 import android.view.View;
 import android.view.ViewTreeObserver;
 import android.widget.ImageView;
@@ -35,6 +34,9 @@ public class DescriptionActivity extends AppCompatActivity {
     TextView title;
     TextView description;
     TextView genres;
+    TextView duration;
+    TextView release_date;
+    TextView rating;
     int x=0;
     StorageReference ref;
     @Override
@@ -47,9 +49,12 @@ public class DescriptionActivity extends AppCompatActivity {
         title.setText(titleFromIntent);
         description = findViewById(R.id.descriptionText);
         genres = findViewById(R.id.genreText);
+        duration = findViewById(R.id.duration);
+        release_date = findViewById(R.id.release_date);
+        rating = findViewById(R.id.rating);
         ImageView moviePoster = findViewById(R.id.filmPoster);
 
-        getMovieFromFirebase(titleFromIntent, description, genres, moviePoster);
+        getMovieFromFirebase(titleFromIntent, description, genres, moviePoster, duration, release_date, rating);
 
 
         ImageView BuyTicket;
@@ -65,7 +70,7 @@ public class DescriptionActivity extends AppCompatActivity {
         finish();
     }
 
-    private void getMovieFromFirebase(String movieTitle, TextView tvDesc, TextView genres, ImageView poster) {
+    private void getMovieFromFirebase(String movieTitle, TextView tvDesc, TextView genres, ImageView poster, TextView duration, TextView release_date, TextView rating) {
         FirebaseFirestore db= FirebaseFirestore.getInstance();
         List<String> genresList = new ArrayList<>();
 
@@ -78,6 +83,16 @@ public class DescriptionActivity extends AppCompatActivity {
                         if(task.isSuccessful()) {
                             for(QueryDocumentSnapshot document : Objects.requireNonNull(task.getResult())) {
                                 tvDesc.setText(document.getString("Description"));
+
+                                String dur = "Czas trwania: " + document.getString("Duration");
+                                duration.setText(dur);
+
+                                String release = "Data premiery: " + document.getString("Release_date");
+                                release_date.setText(release);
+
+                                String rat = "Ocena: " + document.get("Rating");
+                                rating.setText(rat);
+
                                 makeTextViewResizable(tvDesc, 4, "Zobacz więcej", true);
                                 genresList.addAll((Collection<? extends String>) document.get("Genres"));
 
