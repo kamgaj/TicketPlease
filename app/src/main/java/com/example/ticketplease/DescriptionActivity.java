@@ -15,6 +15,7 @@ import android.view.View;
 import android.view.ViewTreeObserver;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -42,6 +43,7 @@ public class DescriptionActivity extends AppCompatActivity {
     TextView duration;
     TextView release_date;
     TextView rating;
+    boolean ready=false;
     int x=0;
     StorageReference ref;
     @Override
@@ -68,8 +70,13 @@ public class DescriptionActivity extends AppCompatActivity {
         BuyTicket.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent=new Intent(DescriptionActivity.this,BookingActivity.class);
-                startActivity(intent);
+                if(ready){
+                    Intent intent=new Intent(DescriptionActivity.this,BookingActivity.class);
+                    startActivity(intent);
+                }else {
+                    Toast.makeText(getApplicationContext(), "Plakat nie został w pełni załadowany", Toast.LENGTH_LONG).show();
+                }
+
             }
         });
     }
@@ -112,6 +119,7 @@ public class DescriptionActivity extends AppCompatActivity {
                                         Bitmap bitmap = BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
                                         createImageFromBitmap(bitmap);
                                         poster.setImageBitmap(bitmap);
+                                        ready=true;
                                     }
                                 });
 
