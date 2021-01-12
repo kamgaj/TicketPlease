@@ -43,4 +43,6 @@ dependencies {
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0'
     implementation 'com.squareup.picasso:picasso:2.71828'
     implementation 'androidmads.library.qrgenearator:QRGenearator:1.0.3'
+    implementation 'jp.wasabeef:blurry:4.0.0'
+
 }

@@ -1,13 +1,16 @@
 package com.example.ticketplease;
 
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.text.Html;
 import android.text.SpannableStringBuilder;
 import android.text.Spanned;
 import android.text.method.LinkMovementMethod;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewTreeObserver;
 import android.widget.ImageView;
@@ -25,6 +28,8 @@ import com.google.firebase.firestore.QuerySnapshot;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 
+import java.io.ByteArrayOutputStream;
+import java.io.FileOutputStream;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
@@ -54,6 +59,7 @@ public class DescriptionActivity extends AppCompatActivity {
         rating = findViewById(R.id.rating);
         ImageView moviePoster = findViewById(R.id.filmPoster);
 
+
         getMovieFromFirebase(titleFromIntent, description, genres, moviePoster, duration, release_date, rating);
 
 
@@ -62,7 +68,8 @@ public class DescriptionActivity extends AppCompatActivity {
         BuyTicket.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity(new Intent(DescriptionActivity.this,BookingActivity.class));
+                Intent intent=new Intent(DescriptionActivity.this,BookingActivity.class);
+                startActivity(intent);
             }
         });
     }
@@ -98,12 +105,12 @@ public class DescriptionActivity extends AppCompatActivity {
 
                                 String path = document.getString("Poster_link");
                                 FirebaseStorage storage = FirebaseStorage.getInstance();
-
                                 ref = storage.getReferenceFromUrl(path);
                                 ref.getBytes(1024 * 1024).addOnSuccessListener(new OnSuccessListener<byte[]>() {
                                     @Override
                                     public void onSuccess(byte[] bytes) {
                                         Bitmap bitmap = BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
+                                        createImageFromBitmap(bitmap);
                                         poster.setImageBitmap(bitmap);
                                     }
                                 });
@@ -178,5 +185,19 @@ public class DescriptionActivity extends AppCompatActivity {
         }
         return ssb;
     }
-
+    public void createImageFromBitmap(Bitmap bitmap) {
+        String fileName = "Poster";//no .png or .jpg needed
+        try {
+            ByteArrayOutputStream bytes = new ByteArrayOutputStream();
+            bitmap.compress(Bitmap.CompressFormat.JPEG, 100, bytes);
+            FileOutputStream fo = openFileOutput(fileName, Context.MODE_PRIVATE);
+            fo.write(bytes.toByteArray());
+            // remember close file output
+            fo.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+            fileName = null;
+        }
+        //return fileName;
+    }
 }

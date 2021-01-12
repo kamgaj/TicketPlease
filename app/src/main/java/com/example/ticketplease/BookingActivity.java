@@ -4,8 +4,13 @@ import android.app.AlertDialog;
 import android.app.DatePickerDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.Color;
+import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
 import android.renderscript.Sampler;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
@@ -13,24 +18,32 @@ import android.widget.DatePicker;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListAdapter;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.constraintlayout.widget.ConstraintLayout;
 
 import com.google.android.material.chip.Chip;
 
+import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
+
+import jp.wasabeef.blurry.Blurry;
 
 public class BookingActivity  extends AppCompatActivity {
     ArrayList<Integer> alreadyBooked= new ArrayList<>();
     ArrayList<String> userChoice = new ArrayList<String>();
     List<String> cinema=new ArrayList<>();
     List<String> technology=new ArrayList<>();
+    List<String> Time=new ArrayList<>();
     Calendar calendar=Calendar.getInstance();
     String readyDate=String.valueOf(calendar.get(calendar.DAY_OF_MONTH))+"."+String.valueOf(calendar.get(calendar.MONTH)+1)+"."+String.valueOf(calendar.get(calendar.YEAR));
     int tickets=0;
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -50,40 +63,61 @@ public class BookingActivity  extends AppCompatActivity {
         });
         AddBookedBefore();
         addButtons();
+        addCinema();
+        addTime();
+        TextView dateText=findViewById(R.id.dateMovieText);
         Chip date = findViewById(R.id.dateFilm);
-        date.setHint(readyDate);
+        dateText.setText(readyDate);
         date.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                int day=calendar.get(Calendar.DAY_OF_MONTH);
-                int month=calendar.get(Calendar.MONTH);
-                int year=calendar.get(Calendar.YEAR);
-                DatePickerDialog datePickerDialog=new DatePickerDialog(BookingActivity.this, new DatePickerDialog.OnDateSetListener() {
+                int day = calendar.get(Calendar.DAY_OF_MONTH);
+                int month = calendar.get(Calendar.MONTH);
+                int year = calendar.get(Calendar.YEAR);
+                DatePickerDialog datePickerDialog = new DatePickerDialog(BookingActivity.this, new DatePickerDialog.OnDateSetListener() {
                     @Override
                     public void onDateSet(DatePicker datePicker, int i, int i1, int i2) {
-                        calendar.set(i,i1,i2);
-                        readyDate = String.valueOf(i2)+"."+String.valueOf(i1+1)+"."+String.valueOf(i);
-                        date.setHint(readyDate);
+                        calendar.set(i, i1, i2);
+                        readyDate = String.valueOf(i2) + "." + String.valueOf(i1 + 1) + "." + String.valueOf(i);
+                        dateText.setText(readyDate);
                     }
-                }, day,month,year);
+                }, day, month, year);
                 datePickerDialog.getDatePicker().setMinDate(calendar.getTimeInMillis());
-                datePickerDialog.updateDate(year,month,day);
+                datePickerDialog.updateDate(year, month, day);
 
                 datePickerDialog.show();
             }
         });
-        addCinema();
+        TextView time=findViewById(R.id.TimeMovieText);
+        Chip timeChip=findViewById(R.id.TimeFilm);
+        timeChip.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                String[] t =Time.toArray(new String[0]);
+                AlertDialog.Builder builder = new AlertDialog.Builder(BookingActivity.this);
+                builder.setTitle("Wybierz godzinę seansu");
+                builder.setSingleChoiceItems(t, -1, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        time.setText(t[i]);
+                        dialogInterface.dismiss();
+                    }
+                });
+                builder.show();
+            }
+        });
         Chip Cinema = findViewById(R.id.cinema);
+        TextView CinemaText=findViewById(R.id.CinemaText);
         Cinema.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                String[] t=cinema.toArray(new String[0]);
-                AlertDialog.Builder builder=new AlertDialog.Builder(BookingActivity.this);
+                String[] t = cinema.toArray(new String[0]);
+                AlertDialog.Builder builder = new AlertDialog.Builder(BookingActivity.this);
                 builder.setTitle("Wybierz kino");
                 builder.setSingleChoiceItems(t, -1, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
-                        Cinema.setHint(t[i]);
+                        CinemaText.setText(t[i]);
                         dialogInterface.dismiss();
                     }
                 });
@@ -92,24 +126,46 @@ public class BookingActivity  extends AppCompatActivity {
         });
         addTechnology();
         Chip Tech = findViewById(R.id.technology);
+        TextView techText=findViewById(R.id.TechnologyText);
         Tech.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                String[] t=technology.toArray(new String[0]);
-                AlertDialog.Builder builder=new AlertDialog.Builder(BookingActivity.this);
+                String[] t = technology.toArray(new String[0]);
+                AlertDialog.Builder builder = new AlertDialog.Builder(BookingActivity.this);
                 builder.setTitle("Wybierz technologie");
                 builder.setSingleChoiceItems(t, -1, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
-                        Tech.setHint(t[i]);
+                        techText.setText(t[i]);
                         dialogInterface.dismiss();
                     }
                 });
                 builder.show();
             }
         });
+        Bitmap b = BitmapFactory.decodeResource(this.getResources(),
+                R.drawable.ticket);
+        try {
+            b = BitmapFactory.decodeStream(this.openFileInput("Poster"));
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
 
+        }
+        ImageView newImage = new ImageView(this);
+        //newImage.setImageResource(R.drawable.ticket);
+        ConstraintLayout constraintLayout=findViewById(R.id.bookingLayout);
+
+
+
+        //wImage.setImageBitmap()
+        Bitmap bitmap=(Bitmap.createScaledBitmap(b, 200, 100, false));
+        Blurry.with(this).from(bitmap).into(newImage);
+       constraintLayout.setBackground(newImage.getDrawable());
+//       constraintLayout.setBackground(new BitmapDrawable(getResources(), bitmap));
+        ;
+        //constraintLayout.setbac
     }
+
     void addButtons(){
         LinearLayout linearLayout;
         linearLayout = findViewById(R.id.seatPleace);
@@ -138,7 +194,7 @@ public class BookingActivity  extends AppCompatActivity {
                             tickets--;
 
                         }else {
-                            button.setBackgroundColor(getResources().getColor(R.color.black));
+                            button.setBackgroundColor(getResources().getColor(R.color.mainColor));
                             button.setTag("1");
                             userChoice.add(String.valueOf(7*finalI + finalJ));
                             tickets++;
@@ -153,7 +209,7 @@ public class BookingActivity  extends AppCompatActivity {
         }
         for(int i=0;i<alreadyBooked.size();i++){
             buttons.get(alreadyBooked.get(i)).setEnabled(false);
-            buttons.get(alreadyBooked.get(i)).setBackgroundColor(getResources().getColor(R.color.mainColor));
+            buttons.get(alreadyBooked.get(i)).setBackgroundColor(getResources().getColor(R.color.black));
         }
     }
     void AddBookedBefore(){
@@ -172,5 +228,16 @@ public class BookingActivity  extends AppCompatActivity {
         technology.add("3D");
         technology.add("4D");
         technology.add("5D");
+    }
+    void addTime(){
+        Time.add("12:15");
+        Time.add("15:10");
+        Time.add("17:25");
+        Time.add("18:35");
+        Time.add("23:45");
+    }
+
+    public void returnToPreviousScreen(View view) {
+        finish();
     }
 }
