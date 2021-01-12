@@ -147,6 +147,7 @@
                 android:id="@+id/horizontalScrollView"
                 android:layout_width="0dp"
                 android:layout_height="182dp"
+                android:background="@drawable/pexels_pixabay_274937"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/newestMovies">
 

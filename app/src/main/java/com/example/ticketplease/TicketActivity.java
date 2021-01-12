@@ -41,7 +41,7 @@ public class TicketActivity extends AppCompatActivity {
         test.add(1);
         test.add(2);
         test.add(3);
-        generateQRPage(1,"Test","13.02.2020",3,"Cinema",test);
+        generateQRPage(1,"Test","13.02.2020","12:15",3,"Cinema",test);
         //addNoTicketMessage();
         /*try {
             // Getting QR-Code as Bitmap
@@ -77,7 +77,7 @@ public class TicketActivity extends AppCompatActivity {
         });
 
     }
-    void generateQRPage(int id,String title, String date, int nrOfTickets, String cinema, List<Integer> seats){
+    void generateQRPage(int id,String title, String date, String time, int nrOfTickets, String cinema, List<Integer> seats){
         ConstraintLayout constraintLayout=findViewById(R.id.qrPlace);
         LayoutInflater layoutInflater = LayoutInflater.from(this);
         constraintLayout.removeAllViews();
@@ -85,6 +85,7 @@ public class TicketActivity extends AppCompatActivity {
         ImageView qrCode = view.findViewById(R.id.qrCode);
         TextView movieTitle = view.findViewById(R.id.movieTitle);
         TextView movieDate = view.findViewById(R.id.date);
+        TextView movieTime = view.findViewById(R.id.TimeTextQR);
         TextView nrOFTickets  = view.findViewById(R.id.numberOfTickets);
         TextView Cinema = view.findViewById(R.id.cinemaName);
         TextView Seats = view.findViewById(R.id.seatsIDs);
