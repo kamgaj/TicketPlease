@@ -65,6 +65,9 @@ public class ProfileActivity extends AppCompatActivity {
 
         firebaseAuth = FirebaseAuth.getInstance();
         firebaseAuth.addAuthStateListener(authStateListener);
+        TextView username=findViewById(R.id.NickName);
+        username.setText(Objects.requireNonNull(firebaseAuth.getCurrentUser()).getEmail());
+        //username.setText(Objects.requireNonNull(firebaseAuth.getCurrentUser()).getDisplayName());
         TextView logout = findViewById(R.id.logoutButton);
         logout.setOnClickListener(new View.OnClickListener() {
             @Override
