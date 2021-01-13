@@ -12,6 +12,7 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
 
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
@@ -33,10 +34,18 @@ import androidmads.library.qrgenearator.QRGContents;
 import androidmads.library.qrgenearator.QRGEncoder;
 
 public class TicketActivity extends AppCompatActivity {
+    FirebaseAuth mFirebaseAuth;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.ticket);
+        mFirebaseAuth = FirebaseAuth.getInstance();
+        if(mFirebaseAuth.getCurrentUser()==null){
+            Intent goToLogin = new Intent(TicketActivity.this, LoginActivity.class);
+            goToLogin.putExtra("disableBackButton", 2137);
+            startActivity(goToLogin);
+        }
+
         List<Integer> test=new ArrayList<Integer>();
         test.add(1);
         test.add(2);
