@@ -15,17 +15,18 @@ import android.widget.DatePicker;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.appcompat.widget.Toolbar;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
 
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.chip.Chip;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
@@ -45,8 +46,7 @@ public class BookingActivity  extends AppCompatActivity {
     Calendar calendar=Calendar.getInstance();
     String readyDate=String.valueOf(calendar.get(calendar.DAY_OF_MONTH))+"."+String.valueOf(calendar.get(calendar.MONTH)+1)+"."+String.valueOf(calendar.get(calendar.YEAR));
     int tickets=0;
-    private DatabaseReference mDatabase;
-    private BookingInfo bookingInfo = new BookingInfo();
+    private BookingInfo bookingInfo;
     List<Integer> seatNumbers = new ArrayList<>();
 
 
@@ -55,7 +55,8 @@ public class BookingActivity  extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.booking_page);
 
-        mDatabase = FirebaseDatabase.getInstance().getReference();
+        bookingInfo = new BookingInfo();
+        bookingInfo.setDate(readyDate);
         bookingInfo.setUserID(Objects.requireNonNull(FirebaseAuth.getInstance().getCurrentUser()).getUid());
 
         String titleFromIntent = getIntent().getStringExtra("movieTitle");
@@ -65,7 +66,8 @@ public class BookingActivity  extends AppCompatActivity {
         buttonNext.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                catchAndPassSeatNumbers();
+                bookingInfo.setSeats(seatNumbers);
+                pushBookingToBase(bookingInfo);
 
                 Intent intent = new Intent(BookingActivity.this, SummaryActivity.class);
                 intent.putExtra("Tickets", String.valueOf(tickets));
@@ -254,11 +256,15 @@ public class BookingActivity  extends AppCompatActivity {
         finish();
     }
 
-    void catchAndPassSeatNumbers() {
-        int[] tempArray = new int[seatNumbers.size()];
-        for(int i = 0; i < seatNumbers.size(); i++) {
-            tempArray[i] = seatNumbers.get(i);
-        }
-        bookingInfo.setSeats(tempArray);
+    void pushBookingToBase(Object value) {
+        FirebaseFirestore db= FirebaseFirestore.getInstance();
+        db.collection("Bookings")
+                .add(value)
+                .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
+                    @Override
+                    public void onSuccess(DocumentReference documentReference) {
+                        Log.d("BookingActivity --------- ", "DocumentSnapshot written with ID: " + documentReference.getId());
+                    }
+                });
     }
 }

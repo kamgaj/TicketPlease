@@ -1,5 +1,8 @@
 package com.example.ticketplease;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class BookingInfo {
     private String cinemaName;
     private String technology;
@@ -7,9 +10,9 @@ public class BookingInfo {
     private String time;
     private String movieName;
     private String userID;
-    private int[] seats;
+    private List<Integer> seats;
 
-    public BookingInfo(String cinemaName, String technology, String date, String time, String movieName, String userID, int[] seats) {
+    public BookingInfo(String cinemaName, String technology, String date, String time, String movieName, String userID, ArrayList<Integer> seats) {
         this.cinemaName = cinemaName;
         this.technology = technology;
         this.date = date;
@@ -70,11 +73,11 @@ public class BookingInfo {
         this.userID = userID;
     }
 
-    public int[] getSeats() {
+    public List<Integer> getSeats() {
         return seats;
     }
 
-    public void setSeats(int[] seats) {
+    public void setSeats(List<Integer> seats) {
         this.seats = seats;
     }
 }
