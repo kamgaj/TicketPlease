@@ -6,10 +6,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.graphics.Color;
-import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
-import android.renderscript.Sampler;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -17,20 +14,25 @@ import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.ListAdapter;
 import android.widget.TextView;
 import android.widget.Toast;
+
 import androidx.appcompat.widget.Toolbar;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
 
 import com.google.android.material.chip.Chip;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
+import java.util.Objects;
+
 
 import jp.wasabeef.blurry.Blurry;
 
@@ -43,16 +45,28 @@ public class BookingActivity  extends AppCompatActivity {
     Calendar calendar=Calendar.getInstance();
     String readyDate=String.valueOf(calendar.get(calendar.DAY_OF_MONTH))+"."+String.valueOf(calendar.get(calendar.MONTH)+1)+"."+String.valueOf(calendar.get(calendar.YEAR));
     int tickets=0;
+    private DatabaseReference mDatabase;
+    private BookingInfo bookingInfo = new BookingInfo();
+    List<Integer> seatNumbers = new ArrayList<>();
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.booking_page);
+
+        mDatabase = FirebaseDatabase.getInstance().getReference();
+        bookingInfo.setUserID(Objects.requireNonNull(FirebaseAuth.getInstance().getCurrentUser()).getUid());
+
+        String titleFromIntent = getIntent().getStringExtra("movieTitle");
+        bookingInfo.setMovieName(titleFromIntent);
+
         Toolbar buttonNext = (Toolbar) findViewById(R.id.toolbarUPDown);
         buttonNext.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                catchAndPassSeatNumbers();
+
                 Intent intent = new Intent(BookingActivity.this, SummaryActivity.class);
                 intent.putExtra("Tickets", String.valueOf(tickets));
                 intent.putExtra("Date", readyDate);
@@ -79,6 +93,7 @@ public class BookingActivity  extends AppCompatActivity {
                         calendar.set(i, i1, i2);
                         readyDate = String.valueOf(i2) + "." + String.valueOf(i1 + 1) + "." + String.valueOf(i);
                         dateText.setText(readyDate);
+                        bookingInfo.setDate(readyDate);
                     }
                 }, day, month, year);
                 datePickerDialog.getDatePicker().setMinDate(calendar.getTimeInMillis());
@@ -99,6 +114,7 @@ public class BookingActivity  extends AppCompatActivity {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
                         time.setText(t[i]);
+                        bookingInfo.setTime(t[i]);
                         dialogInterface.dismiss();
                     }
                 });
@@ -117,6 +133,7 @@ public class BookingActivity  extends AppCompatActivity {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
                         CinemaText.setText(t[i]);
+                        bookingInfo.setCinemaName(t[i]);
                         dialogInterface.dismiss();
                     }
                 });
@@ -136,6 +153,7 @@ public class BookingActivity  extends AppCompatActivity {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
                         techText.setText(t[i]);
+                        bookingInfo.setTechnology(t[i]);
                         dialogInterface.dismiss();
                     }
                 });
@@ -151,18 +169,13 @@ public class BookingActivity  extends AppCompatActivity {
 
         }
         ImageView newImage = new ImageView(this);
-        //newImage.setImageResource(R.drawable.ticket);
         ConstraintLayout constraintLayout=findViewById(R.id.bookingLayout);
 
 
 
-        //wImage.setImageBitmap()
         Bitmap bitmap=(Bitmap.createScaledBitmap(b, 200, 100, false));
         Blurry.with(this).from(bitmap).into(newImage);
        constraintLayout.setBackground(newImage.getDrawable());
-//       constraintLayout.setBackground(new BitmapDrawable(getResources(), bitmap));
-        ;
-        //constraintLayout.setbac
     }
 
     void addButtons(){
@@ -196,6 +209,7 @@ public class BookingActivity  extends AppCompatActivity {
                             button.setBackgroundColor(getResources().getColor(R.color.mainColor));
                             button.setTag("1");
                             userChoice.add(String.valueOf(7*finalI + finalJ));
+                            seatNumbers.add(7*finalI + finalJ);
                             tickets++;
                         }
                     }
@@ -217,10 +231,10 @@ public class BookingActivity  extends AppCompatActivity {
         alreadyBooked.add(20);
     }
     void addCinema(){
-        cinema.add("Kino 1");
-        cinema.add("Kino 2");
-        cinema.add("Kino 3");
-        cinema.add("Kino 4");
+        cinema.add("Cinema City Manufaktura");
+        cinema.add("Helios Sukcesja");
+        cinema.add("Multikino");
+        cinema.add("Wytwórnia");
     }
     void addTechnology(){
         technology.add("2D");
@@ -233,10 +247,18 @@ public class BookingActivity  extends AppCompatActivity {
         Time.add("15:10");
         Time.add("17:25");
         Time.add("18:35");
-        Time.add("23:45");
+        Time.add("20:45");
     }
 
     public void returnToPreviousScreen(View view) {
         finish();
+    }
+
+    void catchAndPassSeatNumbers() {
+        int[] tempArray = new int[seatNumbers.size()];
+        for(int i = 0; i < seatNumbers.size(); i++) {
+            tempArray[i] = seatNumbers.get(i);
+        }
+        bookingInfo.setSeats(tempArray);
     }
 }

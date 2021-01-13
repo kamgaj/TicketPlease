@@ -72,6 +72,7 @@ public class DescriptionActivity extends AppCompatActivity {
             public void onClick(View view) {
                 if(ready){
                     Intent intent=new Intent(DescriptionActivity.this,BookingActivity.class);
+                    intent.putExtra("movieTitle", getIntent().getStringExtra("Movie_title"));
                     startActivity(intent);
                 }else {
                     Toast.makeText(getApplicationContext(), "Plakat nie został w pełni załadowany", Toast.LENGTH_LONG).show();
