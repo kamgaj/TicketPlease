@@ -63,9 +63,25 @@ public class BookingActivity  extends AppCompatActivity {
         bookingInfo.setMovieName(titleFromIntent);
 
         Toolbar buttonNext = (Toolbar) findViewById(R.id.toolbarUPDown);
+        TextView CinemaText=findViewById(R.id.CinemaText);
+        TextView time=findViewById(R.id.TimeMovieText);
+        TextView techText=findViewById(R.id.TechnologyText);
         buttonNext.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                if(CinemaText.getText().toString().trim().equals("Kino")){
+                    Toast.makeText(getApplicationContext(), "Aby kontynuować, wybierz kino", Toast.LENGTH_LONG).show();
+                }
+                else if(techText.getText().toString().trim().equals("Technologia")){
+                    Toast.makeText(getApplicationContext(), "Aby kontynuować, wybierz technologię", Toast.LENGTH_LONG).show();
+                }
+                else if(time.getText().toString().trim().equals("Godzina")){
+                    Toast.makeText(getApplicationContext(), "Aby kontynuować, wybierz godzinę", Toast.LENGTH_LONG).show();
+                }
+                else if(tickets==0){
+                    Toast.makeText(getApplicationContext(), "Aby kontynuować, wybierz miejsce", Toast.LENGTH_LONG).show();
+                }
+                else {
                 bookingInfo.setSeats(seatNumbers);
                 pushBookingToBase(bookingInfo);
 
@@ -73,6 +89,7 @@ public class BookingActivity  extends AppCompatActivity {
                 intent.putExtra("Tickets", String.valueOf(tickets));
                 intent.putExtra("Date", readyDate);
                 startActivity(intent);
+                }
             }
         });
 
@@ -104,7 +121,6 @@ public class BookingActivity  extends AppCompatActivity {
                 datePickerDialog.show();
             }
         });
-        TextView time=findViewById(R.id.TimeMovieText);
         Chip timeChip=findViewById(R.id.TimeFilm);
         timeChip.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -124,7 +140,6 @@ public class BookingActivity  extends AppCompatActivity {
             }
         });
         Chip Cinema = findViewById(R.id.cinema);
-        TextView CinemaText=findViewById(R.id.CinemaText);
         Cinema.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -144,7 +159,6 @@ public class BookingActivity  extends AppCompatActivity {
         });
         addTechnology();
         Chip Tech = findViewById(R.id.technology);
-        TextView techText=findViewById(R.id.TechnologyText);
         Tech.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
