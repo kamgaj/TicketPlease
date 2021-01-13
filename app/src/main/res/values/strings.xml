@@ -75,12 +75,19 @@
     <string name="passwdReset">Email z linkiem do resetu hasła został wysłany</string>
 
     <string-array name="genres">
-        <item>Kryminalny</item>
-        <item>Dramat</item>
-        <item>Komedia</item>
         <item>Akcja</item>
+        <item>Animacja</item>
+        <item>Dramat</item>
+        <item>Familijny</item>
+        <item>Horror</item>
+        <item>Komedia</item>
+        <item>Kryminał</item>
+        <item>Obyczajowy</item>
+        <item>Postapo</item>
+        <item>Przygodowy</item>
         <item>Sci-Fi</item>
         <item>Sensacyjny</item>
+        <item>Superhero</item>
         <item>Thriller</item>
     </string-array>
 
