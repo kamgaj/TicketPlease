@@ -20,6 +20,7 @@ import android.widget.LinearLayout;
 import android.widget.ListAdapter;
 import android.widget.TextView;
 import android.widget.Toast;
+import androidx.appcompat.widget.Toolbar;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
@@ -48,19 +49,17 @@ public class BookingActivity  extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.booking_page);
-        ImageView buttonNext;
-        buttonNext = (ImageView) findViewById(R.id.imageView5);
+        Toolbar buttonNext = (Toolbar) findViewById(R.id.toolbarUPDown);
         buttonNext.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View view) {
-                //Toast.makeText(getApplicationContext(), String.valueOf(tickets)+"  i   "+userChoice.toString(), Toast.LENGTH_LONG).show();
-
+            public void onClick(View v) {
                 Intent intent = new Intent(BookingActivity.this, SummaryActivity.class);
                 intent.putExtra("Tickets", String.valueOf(tickets));
                 intent.putExtra("Date", readyDate);
                 startActivity(intent);
             }
         });
+
         AddBookedBefore();
         addButtons();
         addCinema();
