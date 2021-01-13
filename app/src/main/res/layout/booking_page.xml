@@ -161,7 +161,7 @@
         android:layout_height="19dp"
         android:layout_marginStart="4dp"
         android:layout_marginEnd="4dp"
-        android:text="Technlogia"
+        android:text="Technologia"
         app:layout_constraintBottom_toBottomOf="@+id/technology"
         app:layout_constraintEnd_toEndOf="@+id/technology"
         app:layout_constraintStart_toStartOf="@+id/technology"
