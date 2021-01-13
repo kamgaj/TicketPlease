@@ -199,7 +199,9 @@ public class BookingActivity  extends AppCompatActivity {
         linearLayout = findViewById(R.id.seatPleace);
         LayoutInflater layoutInflater = LayoutInflater.from(this);
         ArrayList<Button> buttons = new ArrayList<>();
-
+        TextView CinemaText=findViewById(R.id.CinemaText);
+        TextView time=findViewById(R.id.TimeMovieText);
+        TextView techText=findViewById(R.id.TechnologyText);
         for (int i = 0; i < 5; i++) {
             LinearLayout row = new LinearLayout(this);
             row.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.FILL_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT));
@@ -214,19 +216,30 @@ public class BookingActivity  extends AppCompatActivity {
                 button.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
+                        if(CinemaText.getText().toString().trim().equals("Kino")){
+                            Toast.makeText(getApplicationContext(), "Wybierz kino", Toast.LENGTH_LONG).show();
+                        }
+                        else if(techText.getText().toString().trim().equals("Technologia")){
+                            Toast.makeText(getApplicationContext(), "Wybierz technologię", Toast.LENGTH_LONG).show();
+                        }
+                        else if(time.getText().toString().trim().equals("Godzina")){
+                            Toast.makeText(getApplicationContext(), "Wybierz godzinę", Toast.LENGTH_LONG).show();
+                        }
+                        else{
+                            if(button.getTag()=="1"){
+                                button.setBackgroundColor(getResources().getColor(R.color.white));
+                                button.setTag("0");
+                                userChoice.remove(String.valueOf(7*finalI + finalJ));
+                                tickets--;
 
-                        if(button.getTag()=="1"){
-                            button.setBackgroundColor(getResources().getColor(R.color.white));
-                            button.setTag("0");
-                            userChoice.remove(String.valueOf(7*finalI + finalJ));
-                            tickets--;
-
-                        }else {
-                            button.setBackgroundColor(getResources().getColor(R.color.mainColor));
-                            button.setTag("1");
-                            userChoice.add(String.valueOf(7*finalI + finalJ));
-                            seatNumbers.add(7*finalI + finalJ);
-                            tickets++;
+                            }
+                            else {
+                                button.setBackgroundColor(getResources().getColor(R.color.mainColor));
+                                button.setTag("1");
+                                userChoice.add(String.valueOf(7*finalI + finalJ));
+                                seatNumbers.add(7*finalI + finalJ);
+                                tickets++;
+                            }
                         }
                     }
                 });
