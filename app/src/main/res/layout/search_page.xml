@@ -152,7 +152,7 @@
 
     <TextView
         android:id="@+id/NickName"
-        android:layout_width="wrap_content"
+        android:layout_width="191dp"
         android:layout_height="wrap_content"
         android:text="@string/wyszukiwarka"
         android:textColor="#FFFFFF"
@@ -161,7 +161,7 @@
         app:layout_constraintEnd_toEndOf="@+id/toolbarUP"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/toolbarUP"
-        app:layout_constraintVertical_bias="1.0" />
+        app:layout_constraintVertical_bias="0.47" />
 
     <ListView
         android:id="@+id/searchListView"
