@@ -66,8 +66,13 @@ public class ProfileActivity extends AppCompatActivity {
         firebaseAuth = FirebaseAuth.getInstance();
         firebaseAuth.addAuthStateListener(authStateListener);
         TextView username=findViewById(R.id.NickName);
-        username.setText(Objects.requireNonNull(firebaseAuth.getCurrentUser()).getEmail());
-        //username.setText(Objects.requireNonNull(firebaseAuth.getCurrentUser()).getDisplayName());
+        String login= (firebaseAuth.getCurrentUser()).getDisplayName();
+        if (login.length()!= 0) {
+            username.setText(login);
+        }
+        else {
+            username.setText(Objects.requireNonNull(firebaseAuth.getCurrentUser()).getEmail());
+        }
         TextView logout = findViewById(R.id.logoutButton);
         logout.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -77,10 +82,8 @@ public class ProfileActivity extends AppCompatActivity {
             }
         });
 
-        FirebaseAuth mFirebaseAuth = FirebaseAuth.getInstance();
         storageReference = FirebaseStorage.getInstance().getReference();
-        uID = Objects.requireNonNull(mFirebaseAuth.getCurrentUser()).getUid();
-
+        uID = Objects.requireNonNull(firebaseAuth.getCurrentUser()).getUid();
         //Downloading user picture from Firebase
         StorageReference profileRef = storageReference.child("User_profile_pictures/" + uID + "/profile.jpg");
         profileRef.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
