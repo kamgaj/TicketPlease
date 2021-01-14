@@ -120,7 +120,7 @@ public class BookingActivity  extends AppCompatActivity {
                         bookingInfo.setDate(readyDate);
                     }
                 }, day, month, year);
-                datePickerDialog.getDatePicker().setMinDate(calendar.getTimeInMillis());
+                datePickerDialog.getDatePicker().setMinDate(Calendar.getInstance().getTimeInMillis());
                 datePickerDialog.updateDate(year, month, day);
 
                 datePickerDialog.show();
