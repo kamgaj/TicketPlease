@@ -17,22 +17,28 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.widget.Toolbar;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
 
+import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
 import com.google.android.material.chip.Chip;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
 
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 import java.util.Objects;
+import java.util.stream.Collectors;
 
 
 import jp.wasabeef.blurry.Blurry;
@@ -48,12 +54,14 @@ public class BookingActivity  extends AppCompatActivity {
     int tickets=0;
     private BookingInfo bookingInfo;
     List<Integer> seatNumbers = new ArrayList<>();
+    FirebaseFirestore db;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.booking_page);
 
+        db = FirebaseFirestore.getInstance();
         bookingInfo = new BookingInfo();
         bookingInfo.setDate(readyDate);
         bookingInfo.setUserID(Objects.requireNonNull(FirebaseAuth.getInstance().getCurrentUser()).getUid());
@@ -92,8 +100,6 @@ public class BookingActivity  extends AppCompatActivity {
             }
         });
 
-        //AddBookedBefore();
-        //addButtons();
         addCinema();
         addTime();
         TextView dateText=findViewById(R.id.dateMovieText);
@@ -243,16 +249,9 @@ public class BookingActivity  extends AppCompatActivity {
 
             linearLayout.addView(row);
         }
-        for(int i=0;i<alreadyBooked.size();i++){
-            buttons.get(alreadyBooked.get(i)).setEnabled(false);
-            buttons.get(alreadyBooked.get(i)).setBackgroundColor(getResources().getColor(R.color.black));
-        }
+        fetchAllBookingsForCurrentMovie(buttons);
     }
-    void AddBookedBefore(){
-        alreadyBooked.add(5);
-        alreadyBooked.add(6);
-        alreadyBooked.add(20);
-    }
+
     void addCinema(){
         cinema.add("Cinema City Manufaktura");
         cinema.add("Helios Sukcesja");
@@ -287,5 +286,44 @@ public class BookingActivity  extends AppCompatActivity {
                         Log.d("BookingActivity --------- ", "DocumentSnapshot written with ID: " + documentReference.getId());
                     }
                 });
+    }
+
+
+    void fetchAllBookingsForCurrentMovie(ArrayList<Button> buttons) {
+        db.collection("Bookings")
+                .whereEqualTo("movieName", bookingInfo.getMovieName())
+                .whereEqualTo("cinemaName", bookingInfo.getCinemaName())
+                .whereEqualTo("date", bookingInfo.getDate())
+                .whereEqualTo("technology", bookingInfo.getTechnology())
+                .whereEqualTo("time", bookingInfo.getTime())
+                .get()
+                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                        if(task.isSuccessful()) {
+                            for(QueryDocumentSnapshot document : Objects.requireNonNull(task.getResult())) {
+                                Log.d("BookingActivity --------- ", "Success");
+                                List<Long> seats = (List<Long>) document.get("seats");
+                                List<Integer> temp = seats.stream()
+                                        .map(Long::intValue)
+                                        .collect(Collectors.toList());
+                                alreadyBooked.addAll(temp);
+                                printBookedSeats();
+                            }
+
+                            for(int i = 0; i < alreadyBooked.size(); i++) {
+                                buttons.get(alreadyBooked.get(i)).setEnabled(false);
+                                buttons.get(alreadyBooked.get(i)).setBackgroundColor(getResources().getColor(R.color.black));
+                            }
+                        } else {
+                            Log.d("BookingActivity --------- ", "Failed to fetch bookings");
+                        }
+                    }
+                });
+    }
+    void printBookedSeats() {
+        for(int i = 0; i < alreadyBooked.size(); i++) {
+            Log.d("Seats ", String.valueOf(alreadyBooked.get(i)));
+        }
     }
 }
