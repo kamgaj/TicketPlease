@@ -118,6 +118,10 @@ public class BookingActivity  extends AppCompatActivity {
                         readyDate = String.valueOf(i2) + "." + String.valueOf(i1 + 1) + "." + String.valueOf(i);
                         dateText.setText(readyDate);
                         bookingInfo.setDate(readyDate);
+                        if(!CinemaText.getText().toString().trim().equals("Kino") && !techText.getText().toString().trim().equals("Technologia") && !time.getText().toString().trim().equals("Godzina")){
+                            clearBookedSeats();
+                            addButtons();
+                        }
                     }
                 }, day, month, year);
                 datePickerDialog.getDatePicker().setMinDate(Calendar.getInstance().getTimeInMillis());
