@@ -8,7 +8,6 @@ import android.provider.MediaStore;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.RadioButton;
@@ -25,7 +24,6 @@ import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 import com.google.firebase.storage.FirebaseStorage;
@@ -61,7 +59,7 @@ public class ProfileActivity extends AppCompatActivity {
     private StorageReference storageReference;
     private String uID;
     private ImageView profilePicture;
-    private FirebaseFirestore db= FirebaseFirestore.getInstance();
+    private final FirebaseFirestore db= FirebaseFirestore.getInstance();
 
     ArrayList<ProfileFilmListItem> filmsArray = new ArrayList<>();
     @Override

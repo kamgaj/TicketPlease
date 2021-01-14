@@ -7,28 +7,17 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
 
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.gson.JsonArray;
-import com.google.gson.JsonElement;
-import com.google.gson.JsonObject;
 import com.google.zxing.WriterException;
 
 import org.json.JSONException;
 import org.json.JSONObject;
-import org.json.JSONStringer;
-import org.w3c.dom.Text;
 
 import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Iterator;
 import java.util.List;
-import java.util.ListIterator;
-import java.util.stream.Collectors;
 
 import androidmads.library.qrgenearator.QRGContents;
 import androidmads.library.qrgenearator.QRGEncoder;
@@ -51,15 +40,7 @@ public class TicketActivity extends AppCompatActivity {
         test.add(2);
         test.add(3);
         generateQRPage(1,"Test","13.02.2020","12:15",3,"Cinema",test);
-        //addNoTicketMessage();
-        /*try {
-            // Getting QR-Code as Bitmap
-            bitmap = qrgEncoder.encodeAsBitmap();
-            // Setting Bitmap to ImageView
-            qrImage.setImageBitmap(bitmap);
-        } catch (WriterException e) {
-           ;
-        }*/
+
         ImageView Profile;
         Profile = (ImageView) findViewById(R.id.profileButton);
         Profile.setOnClickListener(new View.OnClickListener() {

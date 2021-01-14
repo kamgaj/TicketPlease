@@ -18,16 +18,12 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
-import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseAuthException;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.UserProfileChangeRequest;
-import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.Objects;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 
 
@@ -50,7 +46,6 @@ public class RegisterActivity extends AppCompatActivity {
         EditText passwordEdit = findViewById(R.id.password);
 
         mFirebaseAuth = FirebaseAuth.getInstance(); //opening connection with firebase authentication module
-        FirebaseFirestore fStore = FirebaseFirestore.getInstance(); // opening connection with firebase
 
         TextView show;
         show=findViewById(R.id.showPassword);
