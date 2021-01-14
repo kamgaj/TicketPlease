@@ -88,25 +88,30 @@ public class LoginActivity extends AppCompatActivity {
                         mFirebaseAuth.signInWithEmailAndPassword(email, password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                             //@Override
                             public void onComplete (@NonNull Task < AuthResult > task) {
-                                mFirebaseAuth.getCurrentUser().reload();
+                                //mFirebaseAuth.getCurrentUser().reload();
                                 FirebaseUser user = mFirebaseAuth.getCurrentUser();
                                 //checking if email was verified
-                                if(user.isEmailVerified()) {
-                                    //if everything is ok we go to the MainActivity
-                                    if (task.isSuccessful()) {
-                                        Intent goToHome = new Intent(LoginActivity.this, HomeActivity.class);
-                                        goToHome.putExtra("disableBackButton", 7312);
-                                        startActivity(goToHome);
+                                if(user!=null){
+                                    if(user.isEmailVerified()) {
+                                        //if everything is ok we go to the MainActivity
+                                        if (task.isSuccessful()) {
+                                            Intent goToHome = new Intent(LoginActivity.this, HomeActivity.class);
+                                            goToHome.putExtra("disableBackButton", 7312);
+                                            startActivity(goToHome);
+                                        }
+                                        //if not then we got an Error Toast
+                                        else {
+                                            Toast.makeText(getApplicationContext(), "Email lub hasło są niepoprawne", Toast.LENGTH_LONG).show();
+                                        }
                                     }
-                                    //if not then we got an Error Toast
-                                    else {
-                                        Toast.makeText(getApplicationContext(), "Email lub hasło są niepoprawne", Toast.LENGTH_LONG).show();
+                                    //if email was not verified
+                                    else{
+                                        Toast.makeText(getApplicationContext(), "Email nie został zweryfikowany", Toast.LENGTH_LONG).show();
                                     }
+                                }else {
+                                    Toast.makeText(getApplicationContext(), "Email lub hasło są niepoprawne", Toast.LENGTH_LONG).show();
                                 }
-                                //if email was not verified
-                                else{
-                                    Toast.makeText(getApplicationContext(), "Email nie został zweryfikowany", Toast.LENGTH_LONG).show();
-                                }
+
                             }
 
                         });
