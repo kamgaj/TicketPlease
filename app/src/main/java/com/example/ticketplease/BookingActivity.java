@@ -140,6 +140,7 @@ public class BookingActivity  extends AppCompatActivity {
                         bookingInfo.setTime(t[i]);
                         dialogInterface.dismiss();
                         if(!CinemaText.getText().toString().trim().equals("Kino") && !techText.getText().toString().trim().equals("Technologia")){
+                            clearBookedSeats();
                             addButtons();
                         }
                     }
@@ -161,6 +162,7 @@ public class BookingActivity  extends AppCompatActivity {
                         bookingInfo.setCinemaName(t[i]);
                         dialogInterface.dismiss();
                         if(!techText.getText().toString().trim().equals("Technologia") && !time.getText().toString().trim().equals("Godzina")){
+                            clearBookedSeats();
                             addButtons();
                         }
                     }
@@ -183,6 +185,7 @@ public class BookingActivity  extends AppCompatActivity {
                         bookingInfo.setTechnology(t[i]);
                         dialogInterface.dismiss();
                         if(!CinemaText.getText().toString().trim().equals("Kino") && !time.getText().toString().trim().equals("Godzina")){
+                            clearBookedSeats();
                             addButtons();
                         }
                     }
@@ -309,7 +312,6 @@ public class BookingActivity  extends AppCompatActivity {
                                         .map(Long::intValue)
                                         .collect(Collectors.toList());
                                 alreadyBooked.addAll(temp);
-                                printBookedSeats();
                             }
 
                             for(int i = 0; i < alreadyBooked.size(); i++) {
@@ -322,9 +324,8 @@ public class BookingActivity  extends AppCompatActivity {
                     }
                 });
     }
-    void printBookedSeats() {
-        for(int i = 0; i < alreadyBooked.size(); i++) {
-            Log.d("Seats ", String.valueOf(alreadyBooked.get(i)));
-        }
+
+    void clearBookedSeats() {
+        alreadyBooked = new ArrayList<>();
     }
 }
