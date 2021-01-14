@@ -2,24 +2,18 @@ package com.example.ticketplease;
 
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
-import android.widget.Toast;
 
 import com.squareup.picasso.Picasso;
 
-import java.io.InputStream;
-import java.net.HttpURLConnection;
-import java.net.URL;
 import java.util.ArrayList;
 
 public class ProfileListView extends BaseAdapter {
     public ArrayList<ProfileFilmListItem> listFilms;
-    private Context context;
+    private final Context context;
 
     public ProfileListView(Context context,ArrayList<ProfileFilmListItem> listFilms) {
         this.context = context;

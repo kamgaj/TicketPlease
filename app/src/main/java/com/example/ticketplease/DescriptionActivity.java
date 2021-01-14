@@ -5,12 +5,10 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
-import android.os.Parcelable;
 import android.text.Html;
 import android.text.SpannableStringBuilder;
 import android.text.Spanned;
 import android.text.method.LinkMovementMethod;
-import android.util.Log;
 import android.view.View;
 import android.view.ViewTreeObserver;
 import android.widget.ImageView;
@@ -205,8 +203,6 @@ public class DescriptionActivity extends AppCompatActivity {
             fo.close();
         } catch (Exception e) {
             e.printStackTrace();
-            fileName = null;
         }
-        //return fileName;
     }
 }

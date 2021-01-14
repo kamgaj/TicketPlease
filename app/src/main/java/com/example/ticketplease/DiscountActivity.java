@@ -1,6 +1,5 @@
 package com.example.ticketplease;
 
-import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
@@ -60,7 +59,7 @@ public class DiscountActivity extends AppCompatActivity {
                                 String path = document.getString("Image_link");
                                 FirebaseStorage storage = FirebaseStorage.getInstance();
 
-                                ref = storage.getReferenceFromUrl(path);
+                                ref = storage.getReferenceFromUrl(Objects.requireNonNull(path));
                                 ref.getBytes(1024 * 1024).addOnSuccessListener(new OnSuccessListener<byte[]>() {
                                     @Override
                                     public void onSuccess(byte[] bytes) {

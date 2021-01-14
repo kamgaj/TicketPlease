@@ -25,7 +25,6 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
-import org.w3c.dom.Text;
 
 public class LoginActivity extends AppCompatActivity {
     EditText loginEdit, passwordEdit;
@@ -86,9 +85,7 @@ public class LoginActivity extends AppCompatActivity {
                     //signing the user
                     {
                         mFirebaseAuth.signInWithEmailAndPassword(email, password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
-                            //@Override
                             public void onComplete (@NonNull Task < AuthResult > task) {
-                                //mFirebaseAuth.getCurrentUser().reload();
                                 FirebaseUser user = mFirebaseAuth.getCurrentUser();
                                 //checking if email was verified
                                 if(user!=null){

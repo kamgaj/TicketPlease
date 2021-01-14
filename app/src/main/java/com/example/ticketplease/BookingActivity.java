@@ -312,7 +312,7 @@ public class BookingActivity  extends AppCompatActivity {
                             for(QueryDocumentSnapshot document : Objects.requireNonNull(task.getResult())) {
                                 Log.d("BookingActivity --------- ", "Success");
                                 List<Long> seats = (List<Long>) document.get("seats");
-                                List<Integer> temp = seats.stream()
+                                List<Integer> temp = Objects.requireNonNull(seats).stream()
                                         .map(Long::intValue)
                                         .collect(Collectors.toList());
                                 alreadyBooked.addAll(temp);
