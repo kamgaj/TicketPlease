@@ -33,12 +33,19 @@ import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 import com.squareup.picasso.Picasso;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.List;
+import java.util.Locale;
 import java.util.Objects;
 
 public class ProfileActivity extends AppCompatActivity {
 
     private FirebaseAuth firebaseAuth;
+    private final static String TAG = "ProfileActivity";
     FirebaseAuth.AuthStateListener authStateListener = new FirebaseAuth.AuthStateListener() {
         @Override
         public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
@@ -118,7 +125,7 @@ public class ProfileActivity extends AppCompatActivity {
             }
         });
 
-        getTopRatedFilms();
+        getBookedFilms();
         TextView settingsProfile;
         settingsProfile=findViewById(R.id.settingsProfile);
         settingsProfile.setOnClickListener(new View.OnClickListener() {
@@ -148,7 +155,7 @@ public class ProfileActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 filmsArray.clear();
-                getNewestFilms();
+                getWatchedFilms();
             }
         });
         RadioButton Booked = (RadioButton) findViewById(R.id.booked);
@@ -156,7 +163,7 @@ public class ProfileActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 filmsArray.clear();
-                getTopRatedFilms();
+                getBookedFilms();
             }
         });
     }
@@ -192,50 +199,125 @@ public class ProfileActivity extends AppCompatActivity {
             }
         });
     }
-    private void getNewestFilms() {
+
+
+    private void getWatchedFilms() {
         storageReference = FirebaseStorage.getInstance().getReference();
+        List<String> movies = new ArrayList<>();
+        Calendar calendar=Calendar.getInstance();
+        String currentDate = calendar.get(Calendar.DAY_OF_MONTH) + "." + (calendar.get(Calendar.MONTH) + 1) + "." + calendar.get(Calendar.YEAR);
+        SimpleDateFormat formatter = new SimpleDateFormat("dd.MM.yyyy", Locale.ENGLISH);
+        try {
+            Date date =  formatter.parse(currentDate);
 
-        db.collection("Movies")
-                .orderBy("Release_date", Query.Direction.DESCENDING)
-                .limit(10)
-                .get()
-                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-                    @Override
-                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                        if(task.isSuccessful()) {
-                            for(QueryDocumentSnapshot document : Objects.requireNonNull(task.getResult())) {
-                                String path = document.getString("Poster_link");
-                                filmsArray.add(new ProfileFilmListItem(document.getString("Title"), document.getString("Description"), path));
-                                Log.d("Zdjecie",path);
-                            }
-                            PrintWatched();
-                        } else {
-                            Log.d("ProfilePage", "Error getting documents: ", task.getException());
-                        }
-                    }
-                });
-    }
-        private void getTopRatedFilms() {
+            db.collection("Bookings")
+                    .whereEqualTo("userID", Objects.requireNonNull(FirebaseAuth.getInstance().getCurrentUser()).getUid())
+                    .get()
+                    .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                        @Override
+                        public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                            if(task.isSuccessful()) {
+                                for(QueryDocumentSnapshot document : Objects.requireNonNull(task.getResult())) {
+                                    String temp = document.getString("date");
+                                    try {
+                                        Date queryDate = formatter.parse(Objects.requireNonNull(temp));
+                                        if(Objects.requireNonNull(date).after(queryDate)) {
+                                            movies.add(document.getString("movieName"));
+                                        }
+                                    } catch (ParseException e) {
+                                        e.printStackTrace();
+                                    }
+                                }
 
-        db.collection("Movies")
-                .orderBy("Rating", Query.Direction.DESCENDING)
-                .limit(10)
-                .get()
-                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-                    @Override
-                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                        if(task.isSuccessful()) {
-                            for(QueryDocumentSnapshot document : Objects.requireNonNull(task.getResult())) {
-                                String path = document.getString("Poster_link");
-                                filmsArray.add(new ProfileFilmListItem(document.getString("Title"), document.getString("Description"), path));
+                                db.collection("Movies")
+                                        .whereIn("Title", movies)
+                                        .get()
+                                        .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                                            @Override
+                                            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                                                if(task.isSuccessful()) {
+                                                    for(QueryDocumentSnapshot document : Objects.requireNonNull(task.getResult())) {
+                                                        String path = document.getString("Poster_link");
+                                                        filmsArray.add(new ProfileFilmListItem(document.getString("Title"), document.getString("Description"), path));
+                                                    }
+                                                    PrintWatched();
+                                                } else {
+                                                    Log.d(TAG, "Watched films, Movie Collection Query FAILS");
+                                                }
+                                            }
+                                        });
+
+
+                            } else {
+                                Log.d(TAG, "Watched films, Bookings Collection Query FAILS");
                             }
-                            PrintWatched();
-                        } else {
-                            Log.d("ProfilePage2", "Error getting documents: ", task.getException());
                         }
-                    }
-                });
+                    });
+
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
     }
+
+    private void getBookedFilms() {
+        storageReference = FirebaseStorage.getInstance().getReference();
+        List<String> movies = new ArrayList<>();
+        Calendar calendar=Calendar.getInstance();
+        String currentDate = calendar.get(Calendar.DAY_OF_MONTH) + "." + (calendar.get(Calendar.MONTH) + 1) + "." + calendar.get(Calendar.YEAR);
+        SimpleDateFormat formatter = new SimpleDateFormat("dd.MM.yyyy", Locale.ENGLISH);
+        try {
+            Date date =  formatter.parse(currentDate);
+
+            db.collection("Bookings")
+                    .whereEqualTo("userID", Objects.requireNonNull(FirebaseAuth.getInstance().getCurrentUser()).getUid())
+                    .get()
+                    .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                        @Override
+                        public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                            if(task.isSuccessful()) {
+                                for(QueryDocumentSnapshot document : Objects.requireNonNull(task.getResult())) {
+                                    String temp = document.getString("date");
+                                    try {
+                                        Date queryDate = formatter.parse(Objects.requireNonNull(temp));
+                                        if(Objects.requireNonNull(date).before(queryDate) || date.equals(queryDate)) {
+                                            movies.add(document.getString("movieName"));
+                                        }
+                                    } catch (ParseException e) {
+                                        e.printStackTrace();
+                                    }
+                                }
+
+                                db.collection("Movies")
+                                        .whereIn("Title", movies)
+                                        .get()
+                                        .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                                            @Override
+                                            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                                                if(task.isSuccessful()) {
+                                                    for(QueryDocumentSnapshot document : Objects.requireNonNull(task.getResult())) {
+                                                        String path = document.getString("Poster_link");
+                                                        filmsArray.add(new ProfileFilmListItem(document.getString("Title"), document.getString("Description"), path));
+                                                    }
+                                                    PrintWatched();
+                                                } else {
+                                                    Log.d(TAG, "Watched films, Movie Collection Query FAILS");
+                                                }
+                                            }
+                                        });
+
+
+                            } else {
+                                Log.d(TAG, "Watched films, Bookings Collection Query FAILS");
+                            }
+                        }
+                    });
+
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+    }
+
+
     void PrintWatched(){
         ListView films;
         ListAdapter listAdapter;
@@ -244,10 +326,4 @@ public class ProfileActivity extends AppCompatActivity {
         films.setAdapter(listAdapter);
     }
 
-//    public void logout(View view){
-//        FirebaseAuth.getInstance().signOut();
-//        Intent logoutIntent = new Intent(ProfileActivity.this,LoginActivity.class);
-//        logoutIntent.putExtra("logoutCode", 2137);
-//        startActivity(logoutIntent);
-//    }
 }
