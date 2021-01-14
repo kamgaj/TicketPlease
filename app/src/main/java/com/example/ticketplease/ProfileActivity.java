@@ -66,8 +66,8 @@ public class ProfileActivity extends AppCompatActivity {
         firebaseAuth = FirebaseAuth.getInstance();
         firebaseAuth.addAuthStateListener(authStateListener);
         TextView username=findViewById(R.id.NickName);
-        String login= (firebaseAuth.getCurrentUser()).getDisplayName();
-        if (login.length()!= 0) {
+        String login= (Objects.requireNonNull(firebaseAuth.getCurrentUser())).getDisplayName()+"";
+        if (login.length()!= 0 && !login.equals("null")) {
             username.setText(login);
         }
         else {
