@@ -211,6 +211,7 @@ public class BookingActivity  extends AppCompatActivity {
     void addButtons(){
         LinearLayout linearLayout;
         linearLayout = findViewById(R.id.seatPleace);
+        linearLayout.removeAllViewsInLayout();
         LayoutInflater layoutInflater = LayoutInflater.from(this);
         ArrayList<Button> buttons = new ArrayList<>();
         for (int i = 0; i < 5; i++) {
