@@ -34,6 +34,7 @@ import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
 import java.io.FileNotFoundException;
+import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
@@ -87,8 +88,11 @@ public class BookingActivity  extends AppCompatActivity {
                 }
                 else if(tickets==0){
                     Toast.makeText(getApplicationContext(), "Aby kontynuować, wybierz miejsce", Toast.LENGTH_LONG).show();
-                }
-                else {
+                }else if(calendar.get(Calendar.DAY_OF_MONTH) == Calendar.getInstance().get(Calendar.DAY_OF_MONTH)&&calendar.get(Calendar
+               .MONTH)==Calendar.getInstance().get(Calendar.MONTH)&&calendar.get(Calendar.YEAR)==Calendar.getInstance().get(Calendar.YEAR)
+                        &LocalTime.now().plusMinutes(30).compareTo(LocalTime.parse(time.getText().toString() + ":00"))>0) {
+                    Toast.makeText(getApplicationContext(), "Do seansu pozostało mniej niż 30 minut. Dokonanie rezerwacji jest niemożliwe", Toast.LENGTH_LONG).show();
+                } else {
                 bookingInfo.setSeats(seatNumbers);
                 pushBookingToBase(bookingInfo);
 
@@ -134,7 +138,25 @@ public class BookingActivity  extends AppCompatActivity {
         timeChip.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                String[] t =Time.toArray(new String[0]);
+               String[] t;
+                List<String> temp=new ArrayList<>();
+                Calendar T=Calendar.getInstance();
+               if(calendar.get(Calendar.DAY_OF_MONTH) == T.get(Calendar.DAY_OF_MONTH)&&calendar.get(Calendar
+               .MONTH)==T.get(Calendar.MONTH)&&calendar.get(Calendar.YEAR)==T.get(Calendar.YEAR)){
+                   LocalTime currentTime=LocalTime.now().plusMinutes(30);
+                   for (int i=0;i<Time.size();i++){
+                       CharSequence timeN=Time.get(i)+":00";
+                       LocalTime timeNew=LocalTime.parse(timeN);
+                       if (currentTime.compareTo(timeNew)<0){
+                           temp.add(Time.get(i));
+                       }
+                   }
+                   t=temp.toArray(new String[0]);
+               }
+                else {
+                   t=Time.toArray(new String[0]);
+               }
+
                 AlertDialog.Builder builder = new AlertDialog.Builder(BookingActivity.this);
                 builder.setTitle("Wybierz godzinę seansu");
                 builder.setSingleChoiceItems(t, -1, new DialogInterface.OnClickListener() {
@@ -328,7 +350,6 @@ public class BookingActivity  extends AppCompatActivity {
                     }
                 });
     }
-
     void clearBookedSeats() {
         alreadyBooked = new ArrayList<>();
     }
