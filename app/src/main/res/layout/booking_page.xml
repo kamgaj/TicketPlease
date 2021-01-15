@@ -110,10 +110,10 @@
 
     <LinearLayout
         android:id="@+id/seatPleace"
-        android:layout_width="292dp"
+        android:layout_width="wrap_content"
         android:layout_height="184dp"
         android:layout_marginBottom="60dp"
-        android:gravity="center_vertical"
+        android:gravity="center|center_vertical"
         android:orientation="vertical"
         app:layout_constraintBottom_toTopOf="@+id/toolbarUPDown"
         app:layout_constraintEnd_toEndOf="parent"
