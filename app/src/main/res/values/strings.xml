@@ -73,6 +73,9 @@
     <string name="release_date">Release date</string>
     <string name="rating">Rating</string>
     <string name="passwdReset">Email z linkiem do resetu hasła został wysłany</string>
+    <string name="technologia">Technologia</string>
+    <string name="data">Data</string>
+    <string name="godzina">Godzina</string>
 
     <string-array name="genres">
         <item>Akcja</item>
