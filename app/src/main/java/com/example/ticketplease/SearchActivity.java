@@ -11,6 +11,7 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.RadioButton;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -33,6 +34,7 @@ public class SearchActivity extends AppCompatActivity {
     ListView searchView;
     RadioButton Title;
     RadioButton Genre;
+    boolean ifGenre=false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -83,7 +85,7 @@ public class SearchActivity extends AppCompatActivity {
             public void onClick(View v) {
                 searchView.setAdapter(titlesArray);
                 search.setEnabled(true);
-
+                ifGenre=false;
                 goToSearchedMovieDescription();
                 }
 
@@ -149,6 +151,17 @@ public class SearchActivity extends AppCompatActivity {
 
     }
 
+    @Override
+    public void onBackPressed(){
+        if(ifGenre==true){
+            Genre.performClick();
+            ifGenre=false;
+        }
+        else{
+            finish();
+        }
+    }
+
     private void getStringFromXML() {
         String[] genresFromXML = getResources().getStringArray(R.array.genres);
         genresArray = new ArrayAdapter<>(getApplicationContext(), android.R.layout.simple_list_item_1, genresFromXML);
@@ -159,6 +172,7 @@ public class SearchActivity extends AppCompatActivity {
         searchView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                ifGenre=true;
                 String selectedGenre = (String) parent.getItemAtPosition(position);
                 db.collection("Movies")
                         .whereArrayContains("Genres", selectedGenre)
