@@ -31,6 +31,28 @@
         app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent" />
 
+    <ImageView
+        android:id="@+id/imageView5"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
+        app:layout_constraintBottom_toBottomOf="@+id/toolbarUPDown"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/toolbarUPDown"
+        app:srcCompat="@drawable/go_forward" />
+
+    <TextView
+        android:id="@+id/NextScreen"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/dalej"
+        android:textColor="#ffffff"
+        android:textSize="30sp"
+        app:layout_constraintBottom_toBottomOf="@+id/toolbarUPDown"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/toolbarUPDown"
+        app:layout_constraintTop_toTopOf="@+id/toolbarUPDown" />
+
     <TextView
         android:id="@+id/BookingName"
         android:layout_width="wrap_content"
@@ -56,141 +78,150 @@
         app:layout_constraintTop_toTopOf="@+id/toolbarUPBooking"
         app:srcCompat="@drawable/go_back" />
 
-    <com.google.android.material.chip.Chip
-        android:id="@+id/cinema"
-        android:layout_width="292dp"
-        android:layout_height="49dp"
-        android:layout_marginTop="44dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.504"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/toolbarUPBooking" />
-
-    <com.google.android.material.chip.Chip
-        android:id="@+id/technology"
-        android:layout_width="292dp"
-        android:layout_height="49dp"
-        android:layout_marginTop="24dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.504"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/cinema" />
-
-    <com.google.android.material.chip.Chip
-        android:id="@+id/dateFilm"
-        android:layout_width="292dp"
-        android:layout_height="49dp"
-        android:layout_marginTop="24dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.495"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/technology" />
-
-    <com.google.android.material.chip.Chip
-        android:id="@+id/TimeFilm"
-        android:layout_width="292dp"
-        android:layout_height="49dp"
-        android:layout_marginTop="24dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.495"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/dateFilm" />
-
-    <ImageButton
-        android:id="@+id/imageButton2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="24dp"
-        android:clickable="false"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.492"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/TimeFilm"
-        app:srcCompat="@drawable/screen" />
-
-    <LinearLayout
-        android:id="@+id/seatPleace"
-        android:layout_width="292dp"
-        android:layout_height="184dp"
-        android:layout_marginBottom="60dp"
-        android:gravity="center_vertical"
-        android:orientation="vertical"
+    <ScrollView
+        android:layout_width="0dp"
+        android:layout_height="0dp"
         app:layout_constraintBottom_toTopOf="@+id/toolbarUPDown"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.495"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imageButton2"
-        app:layout_constraintVertical_bias="0.925" />
+        app:layout_constraintTop_toBottomOf="@+id/toolbarUPBooking">
 
-    <TextView
-        android:id="@+id/NextScreen"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/dalej"
-        android:textColor="#ffffff"
-        android:textSize="30sp"
-        app:layout_constraintBottom_toBottomOf="@+id/toolbarUPDown"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="@+id/toolbarUPDown"
-        app:layout_constraintTop_toTopOf="@+id/toolbarUPDown" />
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/scrollBooking"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintBottom_toTopOf="@+id/toolbarUPDown"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/toolbarUPBooking">
 
-    <ImageView
-        android:id="@+id/imageView5"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="8dp"
-        app:layout_constraintBottom_toBottomOf="@+id/toolbarUPDown"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/toolbarUPDown"
-        app:srcCompat="@drawable/go_forward" />
 
-    <TextView
-        android:id="@+id/CinemaText"
-        android:layout_width="248dp"
-        android:layout_height="19dp"
-        android:layout_marginStart="4dp"
-        android:layout_marginEnd="4dp"
-        android:text="Kino"
-        app:layout_constraintBottom_toBottomOf="@+id/cinema"
-        app:layout_constraintEnd_toEndOf="@+id/cinema"
-        app:layout_constraintStart_toStartOf="@+id/cinema"
-        app:layout_constraintTop_toTopOf="@+id/cinema" />
+            <com.google.android.material.chip.Chip
+                android:id="@+id/cinema"
+                android:layout_width="292dp"
+                android:layout_height="49dp"
+                android:layout_marginTop="44dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.504"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
 
-    <TextView
-        android:id="@+id/TechnologyText"
-        android:layout_width="248dp"
-        android:layout_height="19dp"
-        android:layout_marginStart="4dp"
-        android:layout_marginEnd="4dp"
-        android:text="Technologia"
-        app:layout_constraintBottom_toBottomOf="@+id/technology"
-        app:layout_constraintEnd_toEndOf="@+id/technology"
-        app:layout_constraintStart_toStartOf="@+id/technology"
-        app:layout_constraintTop_toTopOf="@+id/technology" />
+            <com.google.android.material.chip.Chip
+                android:id="@+id/technology"
+                android:layout_width="292dp"
+                android:layout_height="49dp"
+                android:layout_marginTop="24dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.504"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/cinema" />
 
-    <TextView
-        android:id="@+id/dateMovieText"
-        android:layout_width="243dp"
-        android:layout_height="19dp"
-        android:layout_marginStart="4dp"
-        android:layout_marginEnd="4dp"
-        android:text="Data"
-        app:layout_constraintBottom_toBottomOf="@+id/dateFilm"
-        app:layout_constraintEnd_toEndOf="@+id/dateFilm"
-        app:layout_constraintStart_toStartOf="@+id/dateFilm"
-        app:layout_constraintTop_toTopOf="@+id/dateFilm" />
+            <com.google.android.material.chip.Chip
+                android:id="@+id/dateFilm"
+                android:layout_width="292dp"
+                android:layout_height="49dp"
+                android:layout_marginTop="24dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.495"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/technology" />
 
-    <TextView
-        android:id="@+id/TimeMovieText"
-        android:layout_width="245dp"
-        android:layout_height="17dp"
-        android:layout_marginStart="4dp"
-        android:layout_marginEnd="4dp"
-        android:text="Godzina"
-        app:layout_constraintBottom_toBottomOf="@+id/TimeFilm"
-        app:layout_constraintEnd_toEndOf="@+id/TimeFilm"
-        app:layout_constraintHorizontal_bias="0.502"
-        app:layout_constraintStart_toStartOf="@+id/TimeFilm"
-        app:layout_constraintTop_toTopOf="@+id/TimeFilm" />
+            <com.google.android.material.chip.Chip
+                android:id="@+id/TimeFilm"
+                android:layout_width="292dp"
+                android:layout_height="49dp"
+                android:layout_marginTop="24dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.495"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/dateFilm" />
+
+            <ImageButton
+                android:id="@+id/imageButton2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="24dp"
+                android:clickable="false"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.492"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/TimeFilm"
+                app:srcCompat="@drawable/screen" />
+
+            <LinearLayout
+                android:id="@+id/seatPleace"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="24dp"
+                android:gravity="center|center_vertical"
+                android:orientation="vertical"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.495"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/imageButton2" >
+
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/CinemaText"
+                android:layout_width="248dp"
+                android:layout_height="19dp"
+                android:layout_marginStart="4dp"
+                android:layout_marginEnd="4dp"
+                android:text="Kino"
+                app:layout_constraintBottom_toBottomOf="@+id/cinema"
+                app:layout_constraintEnd_toEndOf="@+id/cinema"
+                app:layout_constraintStart_toStartOf="@+id/cinema"
+                app:layout_constraintTop_toTopOf="@+id/cinema" />
+
+            <Space
+                android:layout_width="match_parent"
+                android:layout_height="24dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/seatPleace" />
+
+            <TextView
+                android:id="@+id/TechnologyText"
+                android:layout_width="248dp"
+                android:layout_height="19dp"
+                android:layout_marginStart="4dp"
+                android:layout_marginEnd="4dp"
+                android:text="@string/technologia"
+                app:layout_constraintBottom_toBottomOf="@+id/technology"
+                app:layout_constraintEnd_toEndOf="@+id/technology"
+                app:layout_constraintStart_toStartOf="@+id/technology"
+                app:layout_constraintTop_toTopOf="@+id/technology" />
+
+            <TextView
+                android:id="@+id/dateMovieText"
+                android:layout_width="243dp"
+                android:layout_height="19dp"
+                android:layout_marginStart="4dp"
+                android:layout_marginEnd="4dp"
+                android:text="@string/data"
+                app:layout_constraintBottom_toBottomOf="@+id/dateFilm"
+                app:layout_constraintEnd_toEndOf="@+id/dateFilm"
+                app:layout_constraintStart_toStartOf="@+id/dateFilm"
+                app:layout_constraintTop_toTopOf="@+id/dateFilm" />
+
+            <TextView
+                android:id="@+id/TimeMovieText"
+                android:layout_width="245dp"
+                android:layout_height="17dp"
+                android:layout_marginStart="4dp"
+                android:layout_marginEnd="4dp"
+                android:text="@string/godzina"
+                app:layout_constraintBottom_toBottomOf="@+id/TimeFilm"
+                app:layout_constraintEnd_toEndOf="@+id/TimeFilm"
+                app:layout_constraintHorizontal_bias="0.502"
+                app:layout_constraintStart_toStartOf="@+id/TimeFilm"
+                app:layout_constraintTop_toTopOf="@+id/TimeFilm" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </ScrollView>
+
+
+
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>
