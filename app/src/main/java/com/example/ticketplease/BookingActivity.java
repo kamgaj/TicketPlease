@@ -34,6 +34,7 @@ import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
 import java.io.FileNotFoundException;
+import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -129,6 +130,7 @@ public class BookingActivity  extends AppCompatActivity {
                     }
                 }, day, month, year);
                 datePickerDialog.getDatePicker().setMinDate(Calendar.getInstance().getTimeInMillis());
+                datePickerDialog.getDatePicker().setMaxDate(Calendar.getInstance().getTimeInMillis()+(1000*60*60*24*14));
                 datePickerDialog.updateDate(year, month, day);
 
                 datePickerDialog.show();
