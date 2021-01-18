@@ -295,7 +295,8 @@ public class ProfileActivity extends AppCompatActivity {
                                                 if(task.isSuccessful()) {
                                                     for(QueryDocumentSnapshot document : Objects.requireNonNull(task.getResult())) {
                                                         String path = document.getString("Poster_link");
-                                                        filmsArray.add(new ProfileFilmListItem(document.getString("Title"), document.getString("Description"), path, 10));
+                                                        Random rand = new Random();
+                                                        filmsArray.add(new ProfileFilmListItem(document.getString("Title"), document.getString("Description"), path, rand.nextInt(50)));
                                                     }
                                                     PrintWatched(1);
                                                 } else {
