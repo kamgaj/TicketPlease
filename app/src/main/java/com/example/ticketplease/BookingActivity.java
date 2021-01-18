@@ -352,5 +352,7 @@ public class BookingActivity  extends AppCompatActivity {
     }
     void clearBookedSeats() {
         alreadyBooked = new ArrayList<>();
+        seatNumbers=new ArrayList<>();
+        tickets=0;
     }
 }
