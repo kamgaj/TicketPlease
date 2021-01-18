@@ -39,6 +39,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 import java.util.Objects;
+import java.util.Random;
 
 public class ProfileActivity extends AppCompatActivity {
 
@@ -236,9 +237,9 @@ public class ProfileActivity extends AppCompatActivity {
                                                 if(task.isSuccessful()) {
                                                     for(QueryDocumentSnapshot document : Objects.requireNonNull(task.getResult())) {
                                                         String path = document.getString("Poster_link");
-                                                        filmsArray.add(new ProfileFilmListItem(document.getString("Title"), document.getString("Description"), path));
+                                                        filmsArray.add(new ProfileFilmListItem(document.getString("Title"), document.getString("Description"), path,0));
                                                     }
-                                                    PrintWatched();
+                                                    PrintWatched(0);
                                                 } else {
                                                     Log.d(TAG, "Watched films, Movie Collection Query FAILS");
                                                 }
@@ -294,9 +295,10 @@ public class ProfileActivity extends AppCompatActivity {
                                                 if(task.isSuccessful()) {
                                                     for(QueryDocumentSnapshot document : Objects.requireNonNull(task.getResult())) {
                                                         String path = document.getString("Poster_link");
-                                                        filmsArray.add(new ProfileFilmListItem(document.getString("Title"), document.getString("Description"), path));
+                                                        Random rand = new Random();
+                                                        filmsArray.add(new ProfileFilmListItem(document.getString("Title"), document.getString("Description"), path, rand.nextInt(50)));
                                                     }
-                                                    PrintWatched();
+                                                    PrintWatched(1);
                                                 } else {
                                                     Log.d(TAG, "Watched films, Movie Collection Query FAILS");
                                                 }
@@ -316,11 +318,11 @@ public class ProfileActivity extends AppCompatActivity {
     }
 
 
-    void PrintWatched(){
+    void PrintWatched(int mode){
         ListView films;
         ListAdapter listAdapter;
         films=findViewById(R.id.ListFilms);
-        listAdapter = new ProfileListView(this,filmsArray);
+        listAdapter = new ProfileListView(this,filmsArray,mode);
         films.setAdapter(listAdapter);
     }
 
