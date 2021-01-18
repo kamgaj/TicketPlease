@@ -62,12 +62,12 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="32dp"
         android:layout_marginTop="16dp"
-        android:text="Data"
-        android:textSize="16sp"
         android:textStyle="bold"
+        android:text="Data:"
+        android:textSize="16sp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/TimeMovieQR"
-        tools:textColor="#000000" />
+        android:textColor="#000000" />
 
     <TextView
         android:id="@+id/numberOfTickets"
@@ -85,9 +85,10 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="32dp"
         android:layout_marginTop="16dp"
-        android:text="Ilość biletów"
+        android:text="Ilość biletów:"
         android:textColor="#000000"
         android:textStyle="bold"
+        android:textSize="16sp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/dateText" />
 
@@ -97,7 +98,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="32dp"
         android:layout_marginTop="16dp"
-        android:text="Kino"
+        android:text="Kino:"
         android:textColor="#000000"
         android:textSize="16sp"
         android:textStyle="bold"
@@ -144,7 +145,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="32dp"
-        android:text="Godzina"
+        android:text="Godzina:"
         android:textColor="#000000"
         android:textSize="16sp"
         android:textStyle="bold"

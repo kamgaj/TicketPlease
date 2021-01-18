@@ -161,7 +161,7 @@ public class ProfileActivity extends AppCompatActivity {
         Booked.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                filmsArray.clear();
+                filmsArray = new ArrayList<>();
                 getBookedFilms();
             }
         });
@@ -248,7 +248,8 @@ public class ProfileActivity extends AppCompatActivity {
                                             });
                                 } catch (IllegalArgumentException iae) {
                                     Log.e(TAG, "Watched array was empty");
-                                    filmsArray.clear();
+                                    filmsArray = new ArrayList<>();
+                                    PrintWatched(0);
                                 }
 
                             } else {
@@ -311,7 +312,8 @@ public class ProfileActivity extends AppCompatActivity {
                                             });
                                 } catch (IllegalArgumentException iae) {
                                     Log.e(TAG, "Booked array was empty");
-                                    filmsArray.clear();
+                                    filmsArray = new ArrayList<>();
+                                    PrintWatched(1);
                                 }
 
                             } else {
