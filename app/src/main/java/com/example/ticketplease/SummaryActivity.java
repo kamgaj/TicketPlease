@@ -28,6 +28,7 @@ public class SummaryActivity extends AppCompatActivity {
         String numberOfTickets = getIntent().getStringExtra("Tickets");
         String dateTicket = getIntent().getStringExtra("Date");
         String timeOnTicket = getIntent().getStringExtra("Time");
+        String title = getIntent().getStringExtra("Title");
 
         TextView text = findViewById(R.id.NumberOfTickets);
 
@@ -50,7 +51,7 @@ public class SummaryActivity extends AppCompatActivity {
         });
 
 
-        setNotification(setCalendar(dateTicket, timeOnTicket));
+        setNotification(setCalendar(dateTicket, timeOnTicket), title, timeOnTicket);
     }
 
     @Override
@@ -71,9 +72,10 @@ public class SummaryActivity extends AppCompatActivity {
         }
     }
 
-    private void setNotification(Calendar cal) {
+    private void setNotification(Calendar cal, String title, String timeOnTicket) {
         Intent intent = new Intent(SummaryActivity.this, ReminderBroadcast.class);
         PendingIntent pendingIntent = PendingIntent.getBroadcast(SummaryActivity.this, 13, intent, 0);
+        transferDataToBroadcastReceiver(title, timeOnTicket);
 
         AlarmManager alarmManager = (AlarmManager) getSystemService(ALARM_SERVICE);
         alarmManager.set(AlarmManager.RTC_WAKEUP, cal.getTimeInMillis(), pendingIntent);
@@ -102,5 +104,12 @@ public class SummaryActivity extends AppCompatActivity {
         Log.d(TAG, String.valueOf(cal.get(Calendar.MONTH)));
 
         return cal;
+    }
+
+    public void transferDataToBroadcastReceiver(String title, String timeOnTicket) {
+        Intent intent = new Intent("my.action.string");
+        intent.putExtra("Title", title);
+        intent.putExtra("Time", timeOnTicket);
+        sendBroadcast(intent);
     }
 }
