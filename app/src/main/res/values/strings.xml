@@ -76,6 +76,7 @@
     <string name="technologia">Technologia</string>
     <string name="data">Data</string>
     <string name="godzina">Godzina</string>
+    <string name="placeholder_text">Placeholder Text</string>
 
     <string-array name="genres">
         <item>Akcja</item>

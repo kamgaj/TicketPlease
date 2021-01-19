@@ -15,4 +15,5 @@
     <color name="colorAccent">#00FF2A</color>
 
     <color name="textColor">#000000</color>
+    <color name="notificationBackground">#CCCACA</color>
 </resources>
