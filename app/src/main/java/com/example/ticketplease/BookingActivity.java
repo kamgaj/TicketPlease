@@ -100,6 +100,8 @@ public class BookingActivity  extends AppCompatActivity {
                 Intent intent = new Intent(BookingActivity.this, SummaryActivity.class);
                 intent.putExtra("Tickets", String.valueOf(tickets));
                 intent.putExtra("Date", readyDate);
+                intent.putExtra("Time", bookingInfo.getTime());
+                intent.putExtra("Title", bookingInfo.getMovieName());
                 startActivity(intent);
                 }
             }
