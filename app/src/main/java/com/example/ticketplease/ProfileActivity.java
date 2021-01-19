@@ -161,7 +161,7 @@ public class ProfileActivity extends AppCompatActivity {
         Booked.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                filmsArray.clear();
+                filmsArray = new ArrayList<>();
                 getBookedFilms();
             }
         });
@@ -228,24 +228,30 @@ public class ProfileActivity extends AppCompatActivity {
                                     }
                                 }
 
-                                db.collection("Movies")
-                                        .whereIn("Title", movies)
-                                        .get()
-                                        .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-                                            @Override
-                                            public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                                                if(task.isSuccessful()) {
-                                                    for(QueryDocumentSnapshot document : Objects.requireNonNull(task.getResult())) {
-                                                        String path = document.getString("Poster_link");
-                                                        filmsArray.add(new ProfileFilmListItem(document.getString("Title"), document.getString("Description"), path,0));
+                                try {
+                                    db.collection("Movies")
+                                            .whereIn("Title", movies)
+                                            .get()
+                                            .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                                                @Override
+                                                public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                                                    if (task.isSuccessful()) {
+                                                        for (QueryDocumentSnapshot document : Objects.requireNonNull(task.getResult())) {
+                                                            String path = document.getString("Poster_link");
+                                                            String id = document.getId();
+                                                            filmsArray.add(new ProfileFilmListItem(document.getString("Title"), document.getString("Description"), path, id));
+                                                        }
+                                                        PrintWatched(0);
+                                                    } else {
+                                                        Log.d(TAG, "Watched films, Movie Collection Query FAILS");
                                                     }
-                                                    PrintWatched(0);
-                                                } else {
-                                                    Log.d(TAG, "Watched films, Movie Collection Query FAILS");
                                                 }
-                                            }
-                                        });
-
+                                            });
+                                } catch (IllegalArgumentException iae) {
+                                    Log.e(TAG, "Watched array was empty");
+                                    filmsArray = new ArrayList<>();
+                                    PrintWatched(0);
+                                }
 
                             } else {
                                 Log.d(TAG, "Watched films, Bookings Collection Query FAILS");
@@ -286,25 +292,30 @@ public class ProfileActivity extends AppCompatActivity {
                                     }
                                 }
 
-                                db.collection("Movies")
-                                        .whereIn("Title", movies)
-                                        .get()
-                                        .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-                                            @Override
-                                            public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                                                if(task.isSuccessful()) {
-                                                    for(QueryDocumentSnapshot document : Objects.requireNonNull(task.getResult())) {
-                                                        String path = document.getString("Poster_link");
-                                                        Random rand = new Random();
-                                                        filmsArray.add(new ProfileFilmListItem(document.getString("Title"), document.getString("Description"), path, rand.nextInt(50)));
+                                try {
+                                    db.collection("Movies")
+                                            .whereIn("Title", movies)
+                                            .get()
+                                            .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                                                @Override
+                                                public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                                                    if (task.isSuccessful()) {
+                                                        for (QueryDocumentSnapshot document : Objects.requireNonNull(task.getResult())) {
+                                                            String path = document.getString("Poster_link");
+                                                            String id = document.getId();
+                                                            filmsArray.add(new ProfileFilmListItem(document.getString("Title"), document.getString("Description"), path, id));
+                                                        }
+                                                        PrintWatched(1);
+                                                    } else {
+                                                        Log.d(TAG, "Watched films, Movie Collection Query FAILS");
                                                     }
-                                                    PrintWatched(1);
-                                                } else {
-                                                    Log.d(TAG, "Watched films, Movie Collection Query FAILS");
                                                 }
-                                            }
-                                        });
-
+                                            });
+                                } catch (IllegalArgumentException iae) {
+                                    Log.e(TAG, "Booked array was empty");
+                                    filmsArray = new ArrayList<>();
+                                    PrintWatched(1);
+                                }
 
                             } else {
                                 Log.d(TAG, "Watched films, Bookings Collection Query FAILS");

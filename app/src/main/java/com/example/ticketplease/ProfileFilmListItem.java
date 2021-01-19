@@ -4,8 +4,8 @@ public class ProfileFilmListItem {
     String Title;
     String Description;
     String Poster;
-    int Id;
-    ProfileFilmListItem(String T, String D, String P, int I){
+    String Id;
+    ProfileFilmListItem(String T, String D, String P, String I){
         Title=T;
         Description=D;
         Poster=P;
