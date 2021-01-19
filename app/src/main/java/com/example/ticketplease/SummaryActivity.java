@@ -73,10 +73,10 @@ public class SummaryActivity extends AppCompatActivity {
 
     private void setNotification(Calendar cal) {
         Intent intent = new Intent(SummaryActivity.this, ReminderBroadcast.class);
-        PendingIntent pendingIntent = PendingIntent.getBroadcast(SummaryActivity.this, 0, intent, 0);
+        PendingIntent pendingIntent = PendingIntent.getBroadcast(SummaryActivity.this, 13, intent, 0);
 
         AlarmManager alarmManager = (AlarmManager) getSystemService(ALARM_SERVICE);
-        alarmManager.setExact(AlarmManager.RTC_WAKEUP, cal.getTimeInMillis(), pendingIntent);
+        alarmManager.set(AlarmManager.RTC_WAKEUP, cal.getTimeInMillis(), pendingIntent);
         Toast.makeText(getApplicationContext(), "Przypomnienie ustawione", Toast.LENGTH_SHORT).show();
     }
 
@@ -88,16 +88,18 @@ public class SummaryActivity extends AppCompatActivity {
         cal.set(Calendar.DAY_OF_MONTH, Integer.parseInt(splitedDate[0]));
         cal.set(Calendar.MONTH, Integer.parseInt(splitedDate[1]) - 1);
         cal.set(Calendar.YEAR, Integer.parseInt(splitedDate[2]));
-        cal.set(Calendar.HOUR, Integer.parseInt(splitedTime[0]) - 2);
+        cal.set(Calendar.HOUR_OF_DAY, Integer.parseInt(splitedTime[0]) - 2);
         cal.set(Calendar.MINUTE, Integer.parseInt(splitedTime[1]));
         cal.set(Calendar.SECOND, 0);
 
         Log.d(TAG, String.valueOf(cal.getTimeInMillis()));
-        Log.d(TAG, splitedDate[0]);
+        Log.d(TAG, String.valueOf(Integer.parseInt(splitedDate[0])));
         Log.d(TAG, String.valueOf(Integer.parseInt(splitedDate[1]) - 1));
         Log.d(TAG, splitedDate[2]);
-        Log.d(TAG, splitedTime[0]);
+        Log.d(TAG, String.valueOf(Integer.parseInt(splitedTime[0]) - 2));
         Log.d(TAG, splitedTime[1]);
+        Log.d(TAG, String.valueOf(cal.getTime()));
+        Log.d(TAG, String.valueOf(cal.get(Calendar.MONTH)));
 
         return cal;
     }
