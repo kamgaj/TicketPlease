@@ -8,16 +8,13 @@ import android.widget.RemoteViews;
 import androidx.core.app.NotificationCompat;
 import androidx.core.app.NotificationManagerCompat;
 
+import java.util.Random;
+
 public class ReminderBroadcast extends BroadcastReceiver {
     @Override
     public void onReceive(Context context, Intent intent) {
-        String action = intent.getAction();
-        String title = "Movie Title";
-        String time = "Time";
-        if(action.equals("my.action.string")) {
-            title = intent.getExtras().getString("Title");
-            time = intent.getExtras().getString("Time");
-        }
+        String title = intent.getStringExtra("Title");
+        String time = intent.getStringExtra("Time");
         RemoteViews remoteViews = new RemoteViews(BuildConfig.APPLICATION_ID,  R.layout.custom_notification);
         remoteViews.setTextViewText(R.id.content_title, title);
         remoteViews.setTextViewText(R.id.content_text, "Twój seans zaczyna się o " + time);
@@ -28,6 +25,7 @@ public class ReminderBroadcast extends BroadcastReceiver {
                 .setPriority(NotificationCompat.PRIORITY_DEFAULT);
 
         NotificationManagerCompat notificationManager = NotificationManagerCompat.from(context);
-        notificationManager.notify(13, builder.build());
+        Random random=new Random();
+        notificationManager.notify(random.nextInt(10000), builder.build());
     }
 }

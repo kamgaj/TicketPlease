@@ -16,6 +16,7 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 
 import java.util.Calendar;
+import java.util.Random;
 
 public class SummaryActivity extends AppCompatActivity {
     public final static String TAG = "SummaryActivity";
@@ -73,13 +74,19 @@ public class SummaryActivity extends AppCompatActivity {
     }
 
     private void setNotification(Calendar cal, String title, String timeOnTicket) {
-        Intent intent = new Intent(SummaryActivity.this, ReminderBroadcast.class);
-        PendingIntent pendingIntent = PendingIntent.getBroadcast(SummaryActivity.this, 13, intent, 0);
-        transferDataToBroadcastReceiver(title, timeOnTicket);
+        if(cal.getTimeInMillis()+3600>=Calendar.getInstance().getTimeInMillis()) {
+            Intent intent = new Intent(SummaryActivity.this, ReminderBroadcast.class);
+            intent.putExtra("Title", title);
+            intent.putExtra("Time", timeOnTicket);
+            Random rand=new Random();
+            PendingIntent pendingIntent = PendingIntent.getBroadcast(SummaryActivity.this, rand.nextInt(10000), intent, 0);
 
-        AlarmManager alarmManager = (AlarmManager) getSystemService(ALARM_SERVICE);
-        alarmManager.set(AlarmManager.RTC_WAKEUP, cal.getTimeInMillis(), pendingIntent);
-        Toast.makeText(getApplicationContext(), "Przypomnienie ustawione", Toast.LENGTH_SHORT).show();
+
+            AlarmManager alarmManager = (AlarmManager) getSystemService(ALARM_SERVICE);
+            alarmManager.setExact(AlarmManager.RTC_WAKEUP, cal.getTimeInMillis(), pendingIntent);
+            Toast.makeText(getApplicationContext(), "Przypomnienie ustawione", Toast.LENGTH_SHORT).show();
+        }
+
     }
 
     private Calendar setCalendar(String date, String time) {
@@ -104,12 +111,5 @@ public class SummaryActivity extends AppCompatActivity {
         Log.d(TAG, String.valueOf(cal.get(Calendar.MONTH)));
 
         return cal;
-    }
-
-    public void transferDataToBroadcastReceiver(String title, String timeOnTicket) {
-        Intent intent = new Intent("my.action.string");
-        intent.putExtra("Title", title);
-        intent.putExtra("Time", timeOnTicket);
-        sendBroadcast(intent);
     }
 }
