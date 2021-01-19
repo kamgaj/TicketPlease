@@ -238,7 +238,8 @@ public class ProfileActivity extends AppCompatActivity {
                                                     if (task.isSuccessful()) {
                                                         for (QueryDocumentSnapshot document : Objects.requireNonNull(task.getResult())) {
                                                             String path = document.getString("Poster_link");
-                                                            filmsArray.add(new ProfileFilmListItem(document.getString("Title"), document.getString("Description"), path, 0));
+                                                            String id = document.getId();
+                                                            filmsArray.add(new ProfileFilmListItem(document.getString("Title"), document.getString("Description"), path, id));
                                                         }
                                                         PrintWatched(0);
                                                     } else {
@@ -301,8 +302,8 @@ public class ProfileActivity extends AppCompatActivity {
                                                     if (task.isSuccessful()) {
                                                         for (QueryDocumentSnapshot document : Objects.requireNonNull(task.getResult())) {
                                                             String path = document.getString("Poster_link");
-                                                            Random rand = new Random();
-                                                            filmsArray.add(new ProfileFilmListItem(document.getString("Title"), document.getString("Description"), path, rand.nextInt(50)));
+                                                            String id = document.getId();
+                                                            filmsArray.add(new ProfileFilmListItem(document.getString("Title"), document.getString("Description"), path, id));
                                                         }
                                                         PrintWatched(1);
                                                     } else {
