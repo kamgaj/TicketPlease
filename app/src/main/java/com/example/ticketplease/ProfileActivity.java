@@ -39,7 +39,6 @@ import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 import java.util.Objects;
-import java.util.Random;
 
 public class ProfileActivity extends AppCompatActivity {
 
@@ -203,10 +202,11 @@ public class ProfileActivity extends AppCompatActivity {
 
     private void getWatchedFilms() {
         storageReference = FirebaseStorage.getInstance().getReference();
-//        List<String> movies = new ArrayList<>();
+        List<String> movies = new ArrayList<>();
         Calendar calendar=Calendar.getInstance();
         String currentDate = calendar.get(Calendar.DAY_OF_MONTH) + "." + (calendar.get(Calendar.MONTH) + 1) + "." + calendar.get(Calendar.YEAR);
         SimpleDateFormat formatter = new SimpleDateFormat("dd.MM.yyyy", Locale.ENGLISH);
+
         try {
             Date date =  formatter.parse(currentDate);
 
@@ -222,11 +222,9 @@ public class ProfileActivity extends AppCompatActivity {
                                     try {
                                         Date queryDate = formatter.parse(Objects.requireNonNull(temp));
                                         if(Objects.requireNonNull(date).after(queryDate)) {
-//                                            movies.add(document.getString("movieName"));
                                             String asd = document.getString("movieName");
                                             try {
                                                 db.collection("Movies")
-//                                                        .whereIn("Title", movies)
                                                         .whereEqualTo("Title", asd)
                                                         .get()
                                                         .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
@@ -236,7 +234,11 @@ public class ProfileActivity extends AppCompatActivity {
                                                                     for (QueryDocumentSnapshot document : Objects.requireNonNull(task.getResult())) {
                                                                         String path = document.getString("Poster_link");
                                                                         String id = document.getId();
-                                                                        filmsArray.add(new ProfileFilmListItem(document.getString("Title"), document.getString("Description"), path, id));
+                                                                        if(!movies.contains(document.getString("Title"))) {
+                                                                            movies.add(document.getString("Title"));
+                                                                            filmsArray.add(new ProfileFilmListItem(document.getString("Title"), document.getString("Description"), path, id));
+                                                                        }
+
                                                                     }
                                                                     PrintWatched(0);
                                                                 } else {
@@ -270,10 +272,10 @@ public class ProfileActivity extends AppCompatActivity {
 
     private void getBookedFilms() {
         storageReference = FirebaseStorage.getInstance().getReference();
-//        List<String> movies = new ArrayList<>();
         Calendar calendar=Calendar.getInstance();
         String currentDate = calendar.get(Calendar.DAY_OF_MONTH) + "." + (calendar.get(Calendar.MONTH) + 1) + "." + calendar.get(Calendar.YEAR);
         SimpleDateFormat formatter = new SimpleDateFormat("dd.MM.yyyy", Locale.ENGLISH);
+
         try {
             Date date =  formatter.parse(currentDate);
 
@@ -289,11 +291,9 @@ public class ProfileActivity extends AppCompatActivity {
                                     try {
                                         Date queryDate = formatter.parse(Objects.requireNonNull(temp));
                                         if(Objects.requireNonNull(date).before(queryDate) || date.equals(queryDate)) {
-//                                            movies.add(document.getString("movieName"));
                                             String test = document.getString("movieName");
                                             try {
                                                 db.collection("Movies")
-//                                                        .whereIn("Title", movies)
                                                         .whereEqualTo("Title", test)
                                                         .get()
                                                         .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
