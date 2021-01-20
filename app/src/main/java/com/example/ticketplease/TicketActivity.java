@@ -25,10 +25,14 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.text.ParseException;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import java.util.Objects;
+import java.util.stream.Collectors;
 
 import androidmads.library.qrgenearator.QRGContents;
 import androidmads.library.qrgenearator.QRGEncoder;
@@ -135,11 +139,16 @@ public class TicketActivity extends AppCompatActivity {
                             int counter=0;
                             for(QueryDocumentSnapshot document : Objects.requireNonNull(task.getResult())) {
                                 String date = document.getString("date");
+                                String time = document.getString("time");
                                 String title = document.getString("movieName");
                                 String id = document.getId();
-                                List<Integer> seats=new ArrayList<>();
-                                seats.add(5);
-                                generateQRPage(id,title,date,"",0,"",seats);
+
+                                String cinemaName = document.getString("cinemaName");
+                                List<Long> seatsL = (List<Long>) document.get("seats");
+                                List<Integer> seatsInt = Objects.requireNonNull(seatsL).stream()
+                                        .map(Long::intValue)
+                                        .collect(Collectors.toList());
+                                generateQRPage(id,title,date,time,seatsInt.size(),cinemaName,seatsInt);
                                 counter++;
                             }
 
