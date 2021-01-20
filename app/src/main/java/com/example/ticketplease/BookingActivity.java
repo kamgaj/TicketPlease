@@ -34,6 +34,7 @@ import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
 import java.io.FileNotFoundException;
+import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -99,6 +100,8 @@ public class BookingActivity  extends AppCompatActivity {
                 Intent intent = new Intent(BookingActivity.this, SummaryActivity.class);
                 intent.putExtra("Tickets", String.valueOf(tickets));
                 intent.putExtra("Date", readyDate);
+                intent.putExtra("Time", bookingInfo.getTime());
+                intent.putExtra("Title", bookingInfo.getMovieName());
                 startActivity(intent);
                 }
             }
@@ -129,6 +132,7 @@ public class BookingActivity  extends AppCompatActivity {
                     }
                 }, day, month, year);
                 datePickerDialog.getDatePicker().setMinDate(Calendar.getInstance().getTimeInMillis());
+                datePickerDialog.getDatePicker().setMaxDate(Calendar.getInstance().getTimeInMillis()+(1000*60*60*24*14));
                 datePickerDialog.updateDate(year, month, day);
 
                 datePickerDialog.show();
@@ -352,5 +356,7 @@ public class BookingActivity  extends AppCompatActivity {
     }
     void clearBookedSeats() {
         alreadyBooked = new ArrayList<>();
+        seatNumbers=new ArrayList<>();
+        tickets=0;
     }
 }

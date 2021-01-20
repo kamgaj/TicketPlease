@@ -4,9 +4,11 @@ public class ProfileFilmListItem {
     String Title;
     String Description;
     String Poster;
-    ProfileFilmListItem(String T, String D, String P){
+    String Id;
+    ProfileFilmListItem(String T, String D, String P, String I){
         Title=T;
         Description=D;
         Poster=P;
+        Id=I;
     }
 }

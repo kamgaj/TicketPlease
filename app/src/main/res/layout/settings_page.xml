@@ -56,13 +56,14 @@
             android:layout_height="wrap_content">
 
 
-            <Switch
-                android:id="@+id/NightMode"
+            <androidx.appcompat.widget.SwitchCompat
+                android:id="@+id/Notifications"
                 android:layout_width="0dp"
                 android:layout_height="45dp"
                 android:layout_marginStart="8dp"
                 android:layout_marginEnd="8dp"
-                android:text="Tryb nocny"
+                android:checked="true"
+                android:text="@string/notifications_permission"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
@@ -74,18 +75,19 @@
                 android:layout_marginStart="8dp"
                 android:layout_marginTop="434dp"
                 android:layout_marginEnd="8dp"
-                app:chipBackgroundColor="#40B144"
+                app:chipBackgroundColor="@color/mainColor"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="1.0"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/NightMode" />
+                app:layout_constraintTop_toBottomOf="@+id/Notifications" />
 
             <TextView
                 android:id="@+id/ResetText"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Zresetuj hasło"
-                android:textColor="#000000"
+                android:textColor="@color/white"
+                android:textStyle="bold"
                 app:layout_constraintBottom_toBottomOf="@+id/ResetButton"
                 app:layout_constraintEnd_toEndOf="@+id/ResetButton"
                 app:layout_constraintHorizontal_bias="0.512"
