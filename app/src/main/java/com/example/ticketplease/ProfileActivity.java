@@ -236,7 +236,7 @@ public class ProfileActivity extends AppCompatActivity {
                                                                         String id = document.getId();
                                                                         if(!movies.contains(document.getString("Title"))) {
                                                                             movies.add(document.getString("Title"));
-                                                                            filmsArray.add(new ProfileFilmListItem(document.getString("Title"), document.getString("Description"), path, id));
+                                                                            filmsArray.add(new ProfileFilmListItem(document.getString("Title"), document.getString("Description"), path, id,null,null,null,null,null));
                                                                         }
 
                                                                     }
@@ -292,6 +292,7 @@ public class ProfileActivity extends AppCompatActivity {
                                         Date queryDate = formatter.parse(Objects.requireNonNull(temp));
                                         if(Objects.requireNonNull(date).before(queryDate) || date.equals(queryDate)) {
                                             String test = document.getString("movieName");
+                                            String id = document.getId();
                                             try {
                                                 db.collection("Movies")
                                                         .whereEqualTo("Title", test)
@@ -302,8 +303,7 @@ public class ProfileActivity extends AppCompatActivity {
                                                                 if (task.isSuccessful()) {
                                                                     for (QueryDocumentSnapshot document : Objects.requireNonNull(task.getResult())) {
                                                                         String path = document.getString("Poster_link");
-                                                                        String id = document.getId();
-                                                                        filmsArray.add(new ProfileFilmListItem(document.getString("Title"), document.getString("Description"), path, id));
+                                                                        filmsArray.add(new ProfileFilmListItem(document.getString("Title"), document.getString("Description"), path, id,"data","Czas","Kino","ilość biletów","Numery miejsc"));
                                                                     }
                                                                     PrintWatched(1);
                                                                 } else {

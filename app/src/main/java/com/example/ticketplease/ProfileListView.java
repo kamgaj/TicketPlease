@@ -123,11 +123,11 @@ public class ProfileListView extends BaseAdapter {
                     } catch (WriterException e) {
                         e.printStackTrace();
                     }
-                    time.setText("12:15");
-                    date.setText("09.02.2021");
-                    numberOfTickets.setText("1");
-                    cinema.setText("Cinema3");
-                    seats.setText("18");
+                    time.setText(products.Time);
+                    date.setText(products.Date);
+                    numberOfTickets.setText(products.numberTickets);
+                    cinema.setText(products.Cinema);
+                    seats.setText(products.Seats);
                     qr.show();
                 }
             });

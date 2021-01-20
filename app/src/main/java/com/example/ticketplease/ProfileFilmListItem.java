@@ -5,10 +5,20 @@ public class ProfileFilmListItem {
     String Description;
     String Poster;
     String Id;
-    ProfileFilmListItem(String T, String D, String P, String I){
+    String Date;
+    String Time;
+    String Seats;
+    String Cinema;
+    String numberTickets;
+    ProfileFilmListItem(String T, String D, String P, String I,String Date, String Time,String Cinema, String numberTickets, String Seats){
         Title=T;
         Description=D;
         Poster=P;
         Id=I;
+        this.Date=Date;
+        this.Time=Time;
+        this.Cinema=Cinema;
+        this.numberTickets=numberTickets;
+        this.Seats=Seats;
     }
 }
