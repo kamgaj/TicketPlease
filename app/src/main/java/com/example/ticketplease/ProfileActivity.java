@@ -39,6 +39,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 import java.util.Objects;
+import java.util.stream.Collectors;
 
 public class ProfileActivity extends AppCompatActivity {
 
@@ -236,7 +237,7 @@ public class ProfileActivity extends AppCompatActivity {
                                                                         String id = document.getId();
                                                                         if(!movies.contains(document.getString("Title"))) {
                                                                             movies.add(document.getString("Title"));
-                                                                            filmsArray.add(new ProfileFilmListItem(document.getString("Title"), document.getString("Description"), path, id));
+                                                                            filmsArray.add(new ProfileFilmListItem(document.getString("Title"), document.getString("Description"), path, id,null,null,null,null,null));
                                                                         }
 
                                                                     }
@@ -292,7 +293,22 @@ public class ProfileActivity extends AppCompatActivity {
                                         Date queryDate = formatter.parse(Objects.requireNonNull(temp));
                                         if(Objects.requireNonNull(date).before(queryDate) || date.equals(queryDate)) {
                                             String test = document.getString("movieName");
+                                            String time = document.getString("time");
+                                            String cinemaName = document.getString("cinemaName");
+                                            List<Long> seatsL = (List<Long>) document.get("seats");
+                                            List<Integer> seatsInt = Objects.requireNonNull(seatsL).stream()
+                                                    .map(Long::intValue)
+                                                    .collect(Collectors.toList());
+                                            String allSeats="";
+                                            for(int i=0;i<seatsInt.size();i++){
+                                                allSeats+=String.valueOf(seatsInt.get(i));
+                                                if(i!=seatsInt.size()-1){
+                                                    allSeats+=", ";
+                                                }
+                                            }
+                                            String id = document.getId();
                                             try {
+                                                String finalAllSeats = allSeats;
                                                 db.collection("Movies")
                                                         .whereEqualTo("Title", test)
                                                         .get()
@@ -302,8 +318,7 @@ public class ProfileActivity extends AppCompatActivity {
                                                                 if (task.isSuccessful()) {
                                                                     for (QueryDocumentSnapshot document : Objects.requireNonNull(task.getResult())) {
                                                                         String path = document.getString("Poster_link");
-                                                                        String id = document.getId();
-                                                                        filmsArray.add(new ProfileFilmListItem(document.getString("Title"), document.getString("Description"), path, id));
+                                                                        filmsArray.add(new ProfileFilmListItem(document.getString("Title"), document.getString("Description"), path, id,temp,time,cinemaName, String.valueOf(seatsInt.size()), finalAllSeats));
                                                                     }
                                                                     PrintWatched(1);
                                                                 } else {
