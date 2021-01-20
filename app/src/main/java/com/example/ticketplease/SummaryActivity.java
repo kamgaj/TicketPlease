@@ -7,7 +7,6 @@ import android.app.PendingIntent;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -100,15 +99,6 @@ public class SummaryActivity extends AppCompatActivity {
         cal.set(Calendar.HOUR_OF_DAY, Integer.parseInt(splitedTime[0]) - 2);
         cal.set(Calendar.MINUTE, Integer.parseInt(splitedTime[1]));
         cal.set(Calendar.SECOND, 0);
-
-        Log.d(TAG, String.valueOf(cal.getTimeInMillis()));
-        Log.d(TAG, String.valueOf(Integer.parseInt(splitedDate[0])));
-        Log.d(TAG, String.valueOf(Integer.parseInt(splitedDate[1]) - 1));
-        Log.d(TAG, splitedDate[2]);
-        Log.d(TAG, String.valueOf(Integer.parseInt(splitedTime[0]) - 2));
-        Log.d(TAG, splitedTime[1]);
-        Log.d(TAG, String.valueOf(cal.getTime()));
-        Log.d(TAG, String.valueOf(cal.get(Calendar.MONTH)));
 
         return cal;
     }
