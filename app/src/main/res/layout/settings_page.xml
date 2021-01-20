@@ -56,13 +56,14 @@
             android:layout_height="wrap_content">
 
 
-            <Switch
-                android:id="@+id/NightMode"
+            <androidx.appcompat.widget.SwitchCompat
+                android:id="@+id/Notifications"
                 android:layout_width="0dp"
                 android:layout_height="45dp"
                 android:layout_marginStart="8dp"
                 android:layout_marginEnd="8dp"
-                android:text="Tryb nocny"
+                android:checked="true"
+                android:text="@string/notifications_permission"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
@@ -78,7 +79,7 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="1.0"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/NightMode" />
+                app:layout_constraintTop_toBottomOf="@+id/Notifications" />
 
             <TextView
                 android:id="@+id/ResetText"

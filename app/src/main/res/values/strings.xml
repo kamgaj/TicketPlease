@@ -77,6 +77,7 @@
     <string name="data">Data</string>
     <string name="godzina">Godzina</string>
     <string name="placeholder_text">Placeholder Text</string>
+    <string name="notifications_permission">Pozwalaj na powiadomienia</string>
 
     <string-array name="genres">
         <item>Akcja</item>

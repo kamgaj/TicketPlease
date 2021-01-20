@@ -1,5 +1,6 @@
 package com.example.ticketplease;
 
+import android.app.PendingIntent;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
@@ -19,11 +20,15 @@ public class ReminderBroadcast extends BroadcastReceiver {
         remoteViews.setTextViewText(R.id.content_title, title);
         remoteViews.setTextViewText(R.id.content_text, "Twój seans zaczyna się o " + time);
 
+        Intent resultIntent = new Intent(context, TicketActivity.class);
+        PendingIntent resultPendingIntent = PendingIntent.getActivity(context, 13, resultIntent, PendingIntent.FLAG_UPDATE_CURRENT);
+
         NotificationCompat.Builder builder = new NotificationCompat.Builder(context, "reminder")
                 .setCustomContentView(remoteViews)
                 .setSmallIcon(R.drawable.buy_ticket)
                 .setPriority(NotificationCompat.PRIORITY_DEFAULT)
-                .setAutoCancel(true);
+                .setAutoCancel(true)
+                .setContentIntent(resultPendingIntent);
 
         NotificationManagerCompat notificationManager = NotificationManagerCompat.from(context);
         Random random=new Random();
