@@ -21,4 +21,12 @@ public class ProfileFilmListItem {
         this.numberTickets=numberTickets;
         this.Seats=Seats;
     }
+
+    public String getDate() {
+        return Date;
+    }
+
+    public String getTime() {
+        return Time;
+    }
 }

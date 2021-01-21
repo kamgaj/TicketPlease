@@ -35,6 +35,8 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
@@ -219,9 +221,9 @@ public class ProfileActivity extends AppCompatActivity {
                         public void onComplete(@NonNull Task<QuerySnapshot> task) {
                             if(task.isSuccessful()) {
                                 for(QueryDocumentSnapshot document : Objects.requireNonNull(task.getResult())) {
-                                    String temp = document.getString("date");
+                                    String tempDate = document.getString("date");
                                     try {
-                                        Date queryDate = formatter.parse(Objects.requireNonNull(temp));
+                                        Date queryDate = formatter.parse(Objects.requireNonNull(tempDate));
                                         if(Objects.requireNonNull(date).after(queryDate)) {
                                             String asd = document.getString("movieName");
                                             try {
@@ -237,11 +239,12 @@ public class ProfileActivity extends AppCompatActivity {
                                                                         String id = document.getId();
                                                                         if(!movies.contains(document.getString("Title"))) {
                                                                             movies.add(document.getString("Title"));
-                                                                            filmsArray.add(new ProfileFilmListItem(document.getString("Title"), document.getString("Description"), path, id,null,null,null,null,null));
+                                                                            filmsArray.add(new ProfileFilmListItem(document.getString("Title"), document.getString("Description"), path, id, tempDate, null,null,null,null));
                                                                         }
 
                                                                     }
-                                                                    PrintWatched(0);
+                                                                    sortMoviesUsingDateDescending(filmsArray);
+                                                                    printWatched(0);
                                                                 } else {
                                                                     Log.d(TAG, "Watched films, Movie Collection Query FAILS");
                                                                 }
@@ -250,7 +253,7 @@ public class ProfileActivity extends AppCompatActivity {
                                             } catch (IllegalArgumentException iae) {
                                                 Log.e(TAG, "Watched array was empty");
                                                 filmsArray = new ArrayList<>();
-                                                PrintWatched(0);
+                                                printWatched(0);
                                             }
                                         }
                                     } catch (ParseException e) {
@@ -320,7 +323,8 @@ public class ProfileActivity extends AppCompatActivity {
                                                                         String path = document.getString("Poster_link");
                                                                         filmsArray.add(new ProfileFilmListItem(document.getString("Title"), document.getString("Description"), path, id,temp,time,cinemaName, String.valueOf(seatsInt.size()), finalAllSeats));
                                                                     }
-                                                                    PrintWatched(1);
+                                                                    sortMoviesUsingDateAndTime(filmsArray);
+                                                                    printWatched(1);
                                                                 } else {
                                                                     Log.d(TAG, "Watched films, Movie Collection Query FAILS");
                                                                 }
@@ -329,7 +333,7 @@ public class ProfileActivity extends AppCompatActivity {
                                             } catch (IllegalArgumentException iae) {
                                                 Log.e(TAG, "Booked array was empty");
                                                 filmsArray = new ArrayList<>();
-                                                PrintWatched(1);
+                                                printWatched(1);
                                             }
                                         }
                                     } catch (ParseException e) {
@@ -350,11 +354,33 @@ public class ProfileActivity extends AppCompatActivity {
     }
 
 
-    void PrintWatched(int mode){
+    void printWatched(int mode){
         ListView films;
         films=findViewById(R.id.ListFilms);
         listAdapter = new ProfileListView(this,filmsArray,mode);
         films.setAdapter(listAdapter);
+    }
+
+    private void sortMoviesUsingDateAndTime(ArrayList<ProfileFilmListItem> toSort) {
+        Collections.sort(toSort, new Comparator<ProfileFilmListItem>() {
+            @Override
+            public int compare(ProfileFilmListItem o1, ProfileFilmListItem o2) {
+                if(o1.getDate().compareTo(o2.getDate()) == 0) {
+                    return o1.getTime().compareTo(o2.getTime());
+                } else {
+                    return o1.getDate().compareTo(o2.getDate());
+                }
+            }
+        });
+    }
+
+    private void sortMoviesUsingDateDescending(ArrayList<ProfileFilmListItem> toSort) {
+        Collections.sort(toSort, new Comparator<ProfileFilmListItem>() {
+            @Override
+            public int compare(ProfileFilmListItem o1, ProfileFilmListItem o2) {
+                    return (o1.getDate().compareTo(o2.getDate())) * -1;
+            }
+        });
     }
 
 }
