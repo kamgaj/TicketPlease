@@ -27,7 +27,10 @@ import org.json.JSONObject;
 import java.text.ParseException;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
@@ -129,6 +132,7 @@ public class TicketActivity extends AppCompatActivity {
     }
     void addQRfromFirebase(){
         clear();
+        LocalDateTime localDateTime=LocalDateTime.now();
         db.collection("Bookings")
                 .whereEqualTo("userID", Objects.requireNonNull(FirebaseAuth.getInstance().getCurrentUser()).getUid())
                 .get()
@@ -138,18 +142,31 @@ public class TicketActivity extends AppCompatActivity {
                         if(task.isSuccessful()) {
                             int counter=0;
                             for(QueryDocumentSnapshot document : Objects.requireNonNull(task.getResult())) {
-                                String date = document.getString("date");
+                                String dateSource = document.getString("date");
+                                List<String> items = Arrays.asList(dateSource.split("\\."));
+                                if(items.get(0).length()==1){
+                                    items.set(0,"0"+items.get(0));
+                                }
+                                if(items.get(1).length()==1){
+                                    items.set(1,"0"+items.get(1));
+                                }
+                                String date=String.join(".",items);
                                 String time = document.getString("time");
-                                String title = document.getString("movieName");
-                                String id = document.getId();
+                                DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+                                LocalDateTime localDateTime1=LocalDateTime.of(LocalDate.parse(date.replaceAll("\\.","/"), formatter), LocalTime.parse(time));
+                                if (localDateTime.isBefore(localDateTime1))
+                                {
+                                    String title = document.getString("movieName");
+                                    String id = document.getId();
 
-                                String cinemaName = document.getString("cinemaName");
-                                List<Long> seatsL = (List<Long>) document.get("seats");
-                                List<Integer> seatsInt = Objects.requireNonNull(seatsL).stream()
-                                        .map(Long::intValue)
-                                        .collect(Collectors.toList());
-                                generateQRPage(id,title,date,time,seatsInt.size(),cinemaName,seatsInt);
-                                counter++;
+                                    String cinemaName = document.getString("cinemaName");
+                                    List<Long> seatsL = (List<Long>) document.get("seats");
+                                    List<Integer> seatsInt = Objects.requireNonNull(seatsL).stream()
+                                            .map(Long::intValue)
+                                            .collect(Collectors.toList());
+                                    generateQRPage(id,title,date,time,seatsInt.size(),cinemaName,seatsInt);
+                                    counter++;
+                                }
                             }
 
                             if(counter==0){
