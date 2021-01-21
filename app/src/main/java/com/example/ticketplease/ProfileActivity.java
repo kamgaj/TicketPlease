@@ -33,7 +33,12 @@ import com.squareup.picasso.Picasso;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Collections;
 import java.util.Comparator;
@@ -210,68 +215,71 @@ public class ProfileActivity extends AppCompatActivity {
         String currentDate = calendar.get(Calendar.DAY_OF_MONTH) + "." + (calendar.get(Calendar.MONTH) + 1) + "." + calendar.get(Calendar.YEAR);
         SimpleDateFormat formatter = new SimpleDateFormat("dd.MM.yyyy", Locale.ENGLISH);
 
-        try {
-            Date date =  formatter.parse(currentDate);
+        LocalDateTime localDateTime=LocalDateTime.now();
 
-            db.collection("Bookings")
-                    .whereEqualTo("userID", Objects.requireNonNull(FirebaseAuth.getInstance().getCurrentUser()).getUid())
-                    .get()
-                    .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-                        @Override
-                        public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                            if(task.isSuccessful()) {
-                                for(QueryDocumentSnapshot document : Objects.requireNonNull(task.getResult())) {
-                                    String tempDate = document.getString("date");
-                                    try {
-                                        Date queryDate = formatter.parse(Objects.requireNonNull(tempDate));
-                                        if(Objects.requireNonNull(date).after(queryDate)) {
-                                            String asd = document.getString("movieName");
-                                            try {
-                                                db.collection("Movies")
-                                                        .whereEqualTo("Title", asd)
-                                                        .get()
-                                                        .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-                                                            @Override
-                                                            public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                                                                if (task.isSuccessful()) {
-                                                                    for (QueryDocumentSnapshot document : Objects.requireNonNull(task.getResult())) {
-                                                                        String path = document.getString("Poster_link");
-                                                                        String id = document.getId();
-                                                                        if(!movies.contains(document.getString("Title"))) {
-                                                                            movies.add(document.getString("Title"));
-                                                                            filmsArray.add(new ProfileFilmListItem(document.getString("Title"), document.getString("Description"), path, id, tempDate, null,null,null,null));
-                                                                        }
-
-                                                                    }
-                                                                    sortMoviesUsingDateDescending(filmsArray);
-                                                                    printWatched(0);
-                                                                } else {
-                                                                    Log.d(TAG, "Watched films, Movie Collection Query FAILS");
-                                                                }
-                                                            }
-                                                        });
-                                            } catch (IllegalArgumentException iae) {
-                                                Log.e(TAG, "Watched array was empty");
-                                                filmsArray = new ArrayList<>();
-                                                printWatched(0);
-                                            }
-                                        }
-                                    } catch (ParseException e) {
-                                        e.printStackTrace();
-                                    }
+        db.collection("Bookings")
+                .whereEqualTo("userID", Objects.requireNonNull(FirebaseAuth.getInstance().getCurrentUser()).getUid())
+                .get()
+                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                        if(task.isSuccessful()) {
+                            filmsArray=new ArrayList<ProfileFilmListItem>();
+                            printWatched(0);
+                            for(QueryDocumentSnapshot document : Objects.requireNonNull(task.getResult())) {
+                                String dateSource = document.getString("date");
+                                String time = document.getString("time");
+                                List<String> items = Arrays.asList(dateSource.split("\\."));
+                                if(items.get(0).length()==1){
+                                    items.set(0,"0"+items.get(0));
                                 }
+                                if(items.get(1).length()==1){
+                                    items.set(1,"0"+items.get(1));
+                                }
+                                String date=String.join(".",items);
+                                DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+                                LocalDateTime localDateTime1=LocalDateTime.of(LocalDate.parse(date.replaceAll("\\.","/"), formatter), LocalTime.parse(time));
+                                    if(localDateTime.isAfter(localDateTime1)) {
+                                        String asd = document.getString("movieName");
+                                        try {
+                                            db.collection("Movies")
+                                                    .whereEqualTo("Title", asd)
+                                                    .get()
+                                                    .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                                                        @Override
+                                                        public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                                                            if (task.isSuccessful()) {
+                                                                for (QueryDocumentSnapshot document : Objects.requireNonNull(task.getResult())) {
+                                                                    String path = document.getString("Poster_link");
+                                                                    String id = document.getId();
+                                                                    if(!movies.contains(document.getString("Title"))) {
+                                                                        movies.add(document.getString("Title"));
+                                                                        filmsArray.add(new ProfileFilmListItem(document.getString("Title"), document.getString("Description"), path, id, date, null,null,null,null));
+                                                                    }
 
+                                                                }
+                                                                sortMoviesUsingDateDescending(filmsArray);
+                                                                printWatched(0);
+                                                            } else {
+                                                                Log.d(TAG, "Watched films, Movie Collection Query FAILS");
+                                                            }
+                                                        }
+                                                    });
+                                        } catch (IllegalArgumentException iae) {
+                                            Log.e(TAG, "Watched array was empty");
+                                            filmsArray = new ArrayList<>();
+                                            printWatched(0);
+                                        }
+                                    }
 
-
-                            } else {
-                                Log.d(TAG, "Watched films, Bookings Collection Query FAILS");
                             }
-                        }
-                    });
 
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
+                        } else {
+                            Log.d(TAG, "Watched films, Bookings Collection Query FAILS");
+                        }
+                    }
+                });
+
     }
 
     private void getBookedFilms() {
@@ -280,9 +288,8 @@ public class ProfileActivity extends AppCompatActivity {
         String currentDate = calendar.get(Calendar.DAY_OF_MONTH) + "." + (calendar.get(Calendar.MONTH) + 1) + "." + calendar.get(Calendar.YEAR);
         SimpleDateFormat formatter = new SimpleDateFormat("dd.MM.yyyy", Locale.ENGLISH);
 
-        try {
-            Date date =  formatter.parse(currentDate);
 
+            LocalDateTime localDateTime=LocalDateTime.now();
             db.collection("Bookings")
                     .whereEqualTo("userID", Objects.requireNonNull(FirebaseAuth.getInstance().getCurrentUser()).getUid())
                     .get()
@@ -290,23 +297,34 @@ public class ProfileActivity extends AppCompatActivity {
                         @Override
                         public void onComplete(@NonNull Task<QuerySnapshot> task) {
                             if(task.isSuccessful()) {
+                                filmsArray=new ArrayList<ProfileFilmListItem>();
+                                printWatched(0);
                                 for(QueryDocumentSnapshot document : Objects.requireNonNull(task.getResult())) {
-                                    String temp = document.getString("date");
-                                    try {
-                                        Date queryDate = formatter.parse(Objects.requireNonNull(temp));
-                                        if(Objects.requireNonNull(date).before(queryDate) || date.equals(queryDate)) {
+                                    String dateSource = document.getString("date");
+                                    String time = document.getString("time");
+                                    List<String> items = Arrays.asList(dateSource.split("\\."));
+                                    if(items.get(0).length()==1){
+                                        items.set(0,"0"+items.get(0));
+                                    }
+                                    if(items.get(1).length()==1){
+                                        items.set(1,"0"+items.get(1));
+                                    }
+                                    String date=String.join(".",items);
+                                    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+                                    LocalDateTime localDateTime1=LocalDateTime.of(LocalDate.parse(date.replaceAll("\\.","/"), formatter), LocalTime.parse(time));
+                                        if (localDateTime.isBefore(localDateTime1)) {
                                             String test = document.getString("movieName");
-                                            String time = document.getString("time");
+
                                             String cinemaName = document.getString("cinemaName");
                                             List<Long> seatsL = (List<Long>) document.get("seats");
                                             List<Integer> seatsInt = Objects.requireNonNull(seatsL).stream()
                                                     .map(Long::intValue)
                                                     .collect(Collectors.toList());
-                                            String allSeats="";
-                                            for(int i=0;i<seatsInt.size();i++){
-                                                allSeats+=String.valueOf(seatsInt.get(i));
-                                                if(i!=seatsInt.size()-1){
-                                                    allSeats+=", ";
+                                            String allSeats = "";
+                                            for (int i = 0; i < seatsInt.size(); i++) {
+                                                allSeats += String.valueOf(seatsInt.get(i)+1);
+                                                if (i != seatsInt.size() - 1) {
+                                                    allSeats += ", ";
                                                 }
                                             }
                                             String id = document.getId();
@@ -321,7 +339,7 @@ public class ProfileActivity extends AppCompatActivity {
                                                                 if (task.isSuccessful()) {
                                                                     for (QueryDocumentSnapshot document : Objects.requireNonNull(task.getResult())) {
                                                                         String path = document.getString("Poster_link");
-                                                                        filmsArray.add(new ProfileFilmListItem(document.getString("Title"), document.getString("Description"), path, id,temp,time,cinemaName, String.valueOf(seatsInt.size()), finalAllSeats));
+                                                                        filmsArray.add(new ProfileFilmListItem(document.getString("Title"), document.getString("Description"), path, id, date, time, cinemaName, String.valueOf(seatsInt.size()), finalAllSeats));
                                                                     }
                                                                     sortMoviesUsingDateAndTime(filmsArray);
                                                                     printWatched(1);
@@ -336,21 +354,14 @@ public class ProfileActivity extends AppCompatActivity {
                                                 printWatched(1);
                                             }
                                         }
-                                    } catch (ParseException e) {
-                                        e.printStackTrace();
-                                    }
                                 }
-
-
                             } else {
                                 Log.d(TAG, "Watched films, Bookings Collection Query FAILS");
                             }
                         }
                     });
 
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
+
     }
 
 
