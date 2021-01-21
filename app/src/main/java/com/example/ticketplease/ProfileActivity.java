@@ -268,11 +268,6 @@ public class ProfileActivity extends AppCompatActivity {
                                     }
                                 }
 
-
-                                if(task.getResult()==null){
-                                    filmsArray=new ArrayList<>();
-                                    printWatched(0);
-                                }
                             } else {
                                 Log.d(TAG, "Watched films, Bookings Collection Query FAILS");
                             }
