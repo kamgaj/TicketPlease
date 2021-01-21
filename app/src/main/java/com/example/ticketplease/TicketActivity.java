@@ -2,29 +2,47 @@ package com.example.ticketplease;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
 import com.google.zxing.WriterException;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.text.ParseException;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
+import java.util.Objects;
+import java.util.stream.Collectors;
 
 import androidmads.library.qrgenearator.QRGContents;
 import androidmads.library.qrgenearator.QRGEncoder;
 
 public class TicketActivity extends AppCompatActivity {
     FirebaseAuth mFirebaseAuth;
+    private final FirebaseFirestore db= FirebaseFirestore.getInstance();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -35,8 +53,7 @@ public class TicketActivity extends AppCompatActivity {
             goToLogin.putExtra("disableBackButton", 2137);
             startActivity(goToLogin);
         }
-
-        generateQRPages();
+        addQRfromFirebase();
 
         ImageView Profile;
         Profile = (ImageView) findViewById(R.id.profileButton);
@@ -64,19 +81,11 @@ public class TicketActivity extends AppCompatActivity {
         });
 
     }
-    void generateQRPages(){
+    void clear(){
         LinearLayout linearLayout=findViewById(R.id.qrPlace);
         linearLayout.removeAllViews();
-        List<Integer> test=new ArrayList<Integer>();
-        List<Integer> test2=new ArrayList<Integer>();
-        test.add(1);
-        test.add(2);
-        test.add(3);
-        test2.add(25);
-        generateQRPage(1,"Test","13.02.2020","12:15",3,"Cinema",test);
-        generateQRPage(2,"Test2","13.02.2020","14:15",1,"Cinema 2",test2);
     }
-    void generateQRPage(int id,String title, String date, String time, int nrOfTickets, String cinema, List<Integer> seats){
+    void generateQRPage(String id,String title, String date, String time, int nrOfTickets, String cinema, List<Integer> seats){
         LinearLayout linearLayout=findViewById(R.id.qrPlace);
         LayoutInflater layoutInflater = LayoutInflater.from(this);
         View view = layoutInflater.inflate(R.layout.qr_page, linearLayout, false);
@@ -94,7 +103,7 @@ public class TicketActivity extends AppCompatActivity {
         Cinema.setText(cinema);
         String temp="";
         for(int i=0;i<seats.size();i++){
-            temp+=seats.get(i);
+            temp+=seats.get(i)+1;
             if(i!=seats.size()-1){
                 temp+=", ";
             }
@@ -120,5 +129,51 @@ public class TicketActivity extends AppCompatActivity {
         LayoutInflater layoutInflater = LayoutInflater.from(this);
         View view = layoutInflater.inflate(R.layout.no_qr_page, linearLayout, false);
         linearLayout.addView(view);
+    }
+    void addQRfromFirebase(){
+        clear();
+        LocalDateTime localDateTime=LocalDateTime.now();
+        db.collection("Bookings")
+                .whereEqualTo("userID", Objects.requireNonNull(FirebaseAuth.getInstance().getCurrentUser()).getUid())
+                .get()
+                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                        if(task.isSuccessful()) {
+                            int counter=0;
+                            for(QueryDocumentSnapshot document : Objects.requireNonNull(task.getResult())) {
+                                String dateSource = document.getString("date");
+                                List<String> items = Arrays.asList(dateSource.split("\\."));
+                                if(items.get(0).length()==1){
+                                    items.set(0,"0"+items.get(0));
+                                }
+                                if(items.get(1).length()==1){
+                                    items.set(1,"0"+items.get(1));
+                                }
+                                String date=String.join(".",items);
+                                String time = document.getString("time");
+                                DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+                                LocalDateTime localDateTime1=LocalDateTime.of(LocalDate.parse(date.replaceAll("\\.","/"), formatter), LocalTime.parse(time));
+                                if (localDateTime.isBefore(localDateTime1))
+                                {
+                                    String title = document.getString("movieName");
+                                    String id = document.getId();
+
+                                    String cinemaName = document.getString("cinemaName");
+                                    List<Long> seatsL = (List<Long>) document.get("seats");
+                                    List<Integer> seatsInt = Objects.requireNonNull(seatsL).stream()
+                                            .map(Long::intValue)
+                                            .collect(Collectors.toList());
+                                    generateQRPage(id,title,date,time,seatsInt.size(),cinemaName,seatsInt);
+                                    counter++;
+                                }
+                            }
+
+                            if(counter==0){
+                                addNoTicketMessage();
+                            }
+                        }
+                    }
+                });
     }
 }
