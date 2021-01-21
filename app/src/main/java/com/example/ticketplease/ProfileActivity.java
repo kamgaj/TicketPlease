@@ -322,7 +322,7 @@ public class ProfileActivity extends AppCompatActivity {
                                                     .collect(Collectors.toList());
                                             String allSeats = "";
                                             for (int i = 0; i < seatsInt.size(); i++) {
-                                                allSeats += String.valueOf(seatsInt.get(i));
+                                                allSeats += String.valueOf(seatsInt.get(i)+1);
                                                 if (i != seatsInt.size() - 1) {
                                                     allSeats += ", ";
                                                 }

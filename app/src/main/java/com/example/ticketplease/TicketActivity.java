@@ -103,7 +103,7 @@ public class TicketActivity extends AppCompatActivity {
         Cinema.setText(cinema);
         String temp="";
         for(int i=0;i<seats.size();i++){
-            temp+=seats.get(i);
+            temp+=seats.get(i)+1;
             if(i!=seats.size()-1){
                 temp+=", ";
             }
