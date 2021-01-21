@@ -78,6 +78,11 @@
     <string name="godzina">Godzina</string>
     <string name="placeholder_text">Placeholder Text</string>
     <string name="notifications_permission">Pozwalaj na powiadomienia</string>
+    <string name="notification_2_hour">Otrzymasz powiadomienie dwie godziny przed seansem</string>
+    <string name="movieDate">Data seansu: %1$s</string>
+    <string name="booked234Tickets">Zarezerwowano %1$s bilety</string>
+    <string name="bookedManyTickets">Zarezerwowano %1$s biletów</string>
+    <string name="booked1Ticket">Zarezerwowano 1 bilet</string>
 
     <string-array name="genres">
         <item>Akcja</item>

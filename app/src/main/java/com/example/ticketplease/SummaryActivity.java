@@ -6,6 +6,7 @@ import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.res.Resources;
 import android.os.Build;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
@@ -20,39 +21,38 @@ import java.util.Calendar;
 import java.util.Random;
 
 public class SummaryActivity extends AppCompatActivity {
-    public final static String TAG = "SummaryActivity";
+    String numberOfTickets;
+    String dateTicket;
+    String timeOnTicket;
+    String title;
+    Boolean areNotificationsEnabled;
+    Button ok;
+    Calendar cal;
+    TextView text;
+    TextView textWithDate;
+    TextView textView;
+    Random rand;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.summary_page);
         createNotificationChannel();
+        getFromIntent();
 
-        String numberOfTickets = getIntent().getStringExtra("Tickets");
-        String dateTicket = getIntent().getStringExtra("Date");
-        String timeOnTicket = getIntent().getStringExtra("Time");
-        String title = getIntent().getStringExtra("Title");
-
-        TextView text = findViewById(R.id.NumberOfTickets);
-
-        if(numberOfTickets.equals("2")||numberOfTickets.equals("3")||numberOfTickets.equals("4")) {
-            text.setText("Zakupiono "+ numberOfTickets + " bilety");
-        } else if(numberOfTickets.equals("1")){
-            text.setText("Zakupiono 1 bilet");
-        }else  {
-            text.setText("Zakupiono "+ numberOfTickets +" biletów");
-        }
-        TextView textWithDate=findViewById(R.id.date);
-        textWithDate.setText("Data seansu: "+dateTicket);
-        Calendar cal = setCalendar(dateTicket, timeOnTicket);
-        TextView textView = findViewById(R.id.numberOfTickets);
-        if(cal.getTimeInMillis()+3600>=Calendar.getInstance().getTimeInMillis()) {
-            textView.setText("Otrzymasz powiadomienie dwie godziny przed seansem");
-        }
-        else{
-            textView.setText("");
-        }
-        Button ok;
+        rand = new Random();
+        cal = setCalendar(dateTicket, timeOnTicket);
+        text = findViewById(R.id.NumberOfTickets);
+        textWithDate = findViewById(R.id.date);
         ok = findViewById(R.id.chip6);
+        textView = findViewById(R.id.numberOfTickets);
+
+
+        areNotificationsEnabled = checkIfNotificationCanBeSent();
+
+        setAllTextViews();
+
+
         ok.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -61,7 +61,7 @@ public class SummaryActivity extends AppCompatActivity {
         });
 
 
-        if(checkIfNotificationCanBeSent()) {
+        if(Boolean.TRUE.equals(areNotificationsEnabled)) {
             setNotification(setCalendar(dateTicket, timeOnTicket), title, timeOnTicket);
         }
 
@@ -74,10 +74,10 @@ public class SummaryActivity extends AppCompatActivity {
 
     private void createNotificationChannel() {
         if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            CharSequence title = "Movie Title placeholder";
+            CharSequence titlePlaceholder = "Movie Title placeholder";
             String description = "Description placeholder";
             int importance = NotificationManager.IMPORTANCE_DEFAULT;
-            NotificationChannel channel = new NotificationChannel("reminder", title, importance);
+            NotificationChannel channel = new NotificationChannel("reminder", titlePlaceholder, importance);
             channel.setDescription(description);
 
             NotificationManager notificationManager = getSystemService(NotificationManager.class);
@@ -90,7 +90,6 @@ public class SummaryActivity extends AppCompatActivity {
             Intent intent = new Intent(SummaryActivity.this, ReminderBroadcast.class);
             intent.putExtra("Title", title);
             intent.putExtra("Time", timeOnTicket);
-            Random rand=new Random();
             PendingIntent pendingIntent = PendingIntent.getBroadcast(SummaryActivity.this, rand.nextInt(10000), intent, 0);
 
 
@@ -119,5 +118,35 @@ public class SummaryActivity extends AppCompatActivity {
     private Boolean checkIfNotificationCanBeSent() {
         SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
         return preferences.getBoolean("NotificationPermission", true);
+    }
+
+    private void getFromIntent() {
+        numberOfTickets = getIntent().getStringExtra("Tickets");
+        dateTicket = getIntent().getStringExtra("Date");
+        timeOnTicket = getIntent().getStringExtra("Time");
+        title = getIntent().getStringExtra("Title");
+    }
+
+    private void setAllTextViews() {
+        Resources res = getResources();
+        if(numberOfTickets.equals("2")||numberOfTickets.equals("3")||numberOfTickets.equals("4")) {
+            text.setText(String.format(res.getString(R.string.booked234Tickets), numberOfTickets));
+        } else if(numberOfTickets.equals("1")){
+            text.setText(R.string.booked1Ticket);
+        }else  {
+            text.setText(String.format(res.getString(R.string.bookedManyTickets), numberOfTickets));
+        }
+
+
+        String dateText = String.format(res.getString(R.string.movieDate), dateTicket);
+        textWithDate.setText(dateText);
+
+
+        if(cal.getTimeInMillis() + 3600 >= Calendar.getInstance().getTimeInMillis()) {
+            textView.setText(R.string.notification_2_hour);
+        }
+        else{
+            textView.setText("");
+        }
     }
 }
