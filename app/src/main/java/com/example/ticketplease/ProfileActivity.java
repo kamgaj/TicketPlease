@@ -224,10 +224,8 @@ public class ProfileActivity extends AppCompatActivity {
                     .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                         @Override
                         public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                            int counter=0;
                             if(task.isSuccessful()) {
                                 for(QueryDocumentSnapshot document : Objects.requireNonNull(task.getResult())) {
-                                    counter++;
                                     String tempDate = document.getString("date");
                                     try {
                                         Date queryDate = formatter.parse(Objects.requireNonNull(tempDate));
@@ -269,7 +267,7 @@ public class ProfileActivity extends AppCompatActivity {
                                 }
 
 
-                                if(counter==0){
+                                if(task.getResult()==null){
                                     filmsArray=new ArrayList<>();
                                     printWatched(0);
                                 }
@@ -299,9 +297,7 @@ public class ProfileActivity extends AppCompatActivity {
                         @Override
                         public void onComplete(@NonNull Task<QuerySnapshot> task) {
                             if(task.isSuccessful()) {
-                                int counter=0;
                                 for(QueryDocumentSnapshot document : Objects.requireNonNull(task.getResult())) {
-                                    counter++;
                                     String dateSource = document.getString("date");
                                     String time = document.getString("time");
                                     List<String> items = Arrays.asList(dateSource.split("\\."));
@@ -357,7 +353,7 @@ public class ProfileActivity extends AppCompatActivity {
                                             }
                                         }
                                 }
-                                if(counter==0){
+                                if(task.getResult()==null){
                                     filmsArray=new ArrayList<ProfileFilmListItem>();
                                     printWatched(0);
                                 }
