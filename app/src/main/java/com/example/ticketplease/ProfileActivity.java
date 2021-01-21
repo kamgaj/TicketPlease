@@ -225,6 +225,8 @@ public class ProfileActivity extends AppCompatActivity {
                         @Override
                         public void onComplete(@NonNull Task<QuerySnapshot> task) {
                             if(task.isSuccessful()) {
+                                filmsArray=new ArrayList<ProfileFilmListItem>();
+                                printWatched(0);
                                 for(QueryDocumentSnapshot document : Objects.requireNonNull(task.getResult())) {
                                     String tempDate = document.getString("date");
                                     try {
@@ -297,6 +299,8 @@ public class ProfileActivity extends AppCompatActivity {
                         @Override
                         public void onComplete(@NonNull Task<QuerySnapshot> task) {
                             if(task.isSuccessful()) {
+                                filmsArray=new ArrayList<ProfileFilmListItem>();
+                                printWatched(0);
                                 for(QueryDocumentSnapshot document : Objects.requireNonNull(task.getResult())) {
                                     String dateSource = document.getString("date");
                                     String time = document.getString("time");
@@ -352,10 +356,6 @@ public class ProfileActivity extends AppCompatActivity {
                                                 printWatched(1);
                                             }
                                         }
-                                }
-                                if(task.getResult()==null){
-                                    filmsArray=new ArrayList<ProfileFilmListItem>();
-                                    printWatched(0);
                                 }
                             } else {
                                 Log.d(TAG, "Watched films, Bookings Collection Query FAILS");
