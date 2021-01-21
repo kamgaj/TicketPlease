@@ -35,14 +35,22 @@ public class SummaryActivity extends AppCompatActivity {
         TextView text = findViewById(R.id.NumberOfTickets);
 
         if(numberOfTickets.equals("2")||numberOfTickets.equals("3")||numberOfTickets.equals("4")) {
-            text.setText("Kupiłeś "+ numberOfTickets + " bilety");
+            text.setText("Zakupiono "+ numberOfTickets + " bilety");
         } else if(numberOfTickets.equals("1")){
-            text.setText("Kupiłeś 1 bilet");
+            text.setText("Zakupiono 1 bilet");
         }else  {
-            text.setText("Kupiłeś "+ numberOfTickets +" biletów");
+            text.setText("Zakupiono "+ numberOfTickets +" biletów");
         }
         TextView textWithDate=findViewById(R.id.date);
         textWithDate.setText("Data seansu: "+dateTicket);
+        Calendar cal = setCalendar(dateTicket, timeOnTicket);
+        TextView textView = findViewById(R.id.numberOfTickets);
+        if(cal.getTimeInMillis()+3600>=Calendar.getInstance().getTimeInMillis()) {
+            textView.setText("Otrzymasz powiadomienie dwie godziny przed seansem");
+        }
+        else{
+            textView.setText("");
+        }
         Button ok;
         ok = findViewById(R.id.chip6);
         ok.setOnClickListener(new View.OnClickListener() {
@@ -67,7 +75,7 @@ public class SummaryActivity extends AppCompatActivity {
     private void createNotificationChannel() {
         if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             CharSequence title = "Movie Title placeholder";
-            String description = "Masz seans za 2 godziny. Ruszaj dupe xD";
+            String description = "Description placeholder";
             int importance = NotificationManager.IMPORTANCE_DEFAULT;
             NotificationChannel channel = new NotificationChannel("reminder", title, importance);
             channel.setDescription(description);
