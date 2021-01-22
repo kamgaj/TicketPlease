@@ -32,6 +32,8 @@ import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
 import java.util.Objects;
@@ -85,6 +87,12 @@ public class TicketActivity extends AppCompatActivity {
         LinearLayout linearLayout=findViewById(R.id.qrPlace);
         linearLayout.removeAllViews();
     }
+    void generateQRPagesFromList(List<TicketItem> ticketItems){
+        for (int i=0;i<ticketItems.size();i++){
+            TicketItem temp=ticketItems.get(i);
+            generateQRPage(temp.getId(),temp.getTitle(),temp.getDate(),temp.getTime(),temp.getNumberOfTickets(),temp.getCinemaName(),temp.getSeats());
+        }
+    }
     void generateQRPage(String id,String title, String date, String time, int nrOfTickets, String cinema, List<Integer> seats){
         LinearLayout linearLayout=findViewById(R.id.qrPlace);
         LayoutInflater layoutInflater = LayoutInflater.from(this);
@@ -130,8 +138,21 @@ public class TicketActivity extends AppCompatActivity {
         View view = layoutInflater.inflate(R.layout.no_qr_page, linearLayout, false);
         linearLayout.addView(view);
     }
+    private void sortMoviesUsingDateAndTime(List<TicketItem> toSort) {
+        Collections.sort(toSort, new Comparator<TicketItem>() {
+            @Override
+            public int compare(TicketItem o1, TicketItem o2) {
+                if(o1.getDate().compareTo(o2.getDate()) == 0) {
+                    return o1.getTime().compareTo(o2.getTime());
+                } else {
+                    return o1.getDate().compareTo(o2.getDate());
+                }
+            }
+        });
+    }
     void addQRfromFirebase(){
         clear();
+        List<TicketItem> ticketList=new ArrayList<>();
         LocalDateTime localDateTime=LocalDateTime.now();
         db.collection("Bookings")
                 .whereEqualTo("userID", Objects.requireNonNull(FirebaseAuth.getInstance().getCurrentUser()).getUid())
@@ -164,11 +185,14 @@ public class TicketActivity extends AppCompatActivity {
                                     List<Integer> seatsInt = Objects.requireNonNull(seatsL).stream()
                                             .map(Long::intValue)
                                             .collect(Collectors.toList());
-                                    generateQRPage(id,title,date,time,seatsInt.size(),cinemaName,seatsInt);
+                                    ticketList.add(new TicketItem(id,title,date,time,seatsInt.size(),cinemaName,seatsInt));
+
                                     counter++;
                                 }
                             }
 
+                            sortMoviesUsingDateAndTime(ticketList);
+                            generateQRPagesFromList(ticketList);
                             if(counter==0){
                                 addNoTicketMessage();
                             }
@@ -176,4 +200,5 @@ public class TicketActivity extends AppCompatActivity {
                     }
                 });
     }
+
 }
