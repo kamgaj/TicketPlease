@@ -6,6 +6,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -260,12 +261,11 @@ public class BookingActivity  extends AppCompatActivity {
                     @Override
                     public void onClick(View view) {
 
-                        if(seatNumbers.contains(7*finalI + finalJ)){
-                            button.setBackgroundColor(getResources().getColor(R.color.white));
-                            seatNumbers.remove(Integer.valueOf(7*finalI + finalJ));
+                        if(seatNumbers.remove(Integer.valueOf(7*finalI + finalJ))){
+                            button.setBackgroundColor(getColor(R.color.white));
                          }
                         else {
-                            button.setBackgroundColor(getResources().getColor(R.color.mainColor));
+                            button.setBackgroundColor(getColor(R.color.mainColor));
                             seatNumbers.add(7*finalI + finalJ);
                         }
                     }
