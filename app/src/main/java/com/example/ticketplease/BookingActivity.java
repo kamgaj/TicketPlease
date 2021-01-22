@@ -6,6 +6,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -47,13 +48,11 @@ import jp.wasabeef.blurry.Blurry;
 
 public class BookingActivity  extends AppCompatActivity {
     ArrayList<Integer> alreadyBooked= new ArrayList<>();
-    ArrayList<String> userChoice = new ArrayList<String>();
     List<String> cinema=new ArrayList<>();
     List<String> technology=new ArrayList<>();
     List<String> Time=new ArrayList<>();
     Calendar calendar=Calendar.getInstance();
     String readyDate=String.valueOf(calendar.get(calendar.DAY_OF_MONTH))+"."+String.valueOf(calendar.get(calendar.MONTH)+1)+"."+String.valueOf(calendar.get(calendar.YEAR));
-    int tickets=0;
     private BookingInfo bookingInfo;
     List<Integer> seatNumbers = new ArrayList<>();
     FirebaseFirestore db;
@@ -87,7 +86,7 @@ public class BookingActivity  extends AppCompatActivity {
                 else if(time.getText().toString().trim().equals("Godzina")){
                     Toast.makeText(getApplicationContext(), "Aby kontynuować, wybierz godzinę", Toast.LENGTH_LONG).show();
                 }
-                else if(tickets==0){
+                else if(seatNumbers.size()==0){
                     Toast.makeText(getApplicationContext(), "Aby kontynuować, wybierz miejsce", Toast.LENGTH_LONG).show();
                 }else if(calendar.get(Calendar.DAY_OF_MONTH) == Calendar.getInstance().get(Calendar.DAY_OF_MONTH)&&calendar.get(Calendar
                .MONTH)==Calendar.getInstance().get(Calendar.MONTH)&&calendar.get(Calendar.YEAR)==Calendar.getInstance().get(Calendar.YEAR)
@@ -98,7 +97,7 @@ public class BookingActivity  extends AppCompatActivity {
                 pushBookingToBase(bookingInfo);
 
                 Intent intent = new Intent(BookingActivity.this, SummaryActivity.class);
-                intent.putExtra("Tickets", String.valueOf(tickets));
+                intent.putExtra("Tickets", String.valueOf(seatNumbers.size()));
                 intent.putExtra("Date", readyDate);
                 intent.putExtra("Time", bookingInfo.getTime());
                 intent.putExtra("Title", bookingInfo.getMovieName());
@@ -262,18 +261,12 @@ public class BookingActivity  extends AppCompatActivity {
                     @Override
                     public void onClick(View view) {
 
-                        if(button.getTag()=="1"){
-                            button.setBackgroundColor(getResources().getColor(R.color.white));
-                            button.setTag("0");
-                            userChoice.remove(String.valueOf(7*finalI + finalJ));
-                            tickets--;
+                        if(seatNumbers.remove(Integer.valueOf(7*finalI + finalJ))){
+                            button.setBackgroundColor(getColor(R.color.white));
                          }
                         else {
-                            button.setBackgroundColor(getResources().getColor(R.color.mainColor));
-                            button.setTag("1");
-                            userChoice.add(String.valueOf(7*finalI + finalJ));
+                            button.setBackgroundColor(getColor(R.color.mainColor));
                             seatNumbers.add(7*finalI + finalJ);
-                            tickets++;
                         }
                     }
                 });
@@ -357,6 +350,5 @@ public class BookingActivity  extends AppCompatActivity {
     void clearBookedSeats() {
         alreadyBooked = new ArrayList<>();
         seatNumbers=new ArrayList<>();
-        tickets=0;
     }
 }
