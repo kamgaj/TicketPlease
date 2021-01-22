@@ -34,9 +34,9 @@
     <string name="_10_00_z">10.00 zł</string>
     <string name="najnowsze_filmy">Najnowsze filmy</string>
     <string name="podsumowanie">Podsumowanie</string>
-    <string name="kupi_e_5_bilet_w">Kupiłeś 5 biletów</string>
+    <string name="kupi_e_5_bilet_w">Zakupiono 5 biletów</string>
     <string name="data_seansu_06_12_2020">Data seansu: 06.12.2020</string>
-    <string name="otrzymasz_powiadomienie_dzie_przed_seansem">Otrzymasz powiadomienie dzień przed seansem</string>
+    <string name="otrzymasz_powiadomienie_dzie_przed_seansem">Otrzymasz powiadomienie dwie godziny przed seansem</string>
     <string name="wyszukiwarka">Wyszukiwarka</string>
     <string name="result_1">Result 1</string>
     <string name="ok">OK</string>
@@ -78,6 +78,11 @@
     <string name="godzina">Godzina</string>
     <string name="placeholder_text">Placeholder Text</string>
     <string name="notifications_permission">Pozwalaj na powiadomienia</string>
+    <string name="notification_2_hour">Otrzymasz powiadomienie dwie godziny przed seansem</string>
+    <string name="movieDate">Data seansu: %1$s</string>
+    <string name="booked234Tickets">Zarezerwowano %1$s bilety</string>
+    <string name="bookedManyTickets">Zarezerwowano %1$s biletów</string>
+    <string name="booked1Ticket">Zarezerwowano 1 bilet</string>
 
     <string-array name="genres">
         <item>Akcja</item>
