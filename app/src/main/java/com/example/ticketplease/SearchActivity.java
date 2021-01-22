@@ -11,7 +11,6 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.RadioButton;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -32,66 +31,63 @@ public class SearchActivity extends AppCompatActivity {
     ArrayAdapter<String> titlesArray;
     ArrayAdapter<String> genresArray;
     ListView searchView;
-    RadioButton Title;
-    RadioButton Genre;
-    boolean ifGenre=false;
+    RadioButton title;
+    RadioButton genre;
+    boolean ifGenre = false;
+    ImageView ticket;
+    ImageView home;
+    ImageView profile;
+    EditText search;
+    public static final String TITLE_WORD = "Title";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.search_page);
 
-        Genre = (RadioButton) findViewById(R.id.offer);
-        Title = (RadioButton) findViewById(R.id.search);
+        genre = (RadioButton) findViewById(R.id.offer);
+        title = (RadioButton) findViewById(R.id.search);
+        ticket = (ImageView) findViewById(R.id.ticketButton);
+        home = (ImageView) findViewById(R.id.homeButton);
+        profile = (ImageView) findViewById(R.id.profileButton);
+        searchView = findViewById(R.id.searchListView);
+        search = findViewById(R.id.SearchTextList);
 
-        ImageView Ticket;
-        Ticket = (ImageView) findViewById(R.id.ticketButton);
-        Ticket.setOnClickListener(new View.OnClickListener() {
+        search.setEnabled(false);
+
+        ticket.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 startActivity(new Intent(SearchActivity.this, TicketActivity.class));
             }
         });
-        ImageView Home;
-        Home = (ImageView) findViewById(R.id.homeButton);
-        Home.setOnClickListener(new View.OnClickListener() {
+
+        home.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 startActivity(new Intent(SearchActivity.this, HomeActivity.class));
             }
         });
-        ImageView Profile;
-        Profile = (ImageView) findViewById(R.id.profileButton);
-        Profile.setOnClickListener(new View.OnClickListener() {
+
+
+        profile.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 startActivity(new Intent(SearchActivity.this, ProfileActivity.class));
             }
         });
 
-
-        searchView = findViewById(R.id.searchListView);
-        EditText search=findViewById(R.id.SearchTextList);
-        search.setEnabled(false);
-
-
-        getStringFromXML();
-
-
-
-
-        Title.setOnClickListener(new View.OnClickListener() {
+        title.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 searchView.setAdapter(titlesArray);
                 search.setEnabled(true);
                 ifGenre=false;
                 goToSearchedMovieDescription();
-                }
-
+            }
         });
 
-        Genre.setOnClickListener(new View.OnClickListener() {
+        genre.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 getStringFromXML();
@@ -99,12 +95,13 @@ public class SearchActivity extends AppCompatActivity {
                 search.setEnabled(false);
 
                 queryGenresFromFirebase();
-                }
-
-
+            }
         });
 
-        Genre.performClick(); //It is necessary, because at create of this activity this line of code clicks in Genre radio button so it allows
+
+        getStringFromXML();
+
+        genre.performClick(); //It is necessary, because at create of this activity this line of code clicks in Genre radio button so it allows
                                 //to use on click listener without a initial click
 
         search.addTextChangedListener(new TextWatcher() {
@@ -118,7 +115,7 @@ public class SearchActivity extends AppCompatActivity {
                     String end = search.getText().toString() + "\uf8ff";
                     end = end.substring(0, 1).toUpperCase() + end.substring(1);
                     db.collection("Movies")
-                            .orderBy("Title")
+                            .orderBy(TITLE_WORD)
                             .startAt(start)
                             .endAt(end)
                             .get()
@@ -128,7 +125,7 @@ public class SearchActivity extends AppCompatActivity {
                                     if(task.isSuccessful()) {
                                         List<String> titles = new ArrayList<>();
                                         for(QueryDocumentSnapshot document : Objects.requireNonNull(task.getResult())) {
-                                            titles.add(document.getString("Title"));
+                                            titles.add(document.getString(TITLE_WORD));
                                         }
                                         titlesArray =  new ArrayAdapter<>(getApplicationContext(), android.R.layout.simple_list_item_1,titles);
                                         searchView.setAdapter(titlesArray);
@@ -143,6 +140,8 @@ public class SearchActivity extends AppCompatActivity {
 
             }
 
+            //Those methods are empty because class TextWatcher has to have this methods implemented
+            //We dont use them but they have to be to proper work of Textwatcher class
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
 
             public void onTextChanged(CharSequence s, int start, int before, int count) {}
@@ -153,9 +152,9 @@ public class SearchActivity extends AppCompatActivity {
 
     @Override
     public void onBackPressed(){
-        if(ifGenre==true){
-            Genre.performClick();
-            ifGenre=false;
+        if(ifGenre){
+            genre.performClick();
+            ifGenre = false;
         }
         else{
             finish();
@@ -183,7 +182,7 @@ public class SearchActivity extends AppCompatActivity {
                                 if(task.isSuccessful()) {
                                     List<String> titles = new ArrayList<>();
                                     for(QueryDocumentSnapshot document : Objects.requireNonNull(task.getResult())) {
-                                        titles.add(document.getString("Title"));
+                                        titles.add(document.getString(TITLE_WORD));
                                     }
                                     genresArray = new ArrayAdapter<>(getApplicationContext(), android.R.layout.simple_list_item_1, titles);
                                     searchView.setAdapter(genresArray);
