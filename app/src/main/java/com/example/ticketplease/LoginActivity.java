@@ -156,7 +156,6 @@ public class LoginActivity extends AppCompatActivity {
         });
     }
 
-
     public void goToRegistration(View view) {
         startActivity(new Intent(LoginActivity.this, RegisterActivity.class));
     }

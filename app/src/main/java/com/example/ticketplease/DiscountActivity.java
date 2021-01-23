@@ -22,8 +22,6 @@ import com.google.firebase.storage.StorageReference;
 import java.util.Objects;
 
 public class DiscountActivity extends AppCompatActivity {
-
-
     StorageReference ref;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,10 +32,7 @@ public class DiscountActivity extends AppCompatActivity {
         title.setText(titleFromIntent);
         TextView description = findViewById(R.id.descriptionText);
         ImageView moviePoster = findViewById(R.id.OfferPoster);
-
         getDiscountFromFirebase(titleFromIntent, description, moviePoster);
-
-
     }
     public void CloseDiscount(View view){
         finish();
@@ -69,7 +64,6 @@ public class DiscountActivity extends AppCompatActivity {
                                 });
 
                             }
-
                         }
                     }
                 });

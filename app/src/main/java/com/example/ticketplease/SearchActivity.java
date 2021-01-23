@@ -69,7 +69,6 @@ public class SearchActivity extends AppCompatActivity {
             }
         });
 
-
         profile.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -98,17 +97,12 @@ public class SearchActivity extends AppCompatActivity {
             }
         });
 
-
         getStringFromXML();
-
         genre.performClick(); //It is necessary, because at create of this activity this line of code clicks in Genre radio button so it allows
                                 //to use on click listener without a initial click
-
         search.addTextChangedListener(new TextWatcher() {
 
             public void afterTextChanged(Editable s) {
-
-
                 if(search.getText().length()>=3) {
                     String start = search.getText().toString();
                     start = start.substring(0, 1).toUpperCase() + start.substring(1);
@@ -140,10 +134,7 @@ public class SearchActivity extends AppCompatActivity {
 
             }
 
-            //Those methods are empty because class TextWatcher has to have this methods implemented
-            //We dont use them but they have to be to proper work of Textwatcher class
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
-
             public void onTextChanged(CharSequence s, int start, int before, int count) {}
         });
 
@@ -191,7 +182,6 @@ public class SearchActivity extends AppCompatActivity {
                                 }
                             }
                         });
-
             }
         });
     }

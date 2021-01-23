@@ -74,8 +74,6 @@ public class RegisterActivity extends AppCompatActivity {
                 final String email = emailEdit.getText().toString();
                 final String password = passwordEdit.getText().toString();
                 final  String username = loginEdit.getText().toString();
-
-
          //Checking if user credentials arent empty and requesting users to insert missing data
         if(username.isEmpty()) {
             loginEdit.setError(getString(R.string.EmptyLogin));

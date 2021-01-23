@@ -71,7 +71,6 @@ public class HomeActivity extends AppCompatActivity {
                 startActivity(new Intent(HomeActivity.this, ProfileActivity.class));
             }
         });
-
         search = findViewById(R.id.chip4);
         search.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -80,9 +79,6 @@ public class HomeActivity extends AppCompatActivity {
                 startActivity(goToSearch);
             }
         });
-
-
-
         //Displaying Movies
         getNewestFilms();
         getTopRatedFilms();

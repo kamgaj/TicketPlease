@@ -34,7 +34,6 @@ public class SettingsActivity extends AppCompatActivity {
                 logoutIntent.putExtra("logoutCode", 2137);
                 startActivity(logoutIntent);
             }
-
         }
     };
     @Override
@@ -63,7 +62,6 @@ public class SettingsActivity extends AppCompatActivity {
                         });
             }
         });
-
 
         setSwitchButton();
         notificationsSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
