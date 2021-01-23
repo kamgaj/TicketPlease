@@ -2,6 +2,7 @@ package com.example.ticketplease;
 
 import android.app.AlertDialog;
 import android.app.DatePickerDialog;
+import android.app.Dialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -55,6 +56,7 @@ public class BookingActivity  extends AppCompatActivity {
     String readyDate=String.valueOf(calendar.get(calendar.DAY_OF_MONTH))+"."+String.valueOf(calendar.get(calendar.MONTH)+1)+"."+String.valueOf(calendar.get(calendar.YEAR));
     private BookingInfo bookingInfo;
     List<Integer> seatNumbers = new ArrayList<>();
+    ArrayList<Button> buttons = new ArrayList<>();
     FirebaseFirestore db;
 
     @Override
@@ -77,6 +79,7 @@ public class BookingActivity  extends AppCompatActivity {
         buttonNext.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                fetchAllBookingsForCurrentMovie(buttons);
                 if(CinemaText.getText().toString().trim().equals("Kino")){
                     Toast.makeText(getApplicationContext(), "Aby kontynuować, wybierz kino", Toast.LENGTH_LONG).show();
                 }
@@ -93,15 +96,14 @@ public class BookingActivity  extends AppCompatActivity {
                         &LocalTime.now().plusMinutes(30).compareTo(LocalTime.parse(time.getText().toString() + ":00"))>0) {
                     Toast.makeText(getApplicationContext(), "Do seansu pozostało mniej niż 30 minut. Dokonanie rezerwacji jest niemożliwe", Toast.LENGTH_LONG).show();
                 } else {
-                bookingInfo.setSeats(seatNumbers);
-                pushBookingToBase(bookingInfo);
+
 
                 Intent intent = new Intent(BookingActivity.this, SummaryActivity.class);
                 intent.putExtra("Tickets", String.valueOf(seatNumbers.size()));
                 intent.putExtra("Date", readyDate);
                 intent.putExtra("Time", bookingInfo.getTime());
                 intent.putExtra("Title", bookingInfo.getMovieName());
-                startActivity(intent);
+                passToSummaryAndCheckBooking(intent);
                 }
             }
         });
@@ -245,7 +247,7 @@ public class BookingActivity  extends AppCompatActivity {
         linearLayout = findViewById(R.id.seatPleace);
         linearLayout.removeAllViewsInLayout();
         LayoutInflater layoutInflater = LayoutInflater.from(this);
-        ArrayList<Button> buttons = new ArrayList<>();
+        buttons = new ArrayList<>();
         for (int i = 0; i < 5; i++) {
             LinearLayout row = new LinearLayout(this);
             row.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.FILL_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT));
@@ -341,6 +343,49 @@ public class BookingActivity  extends AppCompatActivity {
                                 buttons.get(alreadyBooked.get(i)).setEnabled(false);
                                 buttons.get(alreadyBooked.get(i)).setBackgroundColor(getResources().getColor(R.color.black));
                             }
+                        } else {
+                            Log.d("BookingActivity --------- ", "Failed to fetch bookings");
+                        }
+                    }
+                });
+    }
+    void passToSummaryAndCheckBooking(Intent intent){
+        int alreadyBookedOldSize= alreadyBooked.size();
+        alreadyBooked=new ArrayList<>();
+        db.collection("Bookings")
+                .whereEqualTo("movieName", bookingInfo.getMovieName())
+                .whereEqualTo("cinemaName", bookingInfo.getCinemaName())
+                .whereEqualTo("date", bookingInfo.getDate())
+                .whereEqualTo("technology", bookingInfo.getTechnology())
+                .whereEqualTo("time", bookingInfo.getTime())
+                .get()
+                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                        if(task.isSuccessful()) {
+                            for(QueryDocumentSnapshot document : Objects.requireNonNull(task.getResult())) {
+                                Log.d("BookingActivity --------- ", "Success");
+                                List<Long> seats = (List<Long>) document.get("seats");
+                                List<Integer> temp = Objects.requireNonNull(seats).stream()
+                                        .map(Long::intValue)
+                                        .collect(Collectors.toList());
+                                alreadyBooked.addAll(temp);
+                            }
+                            Log.d("old",String.valueOf(alreadyBookedOldSize));
+                            Log.d("new",String.valueOf(alreadyBooked.size()));
+                            if(alreadyBookedOldSize==alreadyBooked.size()){
+                                bookingInfo.setSeats(seatNumbers);
+                                pushBookingToBase(bookingInfo);
+                                startActivity(intent);
+                            }
+                            else {
+                                Toast.makeText(getApplicationContext(), "Conajmniej jedno z wybranch miejsc zostało już zajęte przez inną osobę. Wybierz inne", Toast.LENGTH_LONG).show();
+                                for(int i = 0; i < alreadyBooked.size(); i++) {
+                                    seatNumbers.remove(alreadyBooked.get(i));
+                                    buttons.get(alreadyBooked.get(i)).setEnabled(false);
+                                    buttons.get(alreadyBooked.get(i)).setBackgroundColor(getResources().getColor(R.color.black));
+                                }
+                        }
                         } else {
                             Log.d("BookingActivity --------- ", "Failed to fetch bookings");
                         }
