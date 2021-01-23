@@ -53,7 +53,7 @@ public class BookingActivity  extends AppCompatActivity {
     List<String> technology=new ArrayList<>();
     List<String> Time=new ArrayList<>();
     Calendar calendar=Calendar.getInstance();
-    String readyDate=String.valueOf(calendar.get(calendar.DAY_OF_MONTH))+"."+String.valueOf(calendar.get(calendar.MONTH)+1)+"."+String.valueOf(calendar.get(calendar.YEAR));
+    String readyDate= calendar.get(Calendar.DAY_OF_MONTH) +"."+ (calendar.get(Calendar.MONTH) + 1) +"."+ calendar.get(Calendar.YEAR);
     private BookingInfo bookingInfo;
     List<Integer> seatNumbers = new ArrayList<>();
     ArrayList<Button> buttons = new ArrayList<>();
@@ -72,7 +72,7 @@ public class BookingActivity  extends AppCompatActivity {
         String titleFromIntent = getIntent().getStringExtra("movieTitle");
         bookingInfo.setMovieName(titleFromIntent);
 
-        Toolbar buttonNext = (Toolbar) findViewById(R.id.toolbarUPDown);
+        Toolbar buttonNext = findViewById(R.id.toolbarUPDown);
         TextView CinemaText=findViewById(R.id.CinemaText);
         TextView time=findViewById(R.id.TimeMovieText);
         TextView techText=findViewById(R.id.TechnologyText);
@@ -96,14 +96,12 @@ public class BookingActivity  extends AppCompatActivity {
                         &LocalTime.now().plusMinutes(30).compareTo(LocalTime.parse(time.getText().toString() + ":00"))>0) {
                     Toast.makeText(getApplicationContext(), "Do seansu pozostało mniej niż 30 minut. Dokonanie rezerwacji jest niemożliwe", Toast.LENGTH_LONG).show();
                 } else {
-
-
-                Intent intent = new Intent(BookingActivity.this, SummaryActivity.class);
-                intent.putExtra("Tickets", String.valueOf(seatNumbers.size()));
-                intent.putExtra("Date", readyDate);
-                intent.putExtra("Time", bookingInfo.getTime());
-                intent.putExtra("Title", bookingInfo.getMovieName());
-                passToSummaryAndCheckBooking(intent);
+                    Intent intent = new Intent(BookingActivity.this, SummaryActivity.class);
+                    intent.putExtra("Tickets", String.valueOf(seatNumbers.size()));
+                    intent.putExtra("Date", readyDate);
+                    intent.putExtra("Time", bookingInfo.getTime());
+                    intent.putExtra("Title", bookingInfo.getMovieName());
+                    passToSummaryAndCheckBooking(intent);
                 }
             }
         });
@@ -123,7 +121,7 @@ public class BookingActivity  extends AppCompatActivity {
                     @Override
                     public void onDateSet(DatePicker datePicker, int i, int i1, int i2) {
                         calendar.set(i, i1, i2);
-                        readyDate = String.valueOf(i2) + "." + String.valueOf(i1 + 1) + "." + String.valueOf(i);
+                        readyDate = i2 + "." + (i1 + 1) + "." + i;
                         dateText.setText(readyDate);
                         bookingInfo.setDate(readyDate);
                         if(!CinemaText.getText().toString().trim().equals("Kino") && !techText.getText().toString().trim().equals("Technologia") && !time.getText().toString().trim().equals("Godzina")){
@@ -135,7 +133,6 @@ public class BookingActivity  extends AppCompatActivity {
                 datePickerDialog.getDatePicker().setMinDate(Calendar.getInstance().getTimeInMillis());
                 datePickerDialog.getDatePicker().setMaxDate(Calendar.getInstance().getTimeInMillis()+(1000*60*60*24*14));
                 datePickerDialog.updateDate(year, month, day);
-
                 datePickerDialog.show();
             }
         });
@@ -161,7 +158,6 @@ public class BookingActivity  extends AppCompatActivity {
                 else {
                    t=Time.toArray(new String[0]);
                }
-
                 AlertDialog.Builder builder = new AlertDialog.Builder(BookingActivity.this);
                 builder.setTitle("Wybierz godzinę seansu");
                 builder.setSingleChoiceItems(t, -1, new DialogInterface.OnClickListener() {
@@ -234,9 +230,6 @@ public class BookingActivity  extends AppCompatActivity {
         }
         ImageView newImage = new ImageView(this);
         ConstraintLayout constraintLayout=findViewById(R.id.bookingLayout);
-
-
-
         Bitmap bitmap=(Bitmap.createScaledBitmap(b, 200, 100, false));
         Blurry.with(this).from(bitmap).into(newImage);
        constraintLayout.setBackground(newImage.getDrawable());
@@ -275,7 +268,6 @@ public class BookingActivity  extends AppCompatActivity {
 
                 row.addView(view);
             }
-
             linearLayout.addView(row);
         }
         fetchAllBookingsForCurrentMovie(buttons);
@@ -316,7 +308,6 @@ public class BookingActivity  extends AppCompatActivity {
                     }
                 });
     }
-
 
     void fetchAllBookingsForCurrentMovie(ArrayList<Button> buttons) {
         db.collection("Bookings")
