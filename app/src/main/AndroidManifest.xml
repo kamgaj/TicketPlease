@@ -27,7 +27,6 @@
         <activity android:name=".SearchActivity" />
         <activity android:name=".TicketActivity" />
         <activity android:name=".SummaryActivity" />
-        <activity android:name=".WelcomeActivity" />
         <activity android:name=".SettingsActivity" />
         <activity android:name=".HomeActivity"/>
        <activity android:name=".LoginActivity">
