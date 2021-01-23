@@ -14,12 +14,7 @@
         android:roundIcon="@mipmap/ic_logo_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.TicketPlease">
-<!--        <activity android:name=".MainActivity">-->
-
-<!--        </activity>-->
-
         <activity android:name=".RegisterActivity" />
-<!--        <activity android:name=".homeactivity" />-->
         <activity android:name=".BookingActivity" />
         <activity android:name=".DescriptionActivity" />
         <activity android:name=".DiscountActivity" />
