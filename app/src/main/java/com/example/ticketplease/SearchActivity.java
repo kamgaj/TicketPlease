@@ -45,11 +45,11 @@ public class SearchActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.search_page);
 
-        genre = (RadioButton) findViewById(R.id.offer);
-        title = (RadioButton) findViewById(R.id.search);
-        ticket = (ImageView) findViewById(R.id.ticketButton);
-        home = (ImageView) findViewById(R.id.homeButton);
-        profile = (ImageView) findViewById(R.id.profileButton);
+        genre = findViewById(R.id.offer);
+        title = findViewById(R.id.search);
+        ticket = findViewById(R.id.ticketButton);
+        home = findViewById(R.id.homeButton);
+        profile = findViewById(R.id.profileButton);
         searchView = findViewById(R.id.searchListView);
         search = findViewById(R.id.SearchTextList);
 
@@ -98,7 +98,7 @@ public class SearchActivity extends AppCompatActivity {
         });
 
         getStringFromXML();
-        genre.performClick(); //It is necessary, because at create of this activity this line of code clicks in Genre radio button so it allows
+        title.performClick(); //It is necessary, because at create of this activity this line of code clicks in Genre radio button so it allows
                                 //to use on click listener without a initial click
         search.addTextChangedListener(new TextWatcher() {
 
