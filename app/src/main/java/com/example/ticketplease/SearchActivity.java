@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
@@ -81,6 +82,9 @@ public class SearchActivity extends AppCompatActivity {
             public void onClick(View v) {
                 searchView.setAdapter(titlesArray);
                 search.setEnabled(true);
+                search.requestFocus();
+                InputMethodManager imm = (InputMethodManager) getSystemService(getApplicationContext().INPUT_METHOD_SERVICE);
+                imm.showSoftInput(search, InputMethodManager.SHOW_IMPLICIT);
                 ifGenre=false;
                 goToSearchedMovieDescription();
             }
@@ -89,17 +93,15 @@ public class SearchActivity extends AppCompatActivity {
         genre.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                getStringFromXML();
                 search.getText().clear();
                 search.setEnabled(false);
-
                 queryGenresFromFirebase();
+                getStringFromXML();
             }
         });
 
-        getStringFromXML();
-        title.performClick(); //It is necessary, because at create of this activity this line of code clicks in Genre radio button so it allows
-                                //to use on click listener without a initial click
+        title.performClick();
+
         search.addTextChangedListener(new TextWatcher() {
 
             public void afterTextChanged(Editable s) {
