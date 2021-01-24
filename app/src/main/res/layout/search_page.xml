@@ -152,7 +152,7 @@
 
     <TextView
         android:id="@+id/NickName"
-        android:layout_width="191dp"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/wyszukiwarka"
         android:textColor="#FFFFFF"
