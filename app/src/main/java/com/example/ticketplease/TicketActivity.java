@@ -56,7 +56,6 @@ public class TicketActivity extends AppCompatActivity {
             startActivity(goToLogin);
         }
         addQRfromFirebase();
-
         ImageView Profile;
         Profile = (ImageView) findViewById(R.id.profileButton);
         Profile.setOnClickListener(new View.OnClickListener() {
@@ -179,18 +178,15 @@ public class TicketActivity extends AppCompatActivity {
                                 {
                                     String title = document.getString("movieName");
                                     String id = document.getId();
-
                                     String cinemaName = document.getString("cinemaName");
                                     List<Long> seatsL = (List<Long>) document.get("seats");
                                     List<Integer> seatsInt = Objects.requireNonNull(seatsL).stream()
                                             .map(Long::intValue)
                                             .collect(Collectors.toList());
                                     ticketList.add(new TicketItem(id,title,date,time,seatsInt.size(),cinemaName,seatsInt));
-
                                     counter++;
                                 }
                             }
-
                             sortMoviesUsingDateAndTime(ticketList);
                             generateQRPagesFromList(ticketList);
                             if(counter==0){

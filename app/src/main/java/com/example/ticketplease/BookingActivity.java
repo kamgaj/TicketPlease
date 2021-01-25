@@ -2,6 +2,7 @@ package com.example.ticketplease;
 
 import android.app.AlertDialog;
 import android.app.DatePickerDialog;
+import android.app.Dialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -52,9 +53,10 @@ public class BookingActivity  extends AppCompatActivity {
     List<String> technology=new ArrayList<>();
     List<String> Time=new ArrayList<>();
     Calendar calendar=Calendar.getInstance();
-    String readyDate=String.valueOf(calendar.get(calendar.DAY_OF_MONTH))+"."+String.valueOf(calendar.get(calendar.MONTH)+1)+"."+String.valueOf(calendar.get(calendar.YEAR));
+    String readyDate= calendar.get(Calendar.DAY_OF_MONTH) +"."+ (calendar.get(Calendar.MONTH) + 1) +"."+ calendar.get(Calendar.YEAR);
     private BookingInfo bookingInfo;
     List<Integer> seatNumbers = new ArrayList<>();
+    ArrayList<Button> buttons = new ArrayList<>();
     FirebaseFirestore db;
 
     @Override
@@ -70,13 +72,14 @@ public class BookingActivity  extends AppCompatActivity {
         String titleFromIntent = getIntent().getStringExtra("movieTitle");
         bookingInfo.setMovieName(titleFromIntent);
 
-        Toolbar buttonNext = (Toolbar) findViewById(R.id.toolbarUPDown);
+        Toolbar buttonNext = findViewById(R.id.toolbarUPDown);
         TextView CinemaText=findViewById(R.id.CinemaText);
         TextView time=findViewById(R.id.TimeMovieText);
         TextView techText=findViewById(R.id.TechnologyText);
         buttonNext.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                fetchAllBookingsForCurrentMovie(buttons);
                 if(CinemaText.getText().toString().trim().equals("Kino")){
                     Toast.makeText(getApplicationContext(), "Aby kontynuować, wybierz kino", Toast.LENGTH_LONG).show();
                 }
@@ -93,15 +96,12 @@ public class BookingActivity  extends AppCompatActivity {
                         &LocalTime.now().plusMinutes(30).compareTo(LocalTime.parse(time.getText().toString() + ":00"))>0) {
                     Toast.makeText(getApplicationContext(), "Do seansu pozostało mniej niż 30 minut. Dokonanie rezerwacji jest niemożliwe", Toast.LENGTH_LONG).show();
                 } else {
-                bookingInfo.setSeats(seatNumbers);
-                pushBookingToBase(bookingInfo);
-
-                Intent intent = new Intent(BookingActivity.this, SummaryActivity.class);
-                intent.putExtra("Tickets", String.valueOf(seatNumbers.size()));
-                intent.putExtra("Date", readyDate);
-                intent.putExtra("Time", bookingInfo.getTime());
-                intent.putExtra("Title", bookingInfo.getMovieName());
-                startActivity(intent);
+                    Intent intent = new Intent(BookingActivity.this, SummaryActivity.class);
+                    intent.putExtra("Tickets", String.valueOf(seatNumbers.size()));
+                    intent.putExtra("Date", readyDate);
+                    intent.putExtra("Time", bookingInfo.getTime());
+                    intent.putExtra("Title", bookingInfo.getMovieName());
+                    passToSummaryAndCheckBooking(intent);
                 }
             }
         });
@@ -121,7 +121,7 @@ public class BookingActivity  extends AppCompatActivity {
                     @Override
                     public void onDateSet(DatePicker datePicker, int i, int i1, int i2) {
                         calendar.set(i, i1, i2);
-                        readyDate = String.valueOf(i2) + "." + String.valueOf(i1 + 1) + "." + String.valueOf(i);
+                        readyDate = i2 + "." + (i1 + 1) + "." + i;
                         dateText.setText(readyDate);
                         bookingInfo.setDate(readyDate);
                         if(!CinemaText.getText().toString().trim().equals("Kino") && !techText.getText().toString().trim().equals("Technologia") && !time.getText().toString().trim().equals("Godzina")){
@@ -133,7 +133,6 @@ public class BookingActivity  extends AppCompatActivity {
                 datePickerDialog.getDatePicker().setMinDate(Calendar.getInstance().getTimeInMillis());
                 datePickerDialog.getDatePicker().setMaxDate(Calendar.getInstance().getTimeInMillis()+(1000*60*60*24*14));
                 datePickerDialog.updateDate(year, month, day);
-
                 datePickerDialog.show();
             }
         });
@@ -159,7 +158,6 @@ public class BookingActivity  extends AppCompatActivity {
                 else {
                    t=Time.toArray(new String[0]);
                }
-
                 AlertDialog.Builder builder = new AlertDialog.Builder(BookingActivity.this);
                 builder.setTitle("Wybierz godzinę seansu");
                 builder.setSingleChoiceItems(t, -1, new DialogInterface.OnClickListener() {
@@ -232,9 +230,6 @@ public class BookingActivity  extends AppCompatActivity {
         }
         ImageView newImage = new ImageView(this);
         ConstraintLayout constraintLayout=findViewById(R.id.bookingLayout);
-
-
-
         Bitmap bitmap=(Bitmap.createScaledBitmap(b, 200, 100, false));
         Blurry.with(this).from(bitmap).into(newImage);
        constraintLayout.setBackground(newImage.getDrawable());
@@ -245,7 +240,7 @@ public class BookingActivity  extends AppCompatActivity {
         linearLayout = findViewById(R.id.seatPleace);
         linearLayout.removeAllViewsInLayout();
         LayoutInflater layoutInflater = LayoutInflater.from(this);
-        ArrayList<Button> buttons = new ArrayList<>();
+        buttons = new ArrayList<>();
         for (int i = 0; i < 5; i++) {
             LinearLayout row = new LinearLayout(this);
             row.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.FILL_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT));
@@ -273,7 +268,6 @@ public class BookingActivity  extends AppCompatActivity {
 
                 row.addView(view);
             }
-
             linearLayout.addView(row);
         }
         fetchAllBookingsForCurrentMovie(buttons);
@@ -315,7 +309,6 @@ public class BookingActivity  extends AppCompatActivity {
                 });
     }
 
-
     void fetchAllBookingsForCurrentMovie(ArrayList<Button> buttons) {
         db.collection("Bookings")
                 .whereEqualTo("movieName", bookingInfo.getMovieName())
@@ -341,6 +334,49 @@ public class BookingActivity  extends AppCompatActivity {
                                 buttons.get(alreadyBooked.get(i)).setEnabled(false);
                                 buttons.get(alreadyBooked.get(i)).setBackgroundColor(getResources().getColor(R.color.black));
                             }
+                        } else {
+                            Log.d("BookingActivity --------- ", "Failed to fetch bookings");
+                        }
+                    }
+                });
+    }
+    void passToSummaryAndCheckBooking(Intent intent){
+        int alreadyBookedOldSize= alreadyBooked.size();
+        alreadyBooked=new ArrayList<>();
+        db.collection("Bookings")
+                .whereEqualTo("movieName", bookingInfo.getMovieName())
+                .whereEqualTo("cinemaName", bookingInfo.getCinemaName())
+                .whereEqualTo("date", bookingInfo.getDate())
+                .whereEqualTo("technology", bookingInfo.getTechnology())
+                .whereEqualTo("time", bookingInfo.getTime())
+                .get()
+                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                        if(task.isSuccessful()) {
+                            for(QueryDocumentSnapshot document : Objects.requireNonNull(task.getResult())) {
+                                Log.d("BookingActivity --------- ", "Success");
+                                List<Long> seats = (List<Long>) document.get("seats");
+                                List<Integer> temp = Objects.requireNonNull(seats).stream()
+                                        .map(Long::intValue)
+                                        .collect(Collectors.toList());
+                                alreadyBooked.addAll(temp);
+                            }
+                            Log.d("old",String.valueOf(alreadyBookedOldSize));
+                            Log.d("new",String.valueOf(alreadyBooked.size()));
+                            if(alreadyBookedOldSize==alreadyBooked.size()){
+                                bookingInfo.setSeats(seatNumbers);
+                                pushBookingToBase(bookingInfo);
+                                startActivity(intent);
+                            }
+                            else {
+                                Toast.makeText(getApplicationContext(), "Conajmniej jedno z wybranch miejsc zostało już zajęte przez inną osobę. Wybierz inne", Toast.LENGTH_LONG).show();
+                                for(int i = 0; i < alreadyBooked.size(); i++) {
+                                    seatNumbers.remove(alreadyBooked.get(i));
+                                    buttons.get(alreadyBooked.get(i)).setEnabled(false);
+                                    buttons.get(alreadyBooked.get(i)).setBackgroundColor(getResources().getColor(R.color.black));
+                                }
+                        }
                         } else {
                             Log.d("BookingActivity --------- ", "Failed to fetch bookings");
                         }

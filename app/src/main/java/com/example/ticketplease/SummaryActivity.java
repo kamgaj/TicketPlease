@@ -46,25 +46,17 @@ public class SummaryActivity extends AppCompatActivity {
         textWithDate = findViewById(R.id.date);
         ok = findViewById(R.id.chip6);
         textView = findViewById(R.id.numberOfTickets);
-
-
         areNotificationsEnabled = checkIfNotificationCanBeSent();
-
         setAllTextViews();
-
-
         ok.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 startActivity(new Intent(SummaryActivity.this,HomeActivity.class));
             }
         });
-
-
         if(Boolean.TRUE.equals(areNotificationsEnabled)) {
             setNotification(setCalendar(dateTicket, timeOnTicket), title, timeOnTicket);
         }
-
     }
 
     @Override
@@ -136,12 +128,8 @@ public class SummaryActivity extends AppCompatActivity {
         }else  {
             text.setText(String.format(res.getString(R.string.bookedManyTickets), numberOfTickets));
         }
-
-
         String dateText = String.format(res.getString(R.string.movieDate), dateTicket);
         textWithDate.setText(dateText);
-
-
         if(cal.getTimeInMillis() + 3600 >= Calendar.getInstance().getTimeInMillis()) {
             textView.setText(R.string.notification_2_hour);
         }

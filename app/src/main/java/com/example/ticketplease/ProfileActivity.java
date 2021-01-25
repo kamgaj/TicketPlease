@@ -57,26 +57,22 @@ public class ProfileActivity extends AppCompatActivity {
         @Override
         public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
             if (firebaseAuth.getCurrentUser() == null){
-                //Do anything here which needs to be done after signout is complete
                 Intent logoutIntent = new Intent(ProfileActivity.this,LoginActivity.class);
                 logoutIntent.putExtra("logoutCode", 2137);
                 startActivity(logoutIntent);
             }
-
         }
     };
     private StorageReference storageReference;
     private String uID;
     private ImageView profilePicture;
     private final FirebaseFirestore db= FirebaseFirestore.getInstance();
-
     ArrayList<ProfileFilmListItem> filmsArray = new ArrayList<>();
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.profile_page);
-
-
         firebaseAuth = FirebaseAuth.getInstance();
         firebaseAuth.addAuthStateListener(authStateListener);
         TextView username=findViewById(R.id.NickName);
@@ -98,7 +94,6 @@ public class ProfileActivity extends AppCompatActivity {
 
         storageReference = FirebaseStorage.getInstance().getReference();
         uID = Objects.requireNonNull(firebaseAuth.getCurrentUser()).getUid();
-        //Downloading user picture from Firebase
         StorageReference profileRef = storageReference.child("User_profile_pictures/" + uID + "/profile.jpg");
         profileRef.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
             @Override
@@ -108,7 +103,7 @@ public class ProfileActivity extends AppCompatActivity {
         });
 
         ImageView Ticket;
-        Ticket = (ImageView) findViewById(R.id.ticketButton);
+        Ticket = findViewById(R.id.ticketButton);
         Ticket.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -116,7 +111,7 @@ public class ProfileActivity extends AppCompatActivity {
             }
         });
         ImageView Search;
-        Search = (ImageView) findViewById(R.id.searchButton);
+        Search = findViewById(R.id.searchButton);
         Search.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -124,7 +119,7 @@ public class ProfileActivity extends AppCompatActivity {
             }
         });
         ImageView Home;
-        Home = (ImageView) findViewById(R.id.homeButton);
+        Home = findViewById(R.id.homeButton);
         Home.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -157,7 +152,7 @@ public class ProfileActivity extends AppCompatActivity {
             }
         });
 
-        RadioButton Watched = (RadioButton) findViewById(R.id.watched);
+        RadioButton Watched = findViewById(R.id.watched);
         Watched.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -165,7 +160,7 @@ public class ProfileActivity extends AppCompatActivity {
                 getWatchedFilms();
             }
         });
-        RadioButton Booked = (RadioButton) findViewById(R.id.booked);
+        RadioButton Booked = findViewById(R.id.booked);
         Booked.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -181,7 +176,6 @@ public class ProfileActivity extends AppCompatActivity {
         if(requestCode == 2137) {
             if(resultCode == Activity.RESULT_OK) {
                 Uri imageUri = Objects.requireNonNull(data).getData();
-
                 uploadImageToFirebase(imageUri);
             }
         }
@@ -214,9 +208,7 @@ public class ProfileActivity extends AppCompatActivity {
         Calendar calendar=Calendar.getInstance();
         String currentDate = calendar.get(Calendar.DAY_OF_MONTH) + "." + (calendar.get(Calendar.MONTH) + 1) + "." + calendar.get(Calendar.YEAR);
         SimpleDateFormat formatter = new SimpleDateFormat("dd.MM.yyyy", Locale.ENGLISH);
-
         LocalDateTime localDateTime=LocalDateTime.now();
-
         db.collection("Bookings")
                 .whereEqualTo("userID", Objects.requireNonNull(FirebaseAuth.getInstance().getCurrentUser()).getUid())
                 .get()
@@ -224,12 +216,12 @@ public class ProfileActivity extends AppCompatActivity {
                     @Override
                     public void onComplete(@NonNull Task<QuerySnapshot> task) {
                         if(task.isSuccessful()) {
-                            filmsArray=new ArrayList<ProfileFilmListItem>();
+                            filmsArray= new ArrayList<>();
                             printWatched(0);
                             for(QueryDocumentSnapshot document : Objects.requireNonNull(task.getResult())) {
                                 String dateSource = document.getString("date");
                                 String time = document.getString("time");
-                                List<String> items = Arrays.asList(dateSource.split("\\."));
+                                List<String> items = Arrays.asList(Objects.requireNonNull(dateSource).split("\\."));
                                 if(items.get(0).length()==1){
                                     items.set(0,"0"+items.get(0));
                                 }
@@ -256,7 +248,6 @@ public class ProfileActivity extends AppCompatActivity {
                                                                         movies.add(document.getString("Title"));
                                                                         filmsArray.add(new ProfileFilmListItem(document.getString("Title"), document.getString("Description"), path, id, date, null,null,null,null));
                                                                     }
-
                                                                 }
                                                                 sortMoviesUsingDateDescending(filmsArray);
                                                                 printWatched(0);
@@ -271,7 +262,6 @@ public class ProfileActivity extends AppCompatActivity {
                                             printWatched(0);
                                         }
                                     }
-
                             }
 
                         } else {
@@ -279,7 +269,6 @@ public class ProfileActivity extends AppCompatActivity {
                         }
                     }
                 });
-
     }
 
     private void getBookedFilms() {
@@ -287,8 +276,6 @@ public class ProfileActivity extends AppCompatActivity {
         Calendar calendar=Calendar.getInstance();
         String currentDate = calendar.get(Calendar.DAY_OF_MONTH) + "." + (calendar.get(Calendar.MONTH) + 1) + "." + calendar.get(Calendar.YEAR);
         SimpleDateFormat formatter = new SimpleDateFormat("dd.MM.yyyy", Locale.ENGLISH);
-
-
             LocalDateTime localDateTime=LocalDateTime.now();
             db.collection("Bookings")
                     .whereEqualTo("userID", Objects.requireNonNull(FirebaseAuth.getInstance().getCurrentUser()).getUid())
@@ -297,12 +284,12 @@ public class ProfileActivity extends AppCompatActivity {
                         @Override
                         public void onComplete(@NonNull Task<QuerySnapshot> task) {
                             if(task.isSuccessful()) {
-                                filmsArray=new ArrayList<ProfileFilmListItem>();
+                                filmsArray= new ArrayList<>();
                                 printWatched(0);
                                 for(QueryDocumentSnapshot document : Objects.requireNonNull(task.getResult())) {
                                     String dateSource = document.getString("date");
                                     String time = document.getString("time");
-                                    List<String> items = Arrays.asList(dateSource.split("\\."));
+                                    List<String> items = Arrays.asList(Objects.requireNonNull(dateSource).split("\\."));
                                     if(items.get(0).length()==1){
                                         items.set(0,"0"+items.get(0));
                                     }
@@ -314,22 +301,21 @@ public class ProfileActivity extends AppCompatActivity {
                                     LocalDateTime localDateTime1=LocalDateTime.of(LocalDate.parse(date.replaceAll("\\.","/"), formatter), LocalTime.parse(time));
                                         if (localDateTime.isBefore(localDateTime1)) {
                                             String test = document.getString("movieName");
-
                                             String cinemaName = document.getString("cinemaName");
                                             List<Long> seatsL = (List<Long>) document.get("seats");
                                             List<Integer> seatsInt = Objects.requireNonNull(seatsL).stream()
                                                     .map(Long::intValue)
                                                     .collect(Collectors.toList());
-                                            String allSeats = "";
+                                            StringBuilder allSeats = new StringBuilder();
                                             for (int i = 0; i < seatsInt.size(); i++) {
-                                                allSeats += String.valueOf(seatsInt.get(i)+1);
+                                                allSeats.append((seatsInt.get(i) + 1));
                                                 if (i != seatsInt.size() - 1) {
-                                                    allSeats += ", ";
+                                                    allSeats.append(", ");
                                                 }
                                             }
                                             String id = document.getId();
                                             try {
-                                                String finalAllSeats = allSeats;
+                                                String finalAllSeats = allSeats.toString();
                                                 db.collection("Movies")
                                                         .whereEqualTo("Title", test)
                                                         .get()
@@ -360,10 +346,7 @@ public class ProfileActivity extends AppCompatActivity {
                             }
                         }
                     });
-
-
     }
-
 
     void printWatched(int mode){
         ListView films;
@@ -373,10 +356,10 @@ public class ProfileActivity extends AppCompatActivity {
     }
 
     private void sortMoviesUsingDateAndTime(ArrayList<ProfileFilmListItem> toSort) {
-        Collections.sort(toSort, new Comparator<ProfileFilmListItem>() {
+        toSort.sort(new Comparator<ProfileFilmListItem>() {
             @Override
             public int compare(ProfileFilmListItem o1, ProfileFilmListItem o2) {
-                if(o1.getDate().compareTo(o2.getDate()) == 0) {
+                if (o1.getDate().compareTo(o2.getDate()) == 0) {
                     return o1.getTime().compareTo(o2.getTime());
                 } else {
                     return o1.getDate().compareTo(o2.getDate());
@@ -386,12 +369,11 @@ public class ProfileActivity extends AppCompatActivity {
     }
 
     private void sortMoviesUsingDateDescending(ArrayList<ProfileFilmListItem> toSort) {
-        Collections.sort(toSort, new Comparator<ProfileFilmListItem>() {
+        toSort.sort(new Comparator<ProfileFilmListItem>() {
             @Override
             public int compare(ProfileFilmListItem o1, ProfileFilmListItem o2) {
-                    return (o1.getDate().compareTo(o2.getDate())) * -1;
+                return (o1.getDate().compareTo(o2.getDate())) * -1;
             }
         });
     }
-
 }

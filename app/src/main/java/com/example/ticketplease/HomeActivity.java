@@ -71,7 +71,6 @@ public class HomeActivity extends AppCompatActivity {
                 startActivity(new Intent(HomeActivity.this, ProfileActivity.class));
             }
         });
-
         search = findViewById(R.id.chip4);
         search.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -80,9 +79,6 @@ public class HomeActivity extends AppCompatActivity {
                 startActivity(goToSearch);
             }
         });
-
-
-
         //Displaying Movies
         getNewestFilms();
         getTopRatedFilms();
@@ -169,11 +165,11 @@ public class HomeActivity extends AppCompatActivity {
             View view = layoutInflater.inflate(R.layout.home_page_item, linearLayout, false);
             TextView title = view.findViewById(R.id.MovieTitle);
             ImageView poster = view.findViewById(R.id.Poster);
-            title.setText(listFilms.get(i).Title);
+            title.setText(listFilms.get(i).getTitle());
 
             FirebaseStorage storage = FirebaseStorage.getInstance();
 
-            StorageReference ref = storage.getReferenceFromUrl(listFilms.get(i).pathToPoster);
+            StorageReference ref = storage.getReferenceFromUrl(listFilms.get(i).getPathToPoster());
             ref.getBytes(1024 * 1024).addOnSuccessListener(new OnSuccessListener<byte[]>() {
                 @Override
                 public void onSuccess(byte[] bytes) {
@@ -187,7 +183,7 @@ public class HomeActivity extends AppCompatActivity {
                 @Override
                 public void onClick(View v) {
                     Intent intent = new Intent(HomeActivity.this, DescriptionActivity.class);
-                    intent.putExtra("Movie_title", listFilms.get(finalI).Title);
+                    intent.putExtra("Movie_title", listFilms.get(finalI).getTitle());
                     startActivity(intent);
                 }
             });
@@ -195,7 +191,7 @@ public class HomeActivity extends AppCompatActivity {
                 @Override
                 public void onClick(View v) {
                     Intent intent = new Intent(HomeActivity.this, DescriptionActivity.class);
-                    intent.putExtra("Movie_title", listFilms.get(finalI).Title);
+                    intent.putExtra("Movie_title", listFilms.get(finalI).getTitle());
                     startActivity(intent);
                 }
             });
@@ -208,11 +204,11 @@ public class HomeActivity extends AppCompatActivity {
             View view = layoutInflater.inflate(R.layout.home_page_item, linearLayout, false);
             TextView title = view.findViewById(R.id.MovieTitle);
             ImageView poster = view.findViewById(R.id.Poster);
-            title.setText(listDiscounts.get(i).Title);
+            title.setText(listDiscounts.get(i).getTitle());
 
             FirebaseStorage storage = FirebaseStorage.getInstance();
 
-            StorageReference ref = storage.getReferenceFromUrl(listDiscounts.get(i).pathToPoster);
+            StorageReference ref = storage.getReferenceFromUrl(listDiscounts.get(i).getPathToPoster());
             ref.getBytes(1024 * 1024).addOnSuccessListener(new OnSuccessListener<byte[]>() {
                 @Override
                 public void onSuccess(byte[] bytes) {
@@ -226,7 +222,7 @@ public class HomeActivity extends AppCompatActivity {
                 @Override
                 public void onClick(View v) {
                     Intent intent = new Intent(HomeActivity.this, DiscountActivity.class);
-                    intent.putExtra("Discount_title", listDiscounts.get(finalI).Title);
+                    intent.putExtra("Discount_title", listDiscounts.get(finalI).getTitle());
                     startActivity(intent);
                 }
             });
@@ -234,7 +230,7 @@ public class HomeActivity extends AppCompatActivity {
                 @Override
                 public void onClick(View v) {
                     Intent intent = new Intent(HomeActivity.this, DiscountActivity.class);
-                    intent.putExtra("Movie_title", listDiscounts.get(finalI).Title);
+                    intent.putExtra("Movie_title", listDiscounts.get(finalI).getTitle());
                     startActivity(intent);
                 }
             });

@@ -58,10 +58,7 @@ public class ProfileListView extends BaseAdapter {
         {
             LayoutInflater layoutInflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             row = layoutInflater.inflate(R.layout.profilefilmlist,parent,false);
-            listViewHolder = new ProfileCustomListView();
-            listViewHolder.title = row.findViewById(R.id.FilmTitleWatched);
-            listViewHolder.description = row.findViewById(R.id.DescriptionText);
-            listViewHolder.poster = row.findViewById(R.id.posterPlace);
+            listViewHolder = new ProfileCustomListView( row.findViewById(R.id.FilmTitleWatched),row.findViewById(R.id.posterPlace),row.findViewById(R.id.DescriptionText));
             row.setTag(listViewHolder);
         }
         else
@@ -71,15 +68,15 @@ public class ProfileListView extends BaseAdapter {
         }
         final ProfileFilmListItem products = getItem(position);
 
-        listViewHolder.title.setText(products.Title);
-        Picasso.get().load(products.Poster).into(listViewHolder.poster);
-        listViewHolder.description.setText(products.Description);
+        listViewHolder.getTitle().setText(products.getTitle());
+        Picasso.get().load(products.getPoster()).into(listViewHolder.getPoster());
+        listViewHolder.getDescription().setText(products.getDescription());
         if(mode==0){
             row.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
                     Intent intent = new Intent(context, DescriptionActivity.class);
-                    intent.putExtra("Movie_title", products.Title);
+                    intent.putExtra("Movie_title", products.getTitle());
                     context.startActivity(intent);
                 }
             });
@@ -113,21 +110,21 @@ public class ProfileListView extends BaseAdapter {
                         }
                     });
                     try {
-                        jsonObject.put("ID",products.Id);
+                        jsonObject.put("ID",products.getId());
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }
-                    QRGEncoder qrgEncoder = new QRGEncoder(jsonObject.toString(), null, QRGContents.Type.TEXT,900);;
+                    QRGEncoder qrgEncoder = new QRGEncoder(jsonObject.toString(), null, QRGContents.Type.TEXT,900);
                     try {
                         qrCode.setImageBitmap(qrgEncoder.encodeAsBitmap());
                     } catch (WriterException e) {
                         e.printStackTrace();
                     }
-                    time.setText(products.Time);
-                    date.setText(products.Date);
-                    numberOfTickets.setText(products.numberTickets);
-                    cinema.setText(products.Cinema);
-                    seats.setText(products.Seats);
+                    time.setText(products.getTime());
+                    date.setText(products.getDate());
+                    numberOfTickets.setText(products.getNumberTickets());
+                    cinema.setText(products.getCinema());
+                    seats.setText(products.getSeats());
                     qr.show();
                 }
             });
