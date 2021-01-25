@@ -250,6 +250,7 @@ public class HomeActivity extends AppCompatActivity {
             startActivity(startMain);
         }else {
             super.onBackPressed();
+            finishAffinity();
         }
     }
 
